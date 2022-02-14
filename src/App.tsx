@@ -1,63 +1,111 @@
-import logo from "./logo.svg";
-import {
-  Box,
-  Image,
-  Text,
-  Link,
-  HStack,
-  Heading,
-  Switch,
-  useColorMode,
-  VStack,
-  Code,
-} from "native-base";
+import { useEffect, useState } from "react";
+import { Box, useColorMode, VStack, Spacer } from "native-base";
+import { useAlert } from "react-alert";
+
+import { AppBar } from "./components/header/AppBar";
+import { Grid } from "./components/grid/Grid";
+import { KeyBoard } from "./components/keyboard/KeyBoard";
+import { HowToPlayModal } from "./components/modal/HowToPlayModal";
+
+import { lightBgColor, darkBgColor } from "./constants/colors";
+import { SIZE, GUESS_MAX } from "./constants/settings";
+
+import { isInWordList, isWinningWord } from "./lib/words";
 
 function App() {
   const { colorMode } = useColorMode();
+  const alert = useAlert();
+
+  const [isHowToPlayModalOpen, setIsHowToPlayModalOpen] = useState(false);
+
+  const [guesses, setGuesses] = useState<string[]>([]);
+  const [currentGuess, setCurrentGuess] = useState("");
+  const [isGameWon, setIsGameWon] = useState(false);
+  const [isGameLost, setIsGameLost] = useState(false);
+
+  useEffect(() => {
+    if (isGameWon) {
+      alert.success("すばらしい！");
+      // 統計情報・シェアボタンを表示
+    }
+    if (isGameLost) {
+      alert.show("残念...");
+    }
+  }, [isGameWon, isGameLost]);
+
+  const onChar = (value: string) => {
+    if (
+      currentGuess.split("").length < SIZE &&
+      guesses.length < GUESS_MAX &&
+      !isGameWon
+    ) {
+      setCurrentGuess(`${currentGuess}${value}`);
+    }
+  };
+
+  const onDelete = () => {
+    setCurrentGuess(currentGuess.split("").slice(0, -1).join(""));
+  };
+
+  const onEnter = () => {
+    if (isGameWon) return;
+    if (!(currentGuess.split("").length === SIZE) && !isGameLost) {
+      alert.error("文字数が不足しています");
+      return;
+    }
+    if (!isInWordList(currentGuess) && !isGameLost) {
+      alert.error("存在しない駅名です");
+      return;
+    }
+    // + 存在する駅名かチェック
+    const winningWord = isWinningWord(currentGuess);
+
+    if (
+      currentGuess.split("").length === SIZE &&
+      guesses.length < GUESS_MAX &&
+      !isGameWon
+    ) {
+      setGuesses([...guesses, currentGuess]);
+      setCurrentGuess("");
+
+      if (winningWord) {
+        //統計を更新
+        return setIsGameWon(true);
+      }
+
+      if (guesses.length === GUESS_MAX - 1) {
+        //統計を更新
+        setIsGameLost(true);
+      }
+    }
+  };
 
   return (
     <Box
-      bg={colorMode === "light" ? "coolGray.50" : "coolGray.900"}
+      bg={colorMode === "light" ? lightBgColor : darkBgColor}
       minHeight="100vh"
       justifyContent="center"
-      px={4}
     >
-      <VStack space={5} alignItems="center">
-        <Image
-          source={{ uri: logo }}
-          resizeMode="contain"
-          size={220}
-          alt="NativeBase logo"
-        />
-        <Heading size="lg">Welcome to NativeBase</Heading>
-        <Text>
-          Edit <Code>src/App.js</Code> and save to reload.
-        </Text>
-        <Link href="https://docs.nativebase.io" isExternal>
-          <Text color="primary.500" underline fontSize={"xl"}>
-            Learn NativeBase
-          </Text>
-        </Link>
-        <ToggleDarkMode />
+      <VStack flex={1} justifyContent="space-between">
+        <AppBar handleHowToPlayModal={() => setIsHowToPlayModalOpen(true)} />
+        <VStack justifyContent="center" space={1} flexGrow={1}>
+          <Spacer />
+          <Grid guesses={guesses} currentGuess={currentGuess} />
+          <KeyBoard
+            guesses={guesses}
+            onChar={onChar}
+            onDelete={onDelete}
+            onEnter={onEnter}
+          />
+          <Spacer />
+        </VStack>
       </VStack>
-    </Box>
-  );
-}
 
-function ToggleDarkMode() {
-  const { colorMode, toggleColorMode } = useColorMode();
-  return (
-    <HStack space={2}>
-      <Text>Dark</Text>
-      <Switch
-        isChecked={colorMode === "light" ? true : false}
-        onToggle={toggleColorMode}
-        aria-label={
-          colorMode === "light" ? "switch to dark mode" : "switch to light mode"
-        }
+      <HowToPlayModal
+        isOpen={isHowToPlayModalOpen}
+        onCloseHowToPlayModal={() => setIsHowToPlayModalOpen(false)}
       />
-      <Text>Light</Text>
-    </HStack>
+    </Box>
   );
 }
 

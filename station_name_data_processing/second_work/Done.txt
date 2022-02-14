@@ -1,0 +1,24 @@
+stadle_raw.txt → stadle_yakumono_removed.txt
+・中黒と括弧と空白をのぞいた
+
+→ stadle_yakumono_removed.txt　→ stadle_alphabet.txt
+・アルファベットにした(JRGYPA)
+・Jビレッジ→Jヴィレッジ
+・ジャトコマエ → ジヤトコマエ
+・YRPノビを追加
+
+stadle_alphabet.txt → stadle_number.txt
+・数字にした
+
+stadle_number.txt + kana.txt → stadle+kana.txt
+・ひらがな(カタカナ)のみの駅が抜けていたので追加
+・ススキノ、メディカルセンターが無いので手動で追加
+
+stadle+kana.txt + 1stitems(同一の作業を適用済み) → stadle_before.txt
+
+stadle_before → stadle_20220223.xt
+・ソート処理・重複削除処理を適用
+・サイインを追加 
+
+
+
