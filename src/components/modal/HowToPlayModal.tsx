@@ -29,10 +29,11 @@ export function HowToPlayModal({ isOpen, onCloseHowToPlayModal }: Props) {
         </Modal.Header>
         <Modal.Body>
           <Text fontSize={[14, 20]} my={1}>
-            これは{SIZE}文字の日本の駅名を{GUESS_MAX}回以内に当てるゲームです。
+            これは{SIZE}文字の日本の駅・停留場に{GUESS_MAX}
+            回以内に到着することを目指す、駅名当てゲームです。
           </Text>
           <Text fontSize={[14, 20]} my={1}>
-            駅名は実際に存在するものを回答しなければなりません。
+            回答する駅名は、実際に存在する(リストに含まれる)必要があります。
           </Text>
           <Text fontSize={[14, 20]}>
             入力後Enterを押すと、その回答と答えがどのくらい近いかによって、文字タイルの色が変わります。
@@ -142,7 +143,7 @@ export function HowToPlayModal({ isOpen, onCloseHowToPlayModal }: Props) {
           </Text>
           <Divider my={3} />
           <Text fontSize={[14, 20]}>
-            この場合、答えは「
+            この場合、目的地は「
             <Text fontSize={[14, 20]} color={correctColor} px={1} bold>
               トウキョウ
             </Text>

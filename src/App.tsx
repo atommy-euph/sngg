@@ -25,13 +25,13 @@ function App() {
 
   useEffect(() => {
     if (isGameWon) {
-      alert.success("すばらしい！");
+      alert.success("目的地に到着しました！");
       // 統計情報・シェアボタンを表示
     }
     if (isGameLost) {
-      alert.show("残念...");
+      alert.show("目的地に到着できませんでした...");
     }
-  }, [isGameWon, isGameLost]);
+  }, [alert, isGameWon, isGameLost]);
 
   const onChar = (value: string) => {
     if (
