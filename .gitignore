@@ -12,7 +12,7 @@
 /build
 
 # data processing
-/station_name_data_processing
+station_name_data_processing/
 
 # misc
 .DS_Store
