@@ -50,11 +50,11 @@ function App() {
   const onEnter = () => {
     if (isGameWon) return;
     if (!(currentGuess.split("").length === SIZE) && !isGameLost) {
-      alert.error("文字数が不足しています");
+      alert.error(`回答は${SIZE}文字にしてください`);
       return;
     }
     if (!isInWordList(currentGuess) && !isGameLost) {
-      alert.error("存在しない駅名です");
+      alert.error("駅名リストにありません");
       return;
     }
     // + 存在する駅名かチェック

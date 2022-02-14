@@ -21,4 +21,4 @@ if [ -e names_classed.ts ]; then
 fi
 
 node makeNamesObj.js
-cp names_classed.json ../src/constants/names_classed.json
+cp names_classed_shuffled.json ../src/constants/names_classed_shuffled.json
