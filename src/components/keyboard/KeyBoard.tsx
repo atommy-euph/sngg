@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Center, HStack, VStack } from "native-base";
+import { Center, HStack, Spacer, VStack } from "native-base";
 import { getStatuses } from "../../lib/statuses";
 
 import { Key } from "./Key";
@@ -113,7 +113,6 @@ export const KeyBoard = React.memo(function KeyBoard({
             </VStack>
             <VStack space={keySpace} justifyContent="space-between">
               <Key value="ワ" onClick={onClick} status={charStatuses["ワ"]} />
-              <Key value="ヲ" onClick={onClick} status={charStatuses["ヲ"]} />
             </VStack>
             <VStack space={keySpace} justifyContent="space-between">
               <Key value="ン" onClick={onClick} status={charStatuses["ン"]} />
@@ -123,7 +122,7 @@ export const KeyBoard = React.memo(function KeyBoard({
             <VStack space={keySpace}>
               <Key value="ァ" onClick={onClick} status={charStatuses["ァ"]} />
               <Key value="ィ" onClick={onClick} status={charStatuses["ィ"]} />
-              <Key value="ゥ" onClick={onClick} status={charStatuses["ゥ"]} />
+              <Key value="ヴ" onClick={onClick} status={charStatuses["ヴ"]} />
               <Key value="ェ" onClick={onClick} status={charStatuses["ェ"]} />
               <Key value="ォ" onClick={onClick} status={charStatuses["ォ"]} />
             </VStack>
@@ -148,6 +147,11 @@ export const KeyBoard = React.memo(function KeyBoard({
               <Key value="デ" onClick={onClick} status={charStatuses["デ"]} />
               <Key value="ド" onClick={onClick} status={charStatuses["ド"]} />
             </VStack>
+            <VStack justifyContent="space-between" space={keySpace}>
+              <Spacer maxH={[28, 35, 42, 55]} />
+              <Key value="ッ" onClick={onClick} status={charStatuses["ッ"]} />
+              <Key value="ー" onClick={onClick} status={charStatuses["ー"]} />
+            </VStack>
             <VStack space={keySpace}>
               <Key value="バ" onClick={onClick} status={charStatuses["バ"]} />
               <Key value="ビ" onClick={onClick} status={charStatuses["ビ"]} />
@@ -161,11 +165,6 @@ export const KeyBoard = React.memo(function KeyBoard({
               <Key value="プ" onClick={onClick} status={charStatuses["プ"]} />
               <Key value="ペ" onClick={onClick} status={charStatuses["ペ"]} />
               <Key value="ポ" onClick={onClick} status={charStatuses["ポ"]} />
-            </VStack>
-            <VStack justifyContent="space-between" space={keySpace}>
-              <Key value="ッ" onClick={onClick} status={charStatuses["ッ"]} />
-              <Key value="・" onClick={onClick} status={charStatuses["・"]} />
-              <Key value="ー" onClick={onClick} status={charStatuses["ー"]} />
             </VStack>
             <VStack justifyContent="space-between" space={keySpace}>
               <Key value="ャ" onClick={onClick} status={charStatuses["ャ"]} />
