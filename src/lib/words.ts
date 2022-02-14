@@ -1,5 +1,5 @@
 import {SIZE} from "../constants/settings"
-import NAMEDATA from "../constants/names_classed_shuffled.json"
+import NAMEDATA from "../constants/station_names.json"
 
 export const NAMES = NAMEDATA[SIZE]
 export const NumberOfData = NAMEDATA[SIZE].length

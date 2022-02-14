@@ -15,7 +15,7 @@ const theme = extendTheme({
 const options = {
   position: positions.MIDDLE,
   offset: "-100px",
-  timeout: 1500,
+  timeout: 2500,
   transition: transitions.FADE,
 };
 

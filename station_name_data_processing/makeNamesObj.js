@@ -33,7 +33,7 @@ for (let i = min; i < max + 1; i++) {
 console.log(counter);
 
 let jsonData = JSON.stringify(names_classed);
-fs.writeFile("names_classed_shuffled.json", jsonData, (err) => {
+fs.writeFile("station_names.json", jsonData, (err) => {
   if (err) throw err;
   console.log("正常に書き込みが完了しました");
 });

@@ -9,19 +9,41 @@ import { HowToPlayModal } from "./components/modal/HowToPlayModal";
 
 import { lightBgColor, darkBgColor } from "./constants/colors";
 import { SIZE, GUESS_MAX } from "./constants/settings";
+import { solution } from "./lib/words";
 
 import { isInWordList, isWinningWord } from "./lib/words";
+import {
+  loadGameStateFromLocalStorage,
+  saveGameStateToLocalStorage,
+} from "./lib/localStorage";
 
 function App() {
   const { colorMode } = useColorMode();
   const alert = useAlert();
 
   const [isHowToPlayModalOpen, setIsHowToPlayModalOpen] = useState(false);
-
-  const [guesses, setGuesses] = useState<string[]>([]);
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameWon, setIsGameWon] = useState(false);
   const [isGameLost, setIsGameLost] = useState(false);
+
+  const [guesses, setGuesses] = useState<string[]>(() => {
+    const loaded = loadGameStateFromLocalStorage();
+    if (loaded?.solution !== solution) {
+      return [];
+    }
+    const gameWasWon = loaded.guesses.includes(solution);
+    if (gameWasWon) {
+      setIsGameWon(true);
+    }
+    if (loaded.guesses.length === GUESS_MAX && !gameWasWon) {
+      setIsGameLost(true);
+    }
+    return loaded.guesses;
+  });
+
+  useEffect(() => {
+    saveGameStateToLocalStorage({ guesses, solution });
+  }, [guesses]);
 
   useEffect(() => {
     if (isGameWon) {

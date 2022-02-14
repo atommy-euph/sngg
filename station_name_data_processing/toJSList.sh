@@ -1,5 +1,6 @@
-src=stadle_20220213.txt
+src=station_names.txt
 out=names.js
+json_filename=station_names.json
 
 if [ -e $out ]; then
   rm $out
@@ -16,9 +17,9 @@ done < $src
 
 echo "]" >> $out
 
-if [ -e names_classed.ts ]; then
-  rm names_classed.ts
+if [ -e $json_filename ]; then
+  rm $json_filename
 fi
 
 node makeNamesObj.js
-cp names_classed_shuffled.json ../src/constants/names_classed_shuffled.json
+cp $json_filename ../src/constants/$json_filename
