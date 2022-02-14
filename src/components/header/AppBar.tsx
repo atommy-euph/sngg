@@ -24,6 +24,7 @@ export const AppBar = React.memo(function AppBar({
 
   const handleColorMode: any = (event: any) => {
     toggleColorMode();
+    localStorage.setItem("theme", colorMode === "dark" ? "light" : "dark");
     event.currentTarget.blur();
   };
 

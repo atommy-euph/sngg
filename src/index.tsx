@@ -8,7 +8,15 @@ import reportWebVitals from "./reportWebVitals";
 
 const theme = extendTheme({
   config: {
-    initialColorMode: "light",
+    initialColorMode: (
+      localStorage.getItem("theme")
+        ? localStorage.getItem("theme") === "dark"
+        : window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? true
+        : false
+    )
+      ? "dark"
+      : "light",
   },
 });
 
