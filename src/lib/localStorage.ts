@@ -14,6 +14,8 @@ export const loadGameStateFromLocalStorage = () => {
   return state ? (JSON.parse(state) as StoredGameState) : null
 }
 
+const gameStatsKey = "gameStats"
+
 export type GameStats = {
   winDistribution: number[]
   gamesFailed: number
@@ -23,3 +25,11 @@ export type GameStats = {
   successRate: number
 }
 
+export const saveGameStatsToLocalStorage = (gameStats: GameStats) => {
+  localStorage.setItem(gameStatsKey, JSON.stringify(gameStats))
+}
+
+export const loadGameStatsFromLocalStorage = () => {
+  const gameStats = localStorage.getItem(gameStatsKey)
+  return gameStats ? (JSON.parse(gameStats) as GameStats): null
+}
