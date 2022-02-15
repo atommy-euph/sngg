@@ -16,8 +16,9 @@ import {
   loadGameStateFromLocalStorage,
   saveGameStateToLocalStorage,
 } from "./lib/localStorage";
-import { GameStats } from "./lib/localStorage";
 import { solution } from "./lib/words";
+import { GameStats } from "./lib/localStorage";
+import { loadStats } from "./lib/stats";
 
 function App() {
   const { colorMode } = useColorMode();
