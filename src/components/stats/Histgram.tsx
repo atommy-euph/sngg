@@ -9,7 +9,9 @@ type Props = {
 
 export function Histgram({ gameStats }: Props) {
   const sum = gameStats.winDistribution.reduce((sum, item) => sum + item, 0);
-  const max_freq = Math.max(...gameStats.winDistribution);
+  const max_freq = Math.max(...gameStats.winDistribution)
+    ? Math.max(...gameStats.winDistribution)
+    : 1;
 
   return (
     <Center>
@@ -64,7 +66,7 @@ function ProgressBar({
       <Text position="absolute" top={-9} left={-12} bold italic>
         {label}
       </Text>
-      {[...Array(freq - 1)].map((_, i) => (
+      {[...Array(freq > 0 ? freq - 1 : 0)].map((_, i) => (
         <Circle
           key={i}
           bgColor="gray.50"

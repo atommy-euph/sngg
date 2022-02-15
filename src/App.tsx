@@ -18,7 +18,7 @@ import {
 } from "./lib/localStorage";
 import { solution } from "./lib/words";
 import { GameStats } from "./lib/localStorage";
-import { loadStats } from "./lib/stats";
+import { loadStats, addGameStatsForCompletedGame } from "./lib/stats";
 
 function App() {
   const { colorMode } = useColorMode();
@@ -29,14 +29,7 @@ function App() {
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameWon, setIsGameWon] = useState(false);
   const [isGameLost, setIsGameLost] = useState(false);
-  const [stats, setStats] = useState({
-    winDistribution: [1, 3, 3, 4, 6, 2],
-    gamesFailed: 2,
-    currentStreak: 4,
-    bestStreak: 7,
-    totalGames: 23,
-    successRate: (21 / 23) * 100,
-  });
+  const [stats, setStats] = useState(() => loadStats());
 
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage();
@@ -60,12 +53,15 @@ function App() {
   useEffect(() => {
     if (isGameWon) {
       alert.success("目的地に到着しました！");
-      // 統計情報・シェアボタンを表示
+      setTimeout(() => {
+        setIsStatsModalOpen(true);
+      }, 2500);
     }
     if (isGameLost) {
       alert.show("残念、途中下車...");
       setTimeout(() => {
         alert.show(`答え「${solution}」`);
+        setIsStatsModalOpen(true);
       }, 2500);
     }
   }, [alert, isGameWon, isGameLost]);
@@ -94,7 +90,6 @@ function App() {
       alert.error("駅名リストにありません");
       return;
     }
-    // + 存在する駅名かチェック
     const winningWord = isWinningWord(currentGuess);
 
     if (
@@ -106,12 +101,12 @@ function App() {
       setCurrentGuess("");
 
       if (winningWord) {
-        //統計を更新
+        setStats(addGameStatsForCompletedGame(stats, guesses.length));
         return setIsGameWon(true);
       }
 
       if (guesses.length === GUESS_MAX - 1) {
-        //統計を更新
+        setStats(addGameStatsForCompletedGame(stats, guesses.length + 1));
         setIsGameLost(true);
       }
     }

@@ -1,12 +1,18 @@
 import { HStack, VStack, Text } from "native-base";
 
-export function StatBar() {
+import { GameStats } from "../../lib/localStorage";
+
+type Props = {
+  gameStats: GameStats;
+};
+
+export function StatBar({ gameStats }: Props) {
   return (
     <HStack justifyContent="space-around">
-      <StatItem label="Played" value={1} />
-      <StatItem label={"Success\nRate"} value={1} />
-      <StatItem label={"Current\nStreak"} value={1} />
-      <StatItem label={"Max\nStreak"} value={1} />
+      <StatItem label="Played" value={gameStats.totalGames} />
+      <StatItem label={"Success\nRate"} value={gameStats.successRate} />
+      <StatItem label={"Current\nStreak"} value={gameStats.currentStreak} />
+      <StatItem label={"Max\nStreak"} value={gameStats.bestStreak} />
     </HStack>
   );
 }

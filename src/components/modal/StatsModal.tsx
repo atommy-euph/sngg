@@ -31,7 +31,7 @@ export const StatsModal = React.memo(function StatsModal({
           成績
         </Modal.Header>
         <Modal.Body>
-          <StatBar />
+          <StatBar gameStats={gameStats} />
         </Modal.Body>
         <Modal.Header
           _text={{
