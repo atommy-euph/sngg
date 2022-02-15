@@ -10,13 +10,14 @@ import { StatsModal } from "./components/modal/StatsModal";
 
 import { lightBgColor, darkBgColor } from "./constants/colors";
 import { SIZE, GUESS_MAX } from "./constants/settings";
-import { solution } from "./lib/words";
 
 import { isInWordList, isWinningWord } from "./lib/words";
 import {
   loadGameStateFromLocalStorage,
   saveGameStateToLocalStorage,
 } from "./lib/localStorage";
+import { GameStats } from "./lib/localStorage";
+import { solution } from "./lib/words";
 
 function App() {
   const { colorMode } = useColorMode();
@@ -27,6 +28,14 @@ function App() {
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameWon, setIsGameWon] = useState(false);
   const [isGameLost, setIsGameLost] = useState(false);
+  const [stats, setStats] = useState({
+    winDistribution: [1, 3, 3, 4, 6, 2],
+    gamesFailed: 2,
+    currentStreak: 4,
+    bestStreak: 7,
+    totalGames: 23,
+    successRate: (21 / 23) * 100,
+  });
 
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage();
@@ -138,6 +147,7 @@ function App() {
       <StatsModal
         isOpen={isStatsModalOpen}
         onCloseStatsModal={() => setIsStatsModalOpen(false)}
+        gameStats={stats}
       />
     </Box>
   );

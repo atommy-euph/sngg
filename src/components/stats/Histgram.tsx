@@ -17,6 +17,7 @@ export function Histgram({ gameStats }: Props) {
         <VStack flexGrow={1} space={4} alignItems="space-around" w="50%">
           {gameStats.winDistribution.map((value, index) => (
             <ProgressBar
+              key={index}
               freq={value}
               sum={sum}
               max_freq={max_freq}
@@ -65,6 +66,7 @@ function ProgressBar({
       </Text>
       {[...Array(freq - 1)].map((_, i) => (
         <Circle
+          key={i}
           bgColor="gray.50"
           borderColor={color}
           borderWidth={`${borderWidth}px`}

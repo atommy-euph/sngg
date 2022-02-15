@@ -1,33 +1,22 @@
-import {
-  Modal,
-  Text,
-  Button,
-  Divider,
-  HStack,
-  useColorModeValue,
-  VStack,
-} from "native-base";
+import React from "react";
+import { Modal, Text, Button, Divider, HStack, VStack } from "native-base";
 
 import { StatBar } from "../stats/StatBar";
 import { Histgram } from "../stats/Histgram";
 
 import { GameStats } from "../../lib/localStorage";
 
-const hogeStats: GameStats = {
-  winDistribution: [1, 3, 3, 4, 6, 2],
-  gamesFailed: 2,
-  currentStreak: 4,
-  bestStreak: 7,
-  totalGames: 23,
-  successRate: (21 / 23) * 100,
-};
-
 interface Props {
   isOpen: boolean;
   onCloseStatsModal: () => void;
+  gameStats: GameStats;
 }
 
-export function StatsModal({ isOpen, onCloseStatsModal }: Props) {
+export const StatsModal = React.memo(function StatsModal({
+  isOpen,
+  onCloseStatsModal,
+  gameStats,
+}: Props) {
   return (
     <Modal isOpen={isOpen} onClose={onCloseStatsModal}>
       <Modal.Content>
@@ -55,7 +44,7 @@ export function StatsModal({ isOpen, onCloseStatsModal }: Props) {
         </Modal.Header>
         <Modal.Body>
           <VStack space={5}>
-            <Histgram gameStats={hogeStats} />
+            <Histgram gameStats={gameStats} />
             <Divider />
             <HStack justifyContent="space-around">
               <VStack alignItems="center">
@@ -69,4 +58,4 @@ export function StatsModal({ isOpen, onCloseStatsModal }: Props) {
       </Modal.Content>
     </Modal>
   );
-}
+});

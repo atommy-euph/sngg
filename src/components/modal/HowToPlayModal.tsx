@@ -1,3 +1,4 @@
+import React from "react";
 import { Modal, Text, Divider, HStack, useColorModeValue } from "native-base";
 import { CellDemo } from "../grid/Cell";
 
@@ -16,7 +17,10 @@ interface Props {
   onCloseHowToPlayModal: () => void;
 }
 
-export function HowToPlayModal({ isOpen, onCloseHowToPlayModal }: Props) {
+export const HowToPlayModal = React.memo(function HowToPlayModal({
+  isOpen,
+  onCloseHowToPlayModal,
+}: Props) {
   return (
     <Modal isOpen={isOpen} onClose={onCloseHowToPlayModal}>
       <Modal.Content
@@ -154,4 +158,4 @@ export function HowToPlayModal({ isOpen, onCloseHowToPlayModal }: Props) {
       </Modal.Content>
     </Modal>
   );
-}
+});
