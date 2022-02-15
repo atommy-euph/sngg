@@ -24,7 +24,7 @@ export const Cell = React.memo(function Cell({
     ? getColors(status)
     : { bgColor: "None", borderColor: defaultBorderColor };
   const cellSize = ["13vw", "10vw"];
-  const cellMaxSize = ["55px", "75px"];
+  const cellMaxSize = ["55px", "62px"];
   const fontSize = ["2xl", "3xl", "4xl", "4xl"];
 
   return (

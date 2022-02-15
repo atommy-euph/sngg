@@ -20,12 +20,12 @@ export const Key = React.memo(function Key({
   const keyConfig = {
     w:
       value === "enter" || value === "delete" || value === "toggle"
-        ? [70, 70, 90, 117]
-        : [28, 35, 42, 55],
+        ? [70, 70, 90]
+        : [28, 35, 42],
     h:
       value === "enter" || value === "delete" || value === "toggle"
-        ? [28, 35, 45, 55]
-        : [28, 35, 42, 55],
+        ? [28, 35, 42]
+        : [28, 35, 42],
     color: status ? getColors(status).keyColor : defaultKeyColor,
     fontSize:
       value === "enter" || value === "delete" || value === "toggle"

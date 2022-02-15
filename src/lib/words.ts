@@ -12,19 +12,20 @@ export const isInWordList = (word: string): boolean => {
   return NAMES.includes(word)
 }
 
-export const getIndexOnTheDay = ():number => {
+
+export const getWordOfTheDay = () => {
   const epochMs = new Date('February 14, 2022 00:00:00').valueOf()
   const now = Date.now()
   const msInDay = 86400000
   const index = Math.floor((now - epochMs) / msInDay) % NumberOfData
-
-  return index
-}
-
-export const getWordOfTheDay = () => {
-  const index = getIndexOnTheDay()
+  const nextday = (index + 1) * msInDay + epochMs
   console.log(NAMES[index])
-  return NAMES[index]
-}
+  return {
+      solution: NAMES[index],
+      solutionIndex:index,
+      tommorow:nextday
+    }
+  }
 
-export const solution = getWordOfTheDay()
+
+export const {solution, solutionIndex, tommorow} = getWordOfTheDay()

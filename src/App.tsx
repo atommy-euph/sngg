@@ -6,6 +6,7 @@ import { AppBar } from "./components/header/AppBar";
 import { Grid } from "./components/grid/Grid";
 import { KeyBoard } from "./components/keyboard/KeyBoard";
 import { HowToPlayModal } from "./components/modal/HowToPlayModal";
+import { StatsModal } from "./components/modal/StatsModal";
 
 import { lightBgColor, darkBgColor } from "./constants/colors";
 import { SIZE, GUESS_MAX } from "./constants/settings";
@@ -22,6 +23,7 @@ function App() {
   const alert = useAlert();
 
   const [isHowToPlayModalOpen, setIsHowToPlayModalOpen] = useState(false);
+  const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameWon, setIsGameWon] = useState(false);
   const [isGameLost, setIsGameLost] = useState(false);
@@ -51,7 +53,10 @@ function App() {
       // 統計情報・シェアボタンを表示
     }
     if (isGameLost) {
-      alert.show("目的地に到着できませんでした...");
+      alert.show("残念、途中下車...");
+      setTimeout(() => {
+        alert.show(`答え「${solution}」`);
+      }, 2500);
     }
   }, [alert, isGameWon, isGameLost]);
 
@@ -109,7 +114,10 @@ function App() {
       justifyContent="center"
     >
       <VStack flex={1} justifyContent="space-between">
-        <AppBar handleHowToPlayModal={() => setIsHowToPlayModalOpen(true)} />
+        <AppBar
+          handleInfoModal={() => setIsStatsModalOpen(true)}
+          handleHowToPlayModal={() => setIsHowToPlayModalOpen(true)}
+        />
         <VStack justifyContent="center" space={1} flexGrow={1}>
           <Spacer />
           <Grid guesses={guesses} currentGuess={currentGuess} />
@@ -126,6 +134,10 @@ function App() {
       <HowToPlayModal
         isOpen={isHowToPlayModalOpen}
         onCloseHowToPlayModal={() => setIsHowToPlayModalOpen(false)}
+      />
+      <StatsModal
+        isOpen={isStatsModalOpen}
+        onCloseStatsModal={() => setIsStatsModalOpen(false)}
       />
     </Box>
   );
