@@ -17,20 +17,26 @@ export const Key = React.memo(function Key({
   status,
   onClick,
 }: Props) {
+  const keySize = 7.9; //vw
   const keyConfig = {
     w:
       value === "enter" || value === "delete" || value === "toggle"
-        ? [70, 70, 90]
-        : [28, 35, 42],
-    h:
+        ? `${keySize * 2.1}vw`
+        : `${keySize}vw`,
+    h: `${keySize}vw`,
+    maxW:
       value === "enter" || value === "delete" || value === "toggle"
-        ? [28, 35, 42]
-        : [28, 35, 42],
+        ? "73px"
+        : "35px",
+    maxH:
+      value === "enter" || value === "delete" || value === "toggle"
+        ? "35px"
+        : "35px",
     color: status ? getColors(status).keyColor : defaultKeyColor,
     fontSize:
       value === "enter" || value === "delete" || value === "toggle"
-        ? ["xs", "sm", "md", "md"]
-        : ["md", "lg", "xl", "2xl"],
+        ? "xs"
+        : "md",
   };
 
   const handleClick: any = (event: any) => {
@@ -44,6 +50,8 @@ export const Key = React.memo(function Key({
       key={value}
       w={keyConfig.w}
       h={keyConfig.h}
+      maxW={keyConfig.maxW}
+      maxH={keyConfig.maxH}
       _hover={{ bg: keyConfig.color }}
       _focus={{ bg: keyConfig.color }}
       _pressed={{ bg: keyConfig.color }}

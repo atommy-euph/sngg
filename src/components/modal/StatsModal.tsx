@@ -1,5 +1,13 @@
 import React from "react";
-import { Modal, Button, Text, Divider, HStack, VStack } from "native-base";
+import {
+  Modal,
+  Button,
+  Text,
+  Heading,
+  Divider,
+  HStack,
+  VStack,
+} from "native-base";
 
 import { StatBar } from "../stats/StatBar";
 import { Histgram } from "../stats/Histgram";
@@ -41,39 +49,29 @@ export const StatsModal = React.memo(function StatsModal({
         <Modal.Header
           _text={{
             fontWeight: "bold",
-            textAlign: "center",
-            fontSize: [18, 24],
+            fontSize: 18,
           }}
         >
           成績
         </Modal.Header>
         <Modal.Body>
-          <StatBar gameStats={gameStats} />
-        </Modal.Body>
-        <Modal.Header
-          _text={{
-            fontWeight: "bold",
-            textAlign: "center",
-            fontSize: [18, 24],
-          }}
-        >
-          正解までの回答数
-        </Modal.Header>
-        <Modal.Body>
           <VStack space={5}>
-            <Histgram gameStats={gameStats} />
+            <StatBar gameStats={gameStats} />
             <Divider />
+            <Heading fontSize={18}>正解までの回答数</Heading>
+            <Histgram gameStats={gameStats} />
+            <Divider mt={2} />
             {(isGameWon || isGameLost) && (
               <>
                 <HStack justifyContent="space-around">
                   <VStack alignItems="center">
-                    <Text fontSize={[12, 18]}>次の問題まで</Text>
+                    <Text fontSize={12}>次の問題まで</Text>
                     <CountDown ms={tomorrow} />
                   </VStack>
                   <Button
                     onFocus={onPressShare}
                     w="40%"
-                    _text={{ fontWeight: "bold", fontSize: [20, 28] }}
+                    _text={{ fontWeight: "bold", fontSize: 20 }}
                   >
                     SHARE
                   </Button>

@@ -20,7 +20,7 @@ export const KeyBoard = React.memo(function KeyBoard({
   const [isToggled, setIsToggled] = useState(false);
 
   const charStatuses = getStatuses(guesses);
-  const keySpace = [1, 1.5, 2];
+  const keySpace = "3px";
 
   const onClick = (value: string) => {
     if (value === "delete") {

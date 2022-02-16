@@ -20,10 +20,10 @@ export function StatBar({ gameStats }: Props) {
 function StatItem({ label, value }: { label: string; value: string | number }) {
   return (
     <VStack space={-5} alignItems="center">
-      <Text fontSize={[28, 34]} bold>
+      <Text fontSize={28} bold>
         {value}
       </Text>
-      <Text fontSize={[12, 15]} lineHeight={[12, 15]} textAlign="center">
+      <Text fontSize={12} lineHeight={12} textAlign="center">
         {label}
       </Text>
     </VStack>

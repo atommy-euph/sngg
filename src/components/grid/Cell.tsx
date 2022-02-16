@@ -23,9 +23,10 @@ export const Cell = React.memo(function Cell({
   const { bgColor, borderColor } = status
     ? getColors(status)
     : { bgColor: "None", borderColor: defaultBorderColor };
-  const cellSize = ["13vw", "10vw"];
-  const cellMaxSize = ["55px", "62px"];
-  const fontSize = ["2xl", "3xl", "4xl", "4xl"];
+  const cellSize = "7vh";
+  const cellMaxSize = "55px";
+  const cellMinSize = "40px";
+  const fontSize = "2xl";
 
   return (
     <Square
@@ -33,8 +34,9 @@ export const Cell = React.memo(function Cell({
       p={3}
       borderWidth={3}
       borderColor={borderColor}
-      w={cellSize}
-      h={cellSize}
+      size={cellSize}
+      minW={cellMinSize}
+      minH={cellMinSize}
       maxW={cellMaxSize}
       maxH={cellMaxSize}
       _text={{

@@ -44,15 +44,15 @@ export const AppBar = React.memo(function AppBar({
       alignItems="center"
       px={4}
       w="100%"
-      h={[60, 100]}
+      h={60}
     >
       <HStack space={[0, 1]} alignItems="center" flexBasis="33.3%">
         <IconButton
           onFocus={onQuestionPressed}
-          icon={<QuestionOutlineIcon size={[6, 8]} />}
+          icon={<QuestionOutlineIcon size={6} />}
         />
       </HStack>
-      <Text fontSize={["24", "36"]} bold flexBasis="33.3%" textAlign="center">
+      <Text fontSize={24} bold flexBasis="33.3%" textAlign="center">
         {GAME_TITLE}
       </Text>
       <HStack
@@ -61,15 +61,11 @@ export const AppBar = React.memo(function AppBar({
         flexBasis="33.3%"
         flexDir="row-reverse"
       >
-        <IconButton onFocus={onInfoPressed} icon={<InfoIcon size={[6, 8]} />} />
+        <IconButton onFocus={onInfoPressed} icon={<InfoIcon size={6} />} />
         <IconButton
           onFocus={handleColorMode}
           icon={
-            colorMode === "dark" ? (
-              <SunIcon size={[6, 8]} />
-            ) : (
-              <MoonIcon size={[6, 8]} />
-            )
+            colorMode === "dark" ? <SunIcon size={6} /> : <MoonIcon size={6} />
           }
         />
       </HStack>
