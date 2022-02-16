@@ -14,7 +14,7 @@ export const isInWordList = (word: string): boolean => {
 
 
 export const getWordOfTheDay = () => {
-  const epochMs = new Date('February 14, 2022 00:00:00').valueOf()
+  const epochMs = new Date('February 16, 2022 00:00:00').valueOf()
   const now = Date.now()
   const msInDay = 86400000
   const index = Math.floor((now - epochMs) / msInDay) % NumberOfData
