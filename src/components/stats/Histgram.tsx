@@ -46,6 +46,7 @@ function ProgressBar({
   color?: string;
   label: string | number;
 }) {
+  const max = max_freq ? max_freq : 1;
   const width = max_freq ? (freq / max_freq) * 100 : (freq / sum) * 100; //%
   const barHeight = 4; //px
   const borderWidth = 4; //px
@@ -73,32 +74,42 @@ function ProgressBar({
       <Text position="absolute" top={-9} left={-12} bold italic>
         {label}
       </Text>
-      {[...Array(freq > 0 ? freq - 1 : 0)].map((_, i) => (
-        <>
-          {isCircleExists[i] < p ? (
-            <Circle
-              key={i}
-              bgColor="gray.50"
-              borderColor={color}
-              borderWidth={`${borderWidth}px`}
-              position="absolute"
-              left={`${circleLeft * (i + 1)}%`}
-              size={`${circleSize}px`}
-              top={`${circleTop}px`}
-            />
-          ) : (
-            <Circle
-              key={i}
-              bgColor="gray.900.alpha.1"
-              position="absolute"
-              left={`${circleLeft * (i + 1)}%`}
-              size={`${circleSize}px`}
-              top={`${circleTop}px`}
-            />
-          )}
-        </>
-      ))}
-
+      {max > 1 ? (
+        [...Array(freq > 0 ? freq - 1 : 0)].map((_, i) => (
+          <>
+            {isCircleExists[i] < p ? (
+              <Circle
+                key={i}
+                bgColor="gray.50"
+                borderColor={color}
+                borderWidth={`${borderWidth}px`}
+                position="absolute"
+                left={`${circleLeft * (i + 1)}%`}
+                size={`${circleSize}px`}
+                top={`${circleTop}px`}
+              />
+            ) : (
+              <Circle
+                key={i}
+                bgColor="gray.900.alpha.1"
+                position="absolute"
+                left={`${circleLeft * (i + 1)}%`}
+                size={`${circleSize}px`}
+                top={`${circleTop}px`}
+              />
+            )}
+          </>
+        ))
+      ) : (
+        <Circle
+          bgColor="gray.50"
+          borderColor={color}
+          borderWidth={`${borderWidth}px`}
+          left={`${circleLeft / 2}%`}
+          size={`${circleSize}px`}
+          top={`${circleTop}px`}
+        />
+      )}
       <Center
         bgColor="gray.50"
         borderColor={color}
