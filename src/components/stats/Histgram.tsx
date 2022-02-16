@@ -55,6 +55,13 @@ function ProgressBar({
   const circleTop = (-1 * (circleSize - barHeight)) / 2;
   const circleLeft = 100 / freq; //%
 
+  const p = 20 / sum;
+  let isCircleExists: number[] = [];
+  for (let i = 0; i < freq; i++) {
+    // 値が０から１までの
+    isCircleExists.push(Math.random());
+  }
+
   return (
     <Box
       position="relative"
@@ -67,16 +74,29 @@ function ProgressBar({
         {label}
       </Text>
       {[...Array(freq > 0 ? freq - 1 : 0)].map((_, i) => (
-        <Circle
-          key={i}
-          bgColor="gray.50"
-          borderColor={color}
-          borderWidth={`${borderWidth}px`}
-          position="absolute"
-          left={`${circleLeft * (i + 1)}%`}
-          size={`${circleSize}px`}
-          top={`${circleTop}px`}
-        />
+        <>
+          {isCircleExists[i] < p ? (
+            <Circle
+              key={i}
+              bgColor="gray.50"
+              borderColor={color}
+              borderWidth={`${borderWidth}px`}
+              position="absolute"
+              left={`${circleLeft * (i + 1)}%`}
+              size={`${circleSize}px`}
+              top={`${circleTop}px`}
+            />
+          ) : (
+            <Circle
+              key={i}
+              bgColor="gray.900.alpha.1"
+              position="absolute"
+              left={`${circleLeft * (i + 1)}%`}
+              size={`${circleSize}px`}
+              top={`${circleTop}px`}
+            />
+          )}
+        </>
       ))}
 
       <Center

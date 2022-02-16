@@ -27,6 +27,15 @@ interface Props {
   handleShare: () => void;
 }
 
+// const hogeStats: GameStats = {
+//   winDistribution: [1, 3, 6, 12, 2, 4],
+//   gamesFailed: 1,
+//   currentStreak: 1,
+//   bestStreak: 1,
+//   totalGames: 1,
+//   successRate: 1,
+// };
+
 export const StatsModal = React.memo(function StatsModal({
   isOpen,
   onCloseStatsModal,
