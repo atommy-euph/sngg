@@ -1,22 +1,39 @@
 import React from "react";
-import { Modal, Text, Button, Divider, HStack, VStack } from "native-base";
+import { Modal, Button, Text, Divider, HStack, VStack } from "native-base";
 
 import { StatBar } from "../stats/StatBar";
 import { Histgram } from "../stats/Histgram";
+import { CountDown } from "../stats/CountDown";
 
 import { GameStats } from "../../lib/localStorage";
+import { tomorrow } from "../../lib/words";
+import { shareStatus } from "../../lib/share";
 
 interface Props {
   isOpen: boolean;
   onCloseStatsModal: () => void;
   gameStats: GameStats;
+  guesses: string[];
+  isGameLost: boolean;
+  isGameWon: boolean;
+  handleShare: () => void;
 }
 
 export const StatsModal = React.memo(function StatsModal({
   isOpen,
   onCloseStatsModal,
   gameStats,
+  guesses,
+  isGameLost,
+  isGameWon,
+  handleShare,
 }: Props) {
+  const onPressShare: any = (event: any) => {
+    shareStatus(guesses, isGameLost);
+    handleShare();
+    event.target.blur();
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onCloseStatsModal}>
       <Modal.Content>
@@ -46,13 +63,23 @@ export const StatsModal = React.memo(function StatsModal({
           <VStack space={5}>
             <Histgram gameStats={gameStats} />
             <Divider />
-            <HStack justifyContent="space-around">
-              <VStack alignItems="center">
-                <Text fontSize={[12, 18]}>次の問題まで</Text>
-                <Text fontSize={[24, 38]}>13:14:22</Text>
-              </VStack>
-              <Button />
-            </HStack>
+            {(isGameWon || isGameLost) && (
+              <>
+                <HStack justifyContent="space-around">
+                  <VStack alignItems="center">
+                    <Text fontSize={[12, 18]}>次の問題まで</Text>
+                    <CountDown ms={tomorrow} />
+                  </VStack>
+                  <Button
+                    onFocus={onPressShare}
+                    w="40%"
+                    _text={{ fontWeight: "bold", fontSize: [20, 28] }}
+                  >
+                    SHARE
+                  </Button>
+                </HStack>
+              </>
+            )}
           </VStack>
         </Modal.Body>
       </Modal.Content>
