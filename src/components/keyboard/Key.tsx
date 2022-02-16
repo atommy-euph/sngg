@@ -68,7 +68,13 @@ export const Key = React.memo(function Key({
       onFocus={handleClick}
     >
       <Text
-        color={colorMode === "light" ? darkTextColor : lightTextColor}
+        color={
+          colorMode === "light"
+            ? status
+              ? lightTextColor
+              : darkTextColor
+            : lightTextColor
+        }
         fontSize={keyConfig.fontSize}
         bold
       >

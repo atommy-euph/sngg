@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSpring, animated } from "react-spring";
 import { Square, useColorMode } from "native-base";
 
 import { CharStatus, getColors } from "../../lib/statuses";
@@ -23,6 +24,18 @@ export const Cell = React.memo(function Cell({
   isCompleted,
 }: Props) {
   const { colorMode } = useColorMode();
+  const [styles, setStyles] = useSpring(() => ({
+    transform: "scale(1.0)",
+  }));
+  useEffect(() => {
+    if (value) {
+      setStyles({ transform: "scale(1.1)" });
+      setTimeout(() => {
+        setStyles({ transform: "scale(1.0)" });
+      }, 100);
+    }
+  }, [setStyles, value]);
+
   const { bgColor, borderColor } = status
     ? getColors(status, colorMode)
     : {
@@ -41,27 +54,29 @@ export const Cell = React.memo(function Cell({
   const fontSize = "2xl";
 
   return (
-    <Square
-      bg={bgColor}
-      p={3}
-      borderWidth={3}
-      borderColor={borderColor}
-      size={cellSize}
-      minW={cellMinSize}
-      minH={cellMinSize}
-      maxW={cellMaxSize}
-      maxH={cellMaxSize}
-      _text={{
-        color:
-          !isCompleted && colorMode === "light"
-            ? darkTextColor
-            : lightTextColor,
-        fontSize: fontSize,
-        fontWeight: "bold",
-      }}
-    >
-      {value}
-    </Square>
+    <animated.div style={styles}>
+      <Square
+        bg={bgColor}
+        p={3}
+        borderWidth={3}
+        borderColor={borderColor}
+        size={cellSize}
+        minW={cellMinSize}
+        minH={cellMinSize}
+        maxW={cellMaxSize}
+        maxH={cellMaxSize}
+        _text={{
+          color:
+            !isCompleted && colorMode === "light"
+              ? darkTextColor
+              : lightTextColor,
+          fontSize: fontSize,
+          fontWeight: "bold",
+        }}
+      >
+        {value}
+      </Square>
+    </animated.div>
   );
 });
 
