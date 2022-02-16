@@ -1,5 +1,6 @@
+import { ColorMode} from 'native-base'
 import { solution } from './words'
-import { correctColor, presentColor, absentColor, defaultBorderColor, defaultKeyColor } from '../constants/colors'
+import { correctColor, presentColor, absentColor, lightKeyColor, darkKeyColor, lightBorderColor, darkBorderColor } from '../constants/colors'
 
 export type CharStatus = "absent" | "present" | "correct"
 
@@ -64,12 +65,11 @@ export function getGuessStatuses(guess: string) : CharStatus[] {
 }
 
 
-export function getColors(status: CharStatus) : {bgColor: string, borderColor: string, keyColor: string}{
-
+export function getColors(status: CharStatus, colorMode: ColorMode) : {bgColor: string, borderColor: string, keyColor: string}{
 
   let bgColor = "None"
-  let borderColor = defaultBorderColor
-  let keyColor = defaultKeyColor
+  let borderColor = colorMode === "light" ? lightBorderColor : darkBorderColor
+  let keyColor = colorMode === "light" ? lightKeyColor : darkKeyColor
 
   if (status === "correct") {
     bgColor = correctColor

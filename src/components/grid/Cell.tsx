@@ -4,7 +4,10 @@ import { Square, useColorMode } from "native-base";
 import { CharStatus, getColors } from "../../lib/statuses";
 import {
   darkTextColor,
-  defaultBorderColor,
+  lightBorderColor,
+  darkBorderColor,
+  lightInputBorderColor,
+  darkInputBorderColor,
   lightTextColor,
 } from "../../constants/colors";
 
@@ -21,8 +24,17 @@ export const Cell = React.memo(function Cell({
 }: Props) {
   const { colorMode } = useColorMode();
   const { bgColor, borderColor } = status
-    ? getColors(status)
-    : { bgColor: "None", borderColor: defaultBorderColor };
+    ? getColors(status, colorMode)
+    : {
+        bgColor: "None",
+        borderColor: value
+          ? colorMode === "light"
+            ? lightInputBorderColor
+            : darkInputBorderColor
+          : colorMode === "light"
+          ? lightBorderColor
+          : darkBorderColor,
+      };
   const cellSize = "7vh";
   const cellMaxSize = "55px";
   const cellMinSize = "40px";

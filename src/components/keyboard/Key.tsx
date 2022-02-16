@@ -1,8 +1,13 @@
 import React, { ReactNode } from "react";
-import { Button, Text } from "native-base";
+import { Button, Text, useColorMode } from "native-base";
 
 import { CharStatus, getColors } from "../../lib/statuses";
-import { defaultKeyColor, lightTextColor } from "../../constants/colors";
+import {
+  lightKeyColor,
+  darkKeyColor,
+  lightTextColor,
+  darkTextColor,
+} from "../../constants/colors";
 
 interface Props {
   children?: ReactNode;
@@ -17,6 +22,7 @@ export const Key = React.memo(function Key({
   status,
   onClick,
 }: Props) {
+  const { colorMode } = useColorMode();
   const keySize = 7.9; //vw
   const keyConfig = {
     w:
@@ -32,7 +38,11 @@ export const Key = React.memo(function Key({
       value === "enter" || value === "delete" || value === "toggle"
         ? "35px"
         : "35px",
-    color: status ? getColors(status).keyColor : defaultKeyColor,
+    color: status
+      ? getColors(status, colorMode).keyColor
+      : colorMode === "light"
+      ? lightKeyColor
+      : darkKeyColor,
     fontSize:
       value === "enter" || value === "delete" || value === "toggle"
         ? "xs"
@@ -57,7 +67,11 @@ export const Key = React.memo(function Key({
       _pressed={{ bg: keyConfig.color }}
       onFocus={handleClick}
     >
-      <Text color={lightTextColor} fontSize={keyConfig.fontSize} bold>
+      <Text
+        color={colorMode === "light" ? darkTextColor : lightTextColor}
+        fontSize={keyConfig.fontSize}
+        bold
+      >
         {children || value}
       </Text>
     </Button>
