@@ -50,7 +50,7 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
           <Heading {...headingProps}>遊び方</Heading>
           <Text {...textProps}>
             {SIZE}文字の日本の駅・停留場の名前を{GUESS_MAX}
-            回以内に当てるゲームです。
+            回以内に当てるゲームです。1日1問、新しい問題が出題されます。
           </Text>
           <Text {...textProps}>
             回答する駅名は{SIZE}
@@ -113,7 +113,7 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
             <Text color={correctColor} fontSize={14} pr={1} bold>
               ラ
             </Text>
-            は答えに含まれているし位置も正しい。また、黒くなっている文字は答えに含まれない。
+            は答えに含まれており、位置も正しいです。また、黒くなっている文字は答えに含まれません。
           </Text>
 
           <HStack space={1}>
@@ -162,7 +162,7 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
             <Text color={presentColor} fontSize={14} pr={1} bold>
               キ
             </Text>
-            は答えに含まれているが位置は異なる。さらに2文字目の
+            は答えに含まれているが位置は異なります。さらに2文字目の
             <Text color={presentColor} fontSize={14} pr={1} bold>
               キ
             </Text>
@@ -211,16 +211,15 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
             />
           </HStack>
           <Text pt={2} pb={4} fontSize={14}>
-            同じ形のカナについて
-            <Text color={samegroupColor} fontSize={14} px={1} bold>
+            <Text color={samegroupColor} fontSize={14} pr={1} bold>
               ギ
             </Text>
-            は答えに含まれていないが。{" "}
-            <Text color={presentColor} fontSize={14} pr={1} bold>
+            は答えに含まれていませんが。
+            <Text color={presentColor} fontSize={14} px={1} bold>
               キ
             </Text>
-            は答えに含まれている。 このように「ヤ, ャ」、「ハ, バ, パ」,「ツ,
-            ヅ, ッ」など 同じ形を持つカナが答えに含まれる場合、
+            は答えに含まれています。 このように「ヤ, ャ」「ハ, バ, パ」「ツ, ヅ,
+            ッ」など、同じ形を持つカナが答えに含まれる場合、位置によらず
             <Text color={samegroupColor}>紫</Text>
             で表示されます。
           </Text>
@@ -228,13 +227,12 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
           <Divider my={3} />
 
           <Heading {...headingProps}>ルール</Heading>
+
           <Text {...textProps}>
-            ・「駅」、「停留場」は文字数に含みません。5文字の場合「シブヤエキ」は解答できません。
+            ・「駅」「停留場」は文字数に含みません。5文字の場合「シブヤエキ」は解答できません。
           </Text>
           <Text {...textProps}>
-            ・アルファベットや数字など、表記と読み方が異なる場合は表記を優先します。ただし、もちろん
-            {SIZE}
-            文字以外の駅名は解答できません。例:「YRPノビ」「ニシ4チョウメ」「ジヤトコマエ」
+            ・アルファベットや数字など、表記と読み方が異なる場合は表記を優先します。例:「JRアワジ」
           </Text>
           <Text {...textProps}>
             ・駅名に含まれる中黒、括弧は除きます。例:「栂・美木多」→「トガミキタ」
