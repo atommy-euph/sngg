@@ -23,6 +23,8 @@ export const generateEmojiGrid = (guesses: string[]) => {
               return '🟩'
             case 'present':
               return '🟨'
+            case 'samegroup':
+              return '🟪'
             default:
               return '⬛'
           }
