@@ -74,7 +74,7 @@ export const StatsModal = React.memo(function StatsModal({
               <>
                 <HStack justifyContent="space-around">
                   <VStack alignItems="center">
-                    <Text fontSize={12}>次の問題まで</Text>
+                    <Text fontSize={12}>NEXT STATION</Text>
                     <CountDown ms={tomorrow} />
                   </VStack>
                   <Button

@@ -6,27 +6,53 @@ import { group } from 'console'
 
 export type CharStatus = "absent" | "samegroup" |"present" | "correct"
 
-export function getStatuses(guesses: string[]) :{ [key: string]: CharStatus }{
-  const charObj : { [key: string]: CharStatus } = {}
+// export function getStatuses(guesses: string[]) :{ [key: string]: CharStatus }{
+//   const charObj : { [key: string]: CharStatus } = {}
 
-  guesses.forEach((word) => {
-    word.split("").forEach((letter, i) => {
-      const splitSolution = solution.split("")
+//   guesses.forEach((word) => {
+//     word.split("").forEach((letter, i) => {
+//       const splitSolution = solution.split("")
 
-      if (!splitSolution.includes(letter)){
-        return (charObj[letter] = "absent")
+//       if (!splitSolution.includes(letter)){
+//         return (charObj[letter] = "absent")
+//       }
+//       if (letter === splitSolution[i]) {
+//         return (charObj[letter] = 'correct')
+//       }
+//       if (charObj[letter] !== 'correct') {
+//         return (charObj[letter] = 'present')
+//       }
+//      }
+//   )})
+//   return charObj
+// }
+export function getStatuses(guesses: string[]) : {[key:string]: CharStatus} {
+  const charObj :{[key: string]: CharStatus } = {};
+
+  guesses.forEach((guess) => {
+    const status = getGuessStatuses(guess);
+    guess.split("").forEach((letter, i) => {
+      const sameGroup = groups.find((group) => group.includes(letter))
+      if (!charObj[letter]) {
+        charObj[letter] = status[i];
+        if (charObj[letter] === "absent") {
+          sameGroup?.forEach((value) => {
+            charObj[value] = "absent"
+          })
+        }
+      } else {
+        if (charObj[letter] === "correct" || charObj[letter] === "absent" ||  charObj[letter] === "samegroup") {
+          return
+        }       
+        if (status[i] === "correct") {
+          charObj[letter] = "correct";
+          return;
+        }
       }
-      if (letter === splitSolution[i]) {
-        return (charObj[letter] = 'correct')
-      }
-      if (charObj[letter] !== 'correct') {
-        return (charObj[letter] = 'present')
-      }
-     }
-  )})
+    });
+  });
   return charObj
 }
-
 
 export function getGuessStatuses(guess: string) : CharStatus[]{
   let s = solution.split("")
@@ -87,7 +113,7 @@ export function getColors(status: CharStatus, colorMode: ColorMode) : {bgColor: 
   } else if  (status === "samegroup"){
     bgColor = samegroupColor
     borderColor = samegroupColor
-    keyColor = samegroupColor
+    keyColor = absentColor
   }else {
     bgColor = absentColor
     borderColor = absentColor
