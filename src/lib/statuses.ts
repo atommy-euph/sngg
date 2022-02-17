@@ -2,30 +2,10 @@ import { ColorMode} from 'native-base'
 import { solution } from './words'
 import { groups } from '../constants/groups'
 import { correctColor, presentColor,samegroupColor, absentColor, lightKeyColor, darkKeyColor, lightBorderColor, darkBorderColor } from '../constants/colors'
-import { group } from 'console'
 
 export type CharStatus = "absent" | "samegroup" |"present" | "correct"
 
-// export function getStatuses(guesses: string[]) :{ [key: string]: CharStatus }{
-//   const charObj : { [key: string]: CharStatus } = {}
 
-//   guesses.forEach((word) => {
-//     word.split("").forEach((letter, i) => {
-//       const splitSolution = solution.split("")
-
-//       if (!splitSolution.includes(letter)){
-//         return (charObj[letter] = "absent")
-//       }
-//       if (letter === splitSolution[i]) {
-//         return (charObj[letter] = 'correct')
-//       }
-//       if (charObj[letter] !== 'correct') {
-//         return (charObj[letter] = 'present')
-//       }
-//      }
-//   )})
-//   return charObj
-// }
 export function getStatuses(guesses: string[]) : {[key:string]: CharStatus} {
   const charObj :{[key: string]: CharStatus } = {};
 
