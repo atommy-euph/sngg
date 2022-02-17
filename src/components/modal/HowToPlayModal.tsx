@@ -240,7 +240,7 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
           <Text>
             ・駅名及びその読みは、
             <Link
-              href="https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E9%89%84%E9%81%93%E9%A7%85%E4%B8%80%E8%A6%A7_%E3%81%82"
+              href="https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E9%89%84%E9%81%93%E9%A7%85%E4%B8%80%E8%A6%A7"
               isExternal
             >
               Wikipedia「日本の鉄道駅一覧」
