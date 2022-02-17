@@ -85,10 +85,10 @@ function App() {
       alert.error(`回答は${SIZE}文字にしてください`);
       return;
     }
-    // if (!isInWordList(currentGuess) && !isGameLost) {
-    //   alert.error("駅名リストにありません");
-    //   return;
-    // }
+    if (!isInWordList(currentGuess) && !isGameLost) {
+      alert.error("駅名リストにありません");
+      return;
+    }
     const winningWord = isWinningWord(currentGuess);
 
     if (
