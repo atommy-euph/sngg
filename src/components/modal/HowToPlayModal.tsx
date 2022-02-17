@@ -13,6 +13,7 @@ import { CellDemo } from "../grid/Cell";
 import { SIZE, GUESS_MAX } from "../../constants/settings";
 import {
   correctColor,
+  samegroupColor,
   presentColor,
   absentColor,
   lightTextColor,
@@ -60,7 +61,11 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
           </Text>
           <Divider my={3} />
           <Text fontSize={14} mb={3} bold>
-            5文字の例
+            5文字の例 ( 答「
+            <Text fontSize={14} mb={3} color={correctColor} bold>
+              アキハバラ
+            </Text>
+            」)
           </Text>
           <HStack space={1}>
             <CellDemo
@@ -69,7 +74,31 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
               bgColor={absentColor}
               fontSize={22}
               color={lightTextColor}
-              value="ド"
+              value="J"
+            />
+            <CellDemo
+              cellSize={9}
+              borderColor={absentColor}
+              bgColor={absentColor}
+              fontSize={22}
+              color={lightTextColor}
+              value="R"
+            />
+            <CellDemo
+              cellSize={9}
+              borderColor={absentColor}
+              bgColor={absentColor}
+              fontSize={22}
+              color={lightTextColor}
+              value="オ"
+            />
+            <CellDemo
+              cellSize={9}
+              borderColor={absentColor}
+              bgColor={absentColor}
+              fontSize={22}
+              color={lightTextColor}
+              value="グ"
             />
             <CellDemo
               cellSize={9}
@@ -77,39 +106,16 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
               bgColor={correctColor}
               fontSize={22}
               color={lightTextColor}
-              value="ウ"
-            />
-            <CellDemo
-              cellSize={9}
-              borderColor={absentColor}
-              bgColor={absentColor}
-              fontSize={22}
-              color={lightTextColor}
-              value="ゴ"
-            />
-            <CellDemo
-              cellSize={9}
-              borderColor={absentColor}
-              bgColor={absentColor}
-              fontSize={22}
-              color={lightTextColor}
-              value="ヤ"
-            />
-            <CellDemo
-              cellSize={9}
-              borderColor={absentColor}
-              bgColor={absentColor}
-              fontSize={22}
-              color={lightTextColor}
-              value="マ"
+              value="ラ"
             />
           </HStack>
           <Text pt={2} pb={4} fontSize={14}>
-            <Text fontSize={14} pr={1} bold>
-              ウ
+            <Text color={correctColor} fontSize={14} pr={1} bold>
+              ラ
             </Text>
-            は答えに含まれているし位置も正しい。
+            は答えに含まれているし位置も正しい。また、黒くなっている文字は答えに含まれない。
           </Text>
+
           <HStack space={1}>
             <CellDemo
               cellSize={9}
@@ -133,43 +139,95 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
               bgColor={absentColor}
               fontSize={22}
               color={lightTextColor}
-              value="チ"
+              value="ト"
             />
             <CellDemo
               cellSize={9}
-              borderColor={correctColor}
-              bgColor={correctColor}
+              borderColor={absentColor}
+              bgColor={absentColor}
               fontSize={22}
               color={lightTextColor}
-              value="ョ"
+              value="キ"
             />
             <CellDemo
               cellSize={9}
-              borderColor={correctColor}
-              bgColor={correctColor}
+              borderColor={absentColor}
+              bgColor={absentColor}
               fontSize={22}
               color={lightTextColor}
-              value="ウ"
+              value="ワ"
             />
           </HStack>
           <Text pt={2} pb={4} fontSize={14}>
-            <Text fontSize={14} pr={1} bold>
+            <Text color={presentColor} fontSize={14} pr={1} bold>
               キ
             </Text>
-            は答えに含まれているが位置は異なる。
-          </Text>
-          <Text fontSize={14}>黒くなっている文字は答えに含まれません。</Text>
-          <Text fontSize={14}>
-            この場合、目的地は「
-            <Text fontSize={14} color={correctColor} px={1} bold>
-              トウキョウ
+            は答えに含まれているが位置は異なる。さらに2文字目の
+            <Text color={presentColor} fontSize={14} pr={1} bold>
+              キ
             </Text>
-            」と推測できます！
+            がグレーであることからは2文字以上含まれないとわかる。
+          </Text>
+          <HStack space={1}>
+            <CellDemo
+              cellSize={9}
+              borderColor={absentColor}
+              bgColor={absentColor}
+              fontSize={22}
+              color={lightTextColor}
+              value="ヤ"
+            />
+            <CellDemo
+              cellSize={9}
+              borderColor={presentColor}
+              bgColor={presentColor}
+              fontSize={22}
+              color={lightTextColor}
+              value="ハ"
+            />
+            <CellDemo
+              cellSize={9}
+              borderColor={samegroupColor}
+              bgColor={samegroupColor}
+              fontSize={22}
+              color={lightTextColor}
+              value="ギ"
+            />
+            <CellDemo
+              cellSize={9}
+              borderColor={correctColor}
+              bgColor={correctColor}
+              fontSize={22}
+              color={lightTextColor}
+              value="バ"
+            />
+            <CellDemo
+              cellSize={9}
+              borderColor={absentColor}
+              bgColor={absentColor}
+              fontSize={22}
+              color={lightTextColor}
+              value="シ"
+            />
+          </HStack>
+          <Text pt={2} pb={4} fontSize={14}>
+            同じ形のカナについて
+            <Text color={samegroupColor} fontSize={14} px={1} bold>
+              ギ
+            </Text>
+            は答えに含まれていないが。{" "}
+            <Text color={presentColor} fontSize={14} pr={1} bold>
+              キ
+            </Text>
+            は答えに含まれている。 このように「ヤ, ャ」、「ハ, バ, パ」,「ツ,
+            ヅ, ッ」など 同じ形を持つカナが答えに含まれる場合、
+            <Text color={samegroupColor}>紫</Text>
+            で表示されます。
           </Text>
 
           <Divider my={3} />
-          <Heading {...headingProps}>ルール</Heading>
 
+          <Heading {...headingProps}>ルール</Heading>
           <Text {...textProps}>
             ・「駅」、「停留場」は文字数に含みません。5文字の場合「シブヤエキ」は解答できません。
           </Text>
