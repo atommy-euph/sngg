@@ -3,14 +3,14 @@ import { HStack, Center } from "native-base";
 
 import { Cell } from "./Cell";
 
-import { getGuessStatuses_new } from "../../lib/statuses";
+import { getGuessStatuses } from "../../lib/statuses";
 
 interface Props {
   guess: string;
 }
 
 export const CompletedRow = React.memo(function CompletedRow({ guess }: Props) {
-  const statues = getGuessStatuses_new(guess);
+  const statues = getGuessStatuses(guess);
 
   return (
     <Center>
