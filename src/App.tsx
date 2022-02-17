@@ -25,11 +25,11 @@ function App() {
 
   const [isHowToPlayModalOpen, setIsHowToPlayModalOpen] = useState(false);
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
-  const [currentGuess, setCurrentGuess] = useState("");
   const [isGameWon, setIsGameWon] = useState(false);
   const [isGameLost, setIsGameLost] = useState(false);
   const [stats, setStats] = useState(() => loadStats());
 
+  const [currentGuess, setCurrentGuess] = useState("");
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage();
     if (loaded?.solution !== solution) {

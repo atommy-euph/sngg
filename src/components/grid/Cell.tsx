@@ -29,10 +29,10 @@ export const Cell = React.memo(function Cell({
   }));
   useEffect(() => {
     if (value) {
-      setStyles({ transform: "scale(1.1)" });
+      setStyles({ transform: "scale(1.3)" });
       setTimeout(() => {
         setStyles({ transform: "scale(1.0)" });
-      }, 100);
+      }, 50);
     }
   }, [setStyles, value]);
 

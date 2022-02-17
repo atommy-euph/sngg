@@ -16,20 +16,21 @@ export const darkBorderColor = "gray.700"
 export const lightInputBorderColor = "gray.400"
 export const darkInputBorderColor = "gray.500"
 
-export const correctColor = "lime.600"
-export const presentColor = "yellow.600"
-export const absentColor = "gray.600"
+export const correctColor = "green.500"
+export const presentColor = "amber.500"
+export const absentColor = "gray.500"
+export const samegroupColor = "fuchsia.500"
 
 
 export const barColors = [
   "orange.500",
-  "purple.600",
-  "green.600",
-  "emerald.500",
-  "lime.500",
+  "fuchsia.500",
+  "green.500",
   "yellow.500",
-  "light.400",
-  "amber.600",
   "lightBlue.600",
+  "lime.500",
+  "light.500",
+  "amber.600",
+  "emerald.500",
 
 ]
