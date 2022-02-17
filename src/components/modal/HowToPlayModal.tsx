@@ -166,7 +166,7 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
             <Text color={presentColor} fontSize={14} pr={1} bold>
               キ
             </Text>
-            がグレーであることからは2文字以上含まれないとわかる。
+            がグレーであることからは2文字以上含まれないとわかります。
           </Text>
           <HStack space={1}>
             <CellDemo
