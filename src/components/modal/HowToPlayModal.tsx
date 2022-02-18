@@ -163,7 +163,7 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
               キ
             </Text>
             は答えに含まれていますが位置は異なります。さらに2文字目の
-            <Text color={presentColor} fontSize={14} pr={1} bold>
+            <Text color={presentColor} fontSize={14} px={1} bold>
               キ
             </Text>
             がグレーであることからは2文字以上含まれないとわかります。
