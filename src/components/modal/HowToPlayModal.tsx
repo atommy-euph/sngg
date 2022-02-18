@@ -219,8 +219,11 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
               キ
             </Text>
             は答えに含まれています。 このように「ヤ, ャ」「ハ, バ, パ」「ツ, ヅ,
-            ッ」など、同じ形を持つカナが答えに含まれる場合、位置によらず
-            <Text color={samegroupColor}>紫</Text>
+            ッ」など、同じ形を持つカナが答えに含まれる場合、
+            <Text bold>位置によらず</Text>
+            <Text color={samegroupColor} bold>
+              紫
+            </Text>
             で表示されます。
           </Text>
 

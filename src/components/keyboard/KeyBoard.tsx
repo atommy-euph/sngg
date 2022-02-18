@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Center, HStack, Spacer, VStack } from "native-base";
+import { Center, HStack, Square, VStack } from "native-base";
 import { getStatuses } from "../../lib/statuses";
 
 import { Key } from "./Key";
@@ -142,13 +142,18 @@ export const KeyBoard = React.memo(function KeyBoard({
             </VStack>
             <VStack space={keySpace}>
               <Key value="ダ" onClick={onClick} status={charStatuses["ダ"]} />
-              <Key value="ヂ" onClick={onClick} status={charStatuses["ヂ"]} />
-              <Key value="ヅ" onClick={onClick} status={charStatuses["ヅ"]} />
+              <Key value="ヂ" onClick={onClick} status={charStatuses["ジ"]} />
+              <Key value="ヅ" onClick={onClick} status={charStatuses["ズ"]} />
               <Key value="デ" onClick={onClick} status={charStatuses["デ"]} />
               <Key value="ド" onClick={onClick} status={charStatuses["ド"]} />
             </VStack>
             <VStack justifyContent="space-between" space={keySpace}>
-              <Spacer maxH={[28, 35, 42, 55]} />
+              <Square
+                w={`${7.9}vw`}
+                h={`${7.9}vw`}
+                maxW={"35px"}
+                maxH={"35px"}
+              />
               <Key value="ッ" onClick={onClick} status={charStatuses["ッ"]} />
               <Key value="ー" onClick={onClick} status={charStatuses["ー"]} />
             </VStack>
