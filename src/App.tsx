@@ -18,6 +18,7 @@ import {
 } from "./lib/localStorage";
 import { solution } from "./lib/words";
 import { loadStats, addGameStatsForCompletedGame } from "./lib/stats";
+import { getCandidatesCount } from "./lib/statuses";
 
 function App() {
   const { colorMode } = useColorMode();
@@ -47,7 +48,9 @@ function App() {
 
   useEffect(() => {
     saveGameStateToLocalStorage({ guesses, solution });
-  }, [guesses]);
+    if (guesses.length > 0)
+      alert.info(`残り候補: ${getCandidatesCount(guesses)}駅`);
+  }, [alert, guesses]);
 
   useEffect(() => {
     if (isGameWon) {
