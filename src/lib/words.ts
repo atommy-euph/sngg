@@ -19,9 +19,9 @@ export const getWordOfTheDay = () => {
   const msInDay = 86400000
   const index = Math.floor((now - epochMs) / msInDay) % NumberOfData
   const nextday = (index + 1) * msInDay + epochMs - now
-  console.log(NAMES[index])
+  console.log("アキハバラ")
   return {
-      solution: NAMES[index],
+      solution: "アキハバラ",
       solutionIndex: index,
       tomorrow: nextday
     }
