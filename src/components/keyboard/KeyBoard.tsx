@@ -142,8 +142,8 @@ export const KeyBoard = React.memo(function KeyBoard({
             </VStack>
             <VStack space={keySpace}>
               <Key value="ダ" onClick={onClick} status={charStatuses["ダ"]} />
-              <Key value="ヂ" onClick={onClick} status={charStatuses["ジ"]} />
-              <Key value="ヅ" onClick={onClick} status={charStatuses["ズ"]} />
+              <Key value="ヂ" onClick={onClick} status={charStatuses["ヂ"]} />
+              <Key value="ヅ" onClick={onClick} status={charStatuses["ヅ"]} />
               <Key value="デ" onClick={onClick} status={charStatuses["デ"]} />
               <Key value="ド" onClick={onClick} status={charStatuses["ド"]} />
             </VStack>
