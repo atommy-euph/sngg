@@ -89,13 +89,14 @@ export function getStatuses(guesses: string[]) : {[key:string]: CharStatus} {
           })
         }
       } else {
-        if (charObj[letter] === "correct" || charObj[letter] === "absent" ||  charObj[letter] === "samegroup") {
-          return
-        }       
         if (status[i] === "correct") {
           charObj[letter] = "correct";
           return;
         }
+        if (charObj[letter] === "correct" || charObj[letter] === "absent" ||  charObj[letter] === "samegroup") {
+          return
+        }       
+       
       }
     });
   });
