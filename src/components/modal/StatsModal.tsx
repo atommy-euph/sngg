@@ -7,6 +7,7 @@ import {
   Divider,
   HStack,
   VStack,
+  Link,
 } from "native-base";
 
 import { StatBar } from "../stats/StatBar";
@@ -14,8 +15,11 @@ import { Histgram } from "../stats/Histgram";
 import { CountDown } from "../stats/CountDown";
 
 import { GameStats } from "../../lib/localStorage";
-import { tomorrow } from "../../lib/words";
+import { tomorrow, solution } from "../../lib/words";
 import { shareStatus } from "../../lib/share";
+
+import { correctColor } from "../../constants/colors";
+import { urls } from "../../constants/urls";
 
 interface Props {
   isOpen: boolean;
@@ -51,6 +55,8 @@ export const StatsModal = React.memo(function StatsModal({
     event.target.blur();
   };
 
+  console.log(urls.JRアワジ);
+
   return (
     <Modal isOpen={isOpen} onClose={onCloseStatsModal}>
       <Modal.Content>
@@ -72,6 +78,30 @@ export const StatsModal = React.memo(function StatsModal({
             <Divider mt={2} />
             {(isGameWon || isGameLost) && (
               <>
+                <Heading fontSize={14} mb={1} textAlign="center">
+                  今日の目的地
+                </Heading>
+                <Heading
+                  fontSize={18}
+                  mb={2}
+                  textAlign="center"
+                  color={correctColor}
+                >
+                  {solution}
+                </Heading>
+                <HStack justifyContent="center" space={3} flexWrap="wrap">
+                  {urls[solution].map((value) => (
+                    <Link
+                      href={value["url"]}
+                      isExternal
+                      _text={{ color: "blue.400" }}
+                    >
+                      {value["title"]}
+                    </Link>
+                  ))}
+                </HStack>
+                <Divider my={4} />
+
                 <HStack justifyContent="space-around">
                   <VStack alignItems="center">
                     <Text fontSize={12}>NEXT STATION</Text>
