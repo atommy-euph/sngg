@@ -62,7 +62,6 @@ function App() {
     if (isGameLost) {
       alert.show("残念、途中下車...");
       setTimeout(() => {
-        alert.show(`答え「${solution}」`);
         setIsStatsModalOpen(true);
       }, 2500);
     }
