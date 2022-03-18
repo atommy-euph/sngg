@@ -18,6 +18,16 @@ interface Props {
   isCompleted?: boolean;
 }
 
+export const CellTest = React.memo(function Cell() {
+  return (
+    <>
+      <div className="h-24">
+        <p>Cell Testだよ</p>
+      </div>
+    </>
+  );
+});
+
 export const Cell = React.memo(function Cell({
   value,
   status,

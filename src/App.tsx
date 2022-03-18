@@ -7,6 +7,7 @@ import { Grid } from "./components/grid/Grid";
 import { KeyBoard } from "./components/keyboard/KeyBoard";
 import { HowToPlayModal } from "./components/modal/HowToPlayModal";
 import { StatsModal } from "./components/modal/StatsModal";
+import { CellTest } from "./components/grid/Cell";
 
 import { lightBgColor, darkBgColor } from "./constants/colors";
 import { SIZE, GUESS_MAX } from "./constants/settings";
@@ -123,6 +124,7 @@ function App() {
       minHeight="100vh"
       justifyContent="center"
     >
+      <CellTest />
       <VStack flex={1} justifyContent="space-between">
         <AppBar
           handleInfoModal={() => setIsStatsModalOpen(true)}
