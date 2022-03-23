@@ -5,6 +5,7 @@ import { NativeBaseProvider, extendTheme } from "native-base";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import reportWebVitals from "./reportWebVitals";
+import "./index.css";
 
 const theme = extendTheme({
   config: {

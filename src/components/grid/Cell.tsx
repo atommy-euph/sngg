@@ -18,16 +18,6 @@ interface Props {
   isCompleted?: boolean;
 }
 
-export const CellTest = React.memo(function Cell() {
-  return (
-    <>
-      <div className="h-24">
-        <p>Cell Testだよ</p>
-      </div>
-    </>
-  );
-});
-
 export const Cell = React.memo(function Cell({
   value,
   status,
@@ -65,27 +55,18 @@ export const Cell = React.memo(function Cell({
 
   return (
     <animated.div style={styles}>
-      <Square
-        bg={bgColor}
-        p={3}
-        borderWidth={3}
-        borderColor={borderColor}
-        size={cellSize}
-        minW={cellMinSize}
-        minH={cellMinSize}
-        maxW={cellMaxSize}
-        maxH={cellMaxSize}
-        _text={{
-          color:
-            !isCompleted && colorMode === "light"
-              ? darkTextColor
-              : lightTextColor,
-          fontSize: fontSize,
-          fontWeight: "bold",
-        }}
+      <div
+        className={`flex justify-center items-center border-2 w-14 h-14 ${bgColor} ${borderColor}`}
+        // size={cellSize}
+        // minW={cellMinSize}
+        // minH={cellMinSize}
+        // maxW={cellMaxSize}
+        // maxH={cellMaxSize}
       >
-        {value}
-      </Square>
+        <p className="font-bold text-3xl pb-1 text-darkTextColor dark:text-lightTextColor">
+          {value}
+        </p>
+      </div>
     </animated.div>
   );
 });
