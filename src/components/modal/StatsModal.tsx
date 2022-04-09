@@ -90,22 +90,22 @@ export const StatsModal = React.memo(function StatsModal({
                 <Box bgColor="white" mb={4}>
                   <Square
                     w="100%"
-                    h="16px"
-                    mb={1}
+                    h="12px"
+                    mb={2}
                     bgColor={samegroupColor}
                   ></Square>
                   <VStack>
                     <Circle
                       position="absolute"
-                      top="8px"
+                      top="7px"
                       left="9%"
-                      w="42px"
-                      h="42px"
+                      w="41px"
+                      h="41px"
                       bgColor={samegroupColor}
                     >
                       <Circle
-                        w="35px"
-                        h="35px"
+                        w="34px"
+                        h="34px"
                         bgColor="white"
                         _text={{
                           fontWeight: "bold",
@@ -120,6 +120,7 @@ export const StatsModal = React.memo(function StatsModal({
                       textAlign="center"
                       color="black"
                       letterSpacing={1}
+                      mb={-1}
                     >
                       {solution}
                     </Heading>
@@ -141,6 +142,7 @@ export const StatsModal = React.memo(function StatsModal({
                         textAlign="left"
                         letterSpacing={0.5}
                         color="black"
+                        mb={-0.5}
                       >
                         {solution_yesterday}
                       </Heading>
@@ -190,6 +192,7 @@ export const StatsModal = React.memo(function StatsModal({
                         textAlign="right"
                         letterSpacing={0.5}
                         color="black"
+                        mb={-0.5}
                       >
                         {"？？？？？"}
                       </Heading>
@@ -204,7 +207,12 @@ export const StatsModal = React.memo(function StatsModal({
                       </Heading>
                     </VStack>
                   </HStack>
-                  <Square w="100%" h="16px" bgColor={samegroupColor}></Square>
+                  <Square
+                    w="100%"
+                    h="14px"
+                    mt={1}
+                    bgColor={samegroupColor}
+                  ></Square>
                 </Box>
                 <HStack justifyContent="center" space={3} flexWrap="wrap">
                   {urls[solution].map((value) => (

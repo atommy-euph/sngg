@@ -22,7 +22,7 @@ export function CountDown({ ms }: Props) {
     .toString()
     .padStart(2, "0");
   return (
-    <Text fontSize={20}>
+    <Text fontWeight="bold" fontSize={22}>
       {h}:{m}:{s}
     </Text>
   );
