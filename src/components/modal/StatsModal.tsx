@@ -8,8 +8,11 @@ import {
   HStack,
   VStack,
   Center,
+  Square,
+  Circle,
   Link,
   Image,
+  Box,
 } from "native-base";
 
 import { StatBar } from "../stats/StatBar";
@@ -17,11 +20,17 @@ import { Histgram } from "../stats/Histgram";
 import { CountDown } from "../stats/CountDown";
 
 import { GameStats } from "../../lib/localStorage";
-import { tomorrow, solution } from "../../lib/words";
+import {
+  tomorrow,
+  solution,
+  solution_yesterday,
+  solutionIndex,
+} from "../../lib/words";
 import { shareStatus } from "../../lib/share";
+import { romanize } from "../../lib/kanaToRoman";
 
-import { correctColor } from "../../constants/colors";
 import { urls } from "../../constants/urls";
+import { samegroupColor } from "../../constants/colors";
 
 import BMC_BUTTON from "../../img/bmc-button.png";
 
@@ -75,24 +84,128 @@ export const StatsModal = React.memo(function StatsModal({
         </Modal.Header>
         <Modal.Body>
           <VStack space={5}>
-            <StatBar gameStats={gameStats} />
-            <Divider />
-            <Heading fontSize={18}>正解までの回答数</Heading>
-            <Histgram gameStats={gameStats} />
-            <Divider mt={2} />
             {(isGameWon || isGameLost) && (
               <>
-                <Heading fontSize={14} mb={1} textAlign="center">
-                  今日の目的地
-                </Heading>
-                <Heading
-                  fontSize={18}
-                  mb={2}
-                  textAlign="center"
-                  color={correctColor}
-                >
-                  {solution}
-                </Heading>
+                <Divider mt={2} />
+                <Box bgColor="white" mb={4}>
+                  <Square
+                    w="100%"
+                    h="16px"
+                    mb={1}
+                    bgColor={samegroupColor}
+                  ></Square>
+                  <VStack>
+                    <Circle
+                      position="absolute"
+                      top="10px"
+                      left="10%"
+                      w="42px"
+                      h="42px"
+                      bgColor={samegroupColor}
+                    >
+                      <Circle
+                        w="35px"
+                        h="35px"
+                        bgColor="white"
+                        _text={{
+                          fontWeight: "bold",
+                          fontSize: 22,
+                        }}
+                      >
+                        {solutionIndex}
+                      </Circle>
+                    </Circle>
+                    <Heading
+                      fontSize={26}
+                      textAlign="center"
+                      color="black"
+                      letterSpacing={1}
+                    >
+                      {solution}
+                    </Heading>
+                    <Heading
+                      fontSize={18}
+                      mb={3}
+                      color="black"
+                      textAlign="center"
+                      letterSpacing={0.5}
+                    >
+                      {romanize(solution)}
+                    </Heading>
+                  </VStack>
+
+                  <HStack justifyContent="space-between" px={1}>
+                    <VStack opacity={0.5}>
+                      <Heading
+                        fontSize={18}
+                        textAlign="left"
+                        letterSpacing={0.5}
+                        color="black"
+                      >
+                        {solution_yesterday}
+                      </Heading>
+                      <Heading
+                        fontSize={12}
+                        textAlign="left"
+                        ml={0.5}
+                        letterSpacing={0.5}
+                        color="black"
+                      >
+                        {romanize(solution_yesterday)}
+                      </Heading>
+                    </VStack>
+                    <VStack>
+                      <Circle
+                        position="absolute"
+                        right={0}
+                        top={-33}
+                        w="30px"
+                        h="30px"
+                        bgColor={samegroupColor}
+                      >
+                        <Circle
+                          w="24px"
+                          h="24px"
+                          bgColor="white"
+                          _text={{
+                            fontWeight: "bold",
+                            fontSize: 16,
+                          }}
+                        >
+                          {solutionIndex + 1}
+                        </Circle>
+                      </Circle>
+                      <Text
+                        position="absolute"
+                        right={8}
+                        top={-34}
+                        fontWeight="bold"
+                        fontSize={25}
+                        color="black"
+                      >
+                        →
+                      </Text>
+                      <Heading
+                        fontSize={18}
+                        textAlign="right"
+                        letterSpacing={0.5}
+                        color="black"
+                      >
+                        {"？？？？？"}
+                      </Heading>
+                      <Heading
+                        fontSize={12}
+                        textAlign="right"
+                        letterSpacing={0.5}
+                        color="black"
+                        mr={0.5}
+                      >
+                        {"Next Station"}
+                      </Heading>
+                    </VStack>
+                  </HStack>
+                  <Square w="100%" h="16px" bgColor={samegroupColor}></Square>
+                </Box>
                 <HStack justifyContent="center" space={3} flexWrap="wrap">
                   {urls[solution].map((value) => (
                     <Link
@@ -104,8 +217,18 @@ export const StatsModal = React.memo(function StatsModal({
                     </Link>
                   ))}
                 </HStack>
+              </>
+            )}
+            <Divider />
 
-                <Divider my={4} />
+            <StatBar gameStats={gameStats} />
+            <Divider />
+            <Heading fontSize={18}>正解までの回答数</Heading>
+            <Histgram gameStats={gameStats} />
+
+            {(isGameWon || isGameLost) && (
+              <>
+                <Divider mt={2} mb={4} />
 
                 <HStack justifyContent="space-around">
                   <VStack alignItems="center">
@@ -120,9 +243,9 @@ export const StatsModal = React.memo(function StatsModal({
                     SHARE
                   </Button>
                 </HStack>
-                <Divider mt={4} mb={2} />
               </>
             )}
+            <Divider mb={2} />
             <Center mb={4}>
               <Link href="https://buymeacoffee.com/atommy" isExternal>
                 <Image
