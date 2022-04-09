@@ -268,11 +268,11 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
           <Text color="gray.400" textAlign="center">
             Contact:{" "}
             <Link
-              href="mailto:mt.rich.new@gmail.com"
+              href="https://atommy.me"
               isExternal
               _text={{ color: "gray.400" }}
             >
-              mt.rich.new@gmail.com
+              atommy.me
             </Link>
             .
           </Text>
