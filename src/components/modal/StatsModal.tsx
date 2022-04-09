@@ -7,7 +7,9 @@ import {
   Divider,
   HStack,
   VStack,
+  Center,
   Link,
+  Image,
 } from "native-base";
 
 import { StatBar } from "../stats/StatBar";
@@ -20,6 +22,8 @@ import { shareStatus } from "../../lib/share";
 
 import { correctColor } from "../../constants/colors";
 import { urls } from "../../constants/urls";
+
+import BMC_BUTTON from "../../img/bmc-button.png";
 
 interface Props {
   isOpen: boolean;
@@ -100,6 +104,7 @@ export const StatsModal = React.memo(function StatsModal({
                     </Link>
                   ))}
                 </HStack>
+
                 <Divider my={4} />
 
                 <HStack justifyContent="space-around">
@@ -115,8 +120,19 @@ export const StatsModal = React.memo(function StatsModal({
                     SHARE
                   </Button>
                 </HStack>
+                <Divider mt={4} mb={2} />
               </>
             )}
+            <Center mb={4}>
+              <Link href="https://buymeacoffee.com/atommy" isExternal>
+                <Image
+                  source={BMC_BUTTON}
+                  alt="Buy me a coffee"
+                  minW={150}
+                  minH={10}
+                />
+              </Link>
+            </Center>
           </VStack>
         </Modal.Body>
       </Modal.Content>
