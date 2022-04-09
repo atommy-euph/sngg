@@ -97,8 +97,8 @@ export const StatsModal = React.memo(function StatsModal({
                   <VStack>
                     <Circle
                       position="absolute"
-                      top="10px"
-                      left="10%"
+                      top="8px"
+                      left="9%"
                       w="42px"
                       h="42px"
                       bgColor={samegroupColor}
