@@ -255,6 +255,9 @@ export const StatsModal = React.memo(function StatsModal({
             )}
             <Divider mb={2} />
             <Center mb={4}>
+              <Text fontSize={12} mb={0.5}>
+                開発者にコーヒーをおごる
+              </Text>
               <Link href="https://buymeacoffee.com/atommy" isExternal>
                 <Image
                   source={BMC_BUTTON}
