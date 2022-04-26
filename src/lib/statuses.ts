@@ -85,16 +85,20 @@ export function getStatuses(guesses: string[]) : {[key:string]: CharStatus} {
         charObj[letter] = status[i];
         if (charObj[letter] === "absent") {
           sameGroup?.forEach((value) => {
-            if(!charObj[value]){ charObj[value] = "absent" }
-           
+            if(!charObj[value]){ charObj[value] = "absent" } 
           })
         }
       } else {
-        if (status[i] === "correct") {
+        if (status[i] === "correct" ) {
           charObj[letter] = "correct";
           return;
         }
-        if (charObj[letter] === "correct" || charObj[letter] === "absent" ||  charObj[letter] === "samegroup") {
+        if (charObj[letter] === "correct" && ( status[i] === "absent")) {
+          sameGroup?.forEach((value) => {
+            if(!charObj[value]){ charObj[value] = "absent" } 
+          })
+        }
+        if (charObj[letter] === "absent" ||  charObj[letter] === "samegroup") {
           return
         }
        
