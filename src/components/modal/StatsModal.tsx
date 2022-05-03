@@ -33,6 +33,7 @@ import { urls } from "../../constants/urls";
 import { samegroupColor } from "../../constants/colors";
 
 import BMC_BUTTON from "../../img/bmc-button.png";
+import SHIRITETSU from "../../img/shiritetsu.png";
 
 interface Props {
   isOpen: boolean;
@@ -236,7 +237,7 @@ export const StatsModal = React.memo(function StatsModal({
 
             {(isGameWon || isGameLost) && (
               <>
-                <Divider mt={2} mb={4} />
+                <Divider mt={2} mb={5} />
 
                 <HStack justifyContent="space-around">
                   <VStack alignItems="center">
@@ -253,7 +254,20 @@ export const StatsModal = React.memo(function StatsModal({
                 </HStack>
               </>
             )}
-            <Divider mb={2} />
+            <Divider mt={1} mb={2} />
+            <Heading fontSize={18}>RAILWORDのゲーム</Heading>
+            <Link href="https://buymeacoffee.com/atommy" isExternal>
+              <Image
+                source={SHIRITETSU}
+                alt="尻鉄"
+                minW={5}
+                minH={5}
+                rounded={2}
+                mr={2}
+              />
+              尻鉄 | しりとりで知る鉄道駅
+            </Link>
+            <Divider mt={1} mb={2} />
             <Center mb={4}>
               <Text fontSize={12} mb={0.5}>
                 開発者にコーヒーをおごる
