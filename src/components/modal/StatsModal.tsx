@@ -256,7 +256,7 @@ export const StatsModal = React.memo(function StatsModal({
             )}
             <Divider mt={1} mb={2} />
             <Heading fontSize={18}>RAILWORDのゲーム</Heading>
-            <Link href="https://buymeacoffee.com/atommy" isExternal>
+            <Link href="https://shiritetsu.railword.com" isExternal>
               <Image
                 source={SHIRITETSU}
                 alt="尻鉄"
