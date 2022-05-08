@@ -1,29 +1,41 @@
-import { ColorMode} from 'native-base'
-import { solution } from './words'
-import { groups } from '../constants/groups'
-import { correctColor, presentColor,samegroupColor, absentColor, lightKeyColor, darkKeyColor, lightBorderColor, darkBorderColor } from '../constants/colors'
-import { NAMES } from "../lib/words"
+import { ColorMode } from "native-base";
+import { solution } from "./words";
+import { groups } from "../constants/groups";
+import {
+  correctColor,
+  presentColor,
+  samegroupColor,
+  absentColor,
+  lightKeyColor,
+  darkKeyColor,
+  lightBorderColor,
+  darkBorderColor,
+} from "../constants/colors";
+import { NAMES } from "../lib/words";
 
-export type CharStatus = "absent" | "samegroup" |"present" | "correct"
-
+export type CharStatus = "absent" | "samegroup" | "present" | "correct";
 
 export function getCandidatesCount(guesses: string[]): number {
-
   const candidates = NAMES.filter((name) => {
-    for(let i = 0; i < guesses.length; i++) {
-      if(!status_equal(getGuessStatuses(guesses[i]), getStatusesOfTwoName(guesses[i], name))){
-        return false
-      } 
+    for (let i = 0; i < guesses.length; i++) {
+      if (
+        !status_equal(
+          getGuessStatuses(guesses[i]),
+          getStatusesOfTwoName(guesses[i], name)
+        )
+      ) {
+        return false;
+      }
     }
-    return true
-  })
-  
-  return candidates.length
+    return true;
+  });
+
+  return candidates.length;
 }
 
 function status_equal(a: CharStatus[], b: CharStatus[]) {
-  if (!Array.isArray(a))    return false;
-  if (!Array.isArray(b))    return false;
+  if (!Array.isArray(a)) return false;
+  if (!Array.isArray(b)) return false;
   if (a.length !== b.length) return false;
   for (var i = 0, n = a.length; i < n; ++i) {
     if (a[i] !== b[i]) return false;
@@ -31,14 +43,16 @@ function status_equal(a: CharStatus[], b: CharStatus[]) {
   return true;
 }
 
+export function getStatusesOfTwoName(
+  guess: string,
+  candidate: string
+): CharStatus[] {
+  let s = candidate.split("");
+  let g = guess.split("");
 
-export function getStatusesOfTwoName(guess: string, candidate: string) : CharStatus[]{
-  let s = candidate.split("")
-  let g = guess.split("")
+  const statuses: CharStatus[] = Array.from(Array(s.length));
 
-  const statuses: CharStatus[] = Array.from(Array(s.length))
-
-  // is correct 
+  // is correct
   for (let i = 0; i < s.length; i++) {
     if (g[i] === s[i]) {
       statuses[i] = "correct";
@@ -71,50 +85,58 @@ export function getStatusesOfTwoName(guess: string, candidate: string) : CharSta
     }
   }
 
-  return statuses
+  return statuses;
 }
-
-export function getStatuses(guesses: string[]) : {[key:string]: CharStatus} {
-  const charObj :{[key: string]: CharStatus } = {};
-
+export function getStatuses(guesses: string[]): { [key: string]: CharStatus } {
+  const charObj: { [key: string]: CharStatus } = {};
   guesses.forEach((guess) => {
     const status = getGuessStatuses(guess);
     guess.split("").forEach((letter, i) => {
-      const sameGroup = groups.find((group) => group.includes(letter))
+      const sameGroup = groups.find((group) => group.includes(letter));
       if (!charObj[letter]) {
+        // 対応するキーは、色がついていない。
+        // 対応するキーに、対応する色を設定する。
         charObj[letter] = status[i];
+        // 文字が黒の場合、samegruop内の他のキーに色が付いていなければ、そのキーも黒にする。
         if (charObj[letter] === "absent") {
           sameGroup?.forEach((value) => {
-            if(!charObj[value]){ charObj[value] = "absent" } 
-          })
+            if (!charObj[value]) charObj[value] = "absent";
+          });
         }
       } else {
-        if (status[i] === "correct" ) {
-          charObj[letter] = "correct";
-          return;
+        // 対応するキーは、すでに色がついている。
+        // 文字に対応するキーがすでに緑なら何もしない。
+        if (charObj[letter] === "correct") return charObj;
+        // 文字が緑か黄色なら対応するキーをその色にして終わり。
+        if (status[i] === "correct" || status[i] === "present") {
+          charObj[letter] = status[i];
+          return charObj;
         }
-        if (charObj[letter] === "correct" && ( status[i] === "absent")) {
+        // 文字が紫色の場合、samegropu内の他のキーが黄色でも緑でなければ黒にする。
+        if (status[i] === "samegroup") {
           sameGroup?.forEach((value) => {
-            if(!charObj[value]){ charObj[value] = "absent" } 
-          })
+            if (!charObj[value]) {
+              if (
+                charObj[value] !== "correct" &&
+                charObj[value] !== "present"
+              ) {
+                charObj[value] = "absent";
+              }
+            }
+          });
         }
-        if (charObj[letter] === "absent" ||  charObj[letter] === "samegroup") {
-          return
-        }
-       
       }
     });
   });
-  return charObj
+  return charObj;
 }
+export function getGuessStatuses(guess: string): CharStatus[] {
+  let s = solution.split("");
+  let g = guess.split("");
 
-export function getGuessStatuses(guess: string) : CharStatus[]{
-  let s = solution.split("")
-  let g = guess.split("")
+  const statuses: CharStatus[] = Array.from(Array(s.length));
 
-  const statuses: CharStatus[] = Array.from(Array(s.length))
-
-  // is correct 
+  // is correct
   for (let i = 0; i < s.length; i++) {
     if (g[i] === s[i]) {
       statuses[i] = "correct";
@@ -147,42 +169,43 @@ export function getGuessStatuses(guess: string) : CharStatus[]{
     }
   }
 
-  return statuses
+  return statuses;
 }
 
-export function getColors(status: CharStatus, colorMode: ColorMode) : {bgColor: string, borderColor: string, keyColor: string}{
-
-  let bgColor = "None"
-  let borderColor = colorMode === "light" ? lightBorderColor : darkBorderColor
-  let keyColor = colorMode === "light" ? lightKeyColor : darkKeyColor
+export function getColors(
+  status: CharStatus,
+  colorMode: ColorMode
+): { bgColor: string; borderColor: string; keyColor: string } {
+  let bgColor = "None";
+  let borderColor = colorMode === "light" ? lightBorderColor : darkBorderColor;
+  let keyColor = colorMode === "light" ? lightKeyColor : darkKeyColor;
 
   if (status === "correct") {
-    bgColor = correctColor
-    borderColor = correctColor
-    keyColor = correctColor
+    bgColor = correctColor;
+    borderColor = correctColor;
+    keyColor = correctColor;
   } else if (status === "present") {
-    bgColor = presentColor
-    borderColor = presentColor
-    keyColor = presentColor
-  } else if  (status === "samegroup"){
-    bgColor = samegroupColor
-    borderColor = samegroupColor
-    keyColor = absentColor
-  }else {
-    bgColor = absentColor
-    borderColor = absentColor
-    keyColor = absentColor
+    bgColor = presentColor;
+    borderColor = presentColor;
+    keyColor = presentColor;
+  } else if (status === "samegroup") {
+    bgColor = samegroupColor;
+    borderColor = samegroupColor;
+    keyColor = absentColor;
+  } else {
+    bgColor = absentColor;
+    borderColor = absentColor;
+    keyColor = absentColor;
   }
 
-  return {bgColor, borderColor, keyColor}
+  return { bgColor, borderColor, keyColor };
 }
 
-const isSameGroup = (kana1:string, kana2:string) => {
-  for(let i = 0; i < groups.length; i++) {
-    if(groups[i].includes(kana1) && groups[i].includes(kana2)){
-      return true
+const isSameGroup = (kana1: string, kana2: string) => {
+  for (let i = 0; i < groups.length; i++) {
+    if (groups[i].includes(kana1) && groups[i].includes(kana2)) {
+      return true;
     }
   }
-  return false
-}
-  
+  return false;
+};
