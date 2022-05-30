@@ -93,38 +93,27 @@ export function getStatuses(guesses: string[]): { [key: string]: CharStatus } {
     const status = getGuessStatuses(guess);
     guess.split("").forEach((letter, i) => {
       const sameGroup = groups.find((group) => group.includes(letter));
-      if (!charObj[letter]) {
-        // 対応するキーは、色がついていない。
-        // 対応するキーに、対応する色を設定する。
-        charObj[letter] = status[i];
-        // 文字が黒の場合、samegruop内の他のキーに色が付いていなければ、そのキーも黒にする。
-        if (charObj[letter] === "absent") {
-          sameGroup?.forEach((value) => {
-            if (!charObj[value]) charObj[value] = "absent";
-          });
+      if (status[i] === "correct") {
+        // 文字が緑色の場合はキーを緑色にする。
+        charObj[letter] = "correct";
+      } else if (status[i] === "present") {
+        // 文字が黄色の場合
+        if (charObj[letter] !== "correct") {
+          //キーが緑色でなければ黄色にする。
+          charObj[letter] = "present";
+        }
+      } else if (status[i] === "samegroup") {
+        // 文字が紫色の場合
+        if (!charObj[letter]) {
+          // キーに色が付いていなければ黒にする
+          charObj[letter] = "absent";
         }
       } else {
-        // 対応するキーは、すでに色がついている。
-        // 文字に対応するキーがすでに緑なら何もしない。
-        if (charObj[letter] === "correct") return charObj;
-        // 文字が緑か黄色なら対応するキーをその色にして終わり。
-        if (status[i] === "correct" || status[i] === "present") {
-          charObj[letter] = status[i];
-          return charObj;
-        }
-        // 文字が紫色の場合、samegropu内の他のキーが黄色でも緑でなければ黒にする。
-        if (status[i] === "samegroup") {
-          sameGroup?.forEach((value) => {
-            if (!charObj[value]) {
-              if (
-                charObj[value] !== "correct" &&
-                charObj[value] !== "present"
-              ) {
-                charObj[value] = "absent";
-              }
-            }
-          });
-        }
+        // 文字が黒の場合。
+        // samegruop内の色が着いていないキーを黒にする。
+        sameGroup?.forEach((value) => {
+          if (!charObj[value]) charObj[value] = "absent";
+        });
       }
     });
   });
