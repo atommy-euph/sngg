@@ -112,8 +112,7 @@ export function getStatuses(guesses: string[]): { [key: string]: CharStatus } {
         // 文字が黒の場合。
         // 黒にする
         charObj[letter] = "absent";
-
-        // samegruop内の色が着いていないキーを黒にする。
+        // さらに samegruop 内の色が着いていないキーを黒にする。
         sameGroup?.forEach((value) => {
           if (!charObj[value]) charObj[value] = "absent";
         });
