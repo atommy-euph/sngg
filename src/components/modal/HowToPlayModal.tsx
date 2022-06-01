@@ -214,7 +214,7 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
             <Text color={samegroupColor} fontSize={14} pr={1} bold>
               ギ
             </Text>
-            は答えに含まれていませんが。
+            は答えに含まれていませんが、
             <Text color={presentColor} fontSize={14} px={1} bold>
               キ
             </Text>
