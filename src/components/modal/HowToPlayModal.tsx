@@ -278,7 +278,6 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
           </Text>
         </Modal.Body>
       </Modal.Content>
-      で
     </Modal>
   );
 });
