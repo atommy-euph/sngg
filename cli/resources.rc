@@ -4,11 +4,11 @@
 #include "resource.h"
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.K.) resources
+// Japanese resources
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
 #ifdef _WIN32
-#pragma code_page(1252)
+#pragma code_page(932)
 #endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
@@ -18,7 +18,7 @@
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON1               ICON    DISCARDABLE     "favicon.ico"
+IDI_ICON1               ICON    DISCARDABLE     "../public/favicon.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -53,9 +53,9 @@ BEGIN
     END
     BLOCK "VarFileInfo"
     BEGIN
-        VALUE "Translation", 0x409, 1200
+        VALUE "Translation", 0x411, 932
     END
 END
 
-#endif    // English (U.K.) resources
+#endif    // Japanese resources
 /////////////////////////////////////////////////////////////////////////////
