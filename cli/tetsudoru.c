@@ -60,18 +60,24 @@ void compare(wchar_t *target, wchar_t *input, int *a)
 	    a[i] = b[j] = 3;
 }
 
-void mywprintf(wchar_t *wstr)
+int mywprintf(const wchar_t *fmt, ...)
 {
   int n;
-  char str[96];
-  n = WideCharToMultiByte(CP_ACP, 0, wstr, -1, str, 96, NULL, NULL);
+  wchar_t wstr[256];
+  char str[1024];
+  va_list ap;
+
+  va_start(ap, fmt);
+  vswprintf(wstr, 255, fmt, ap);
+  va_end(ap);
+  n = WideCharToMultiByte(CP_ACP, 0, wstr, -1, str, 255, NULL, NULL);
   str[n] = '\0';
   printf(str);
 }
 
 void mywputc(wchar_t wch)
 {
-  char str[3];
+  char str[5];
   int n;
   n = WideCharToMultiByte(CP_ACP, 0, &wch, 1, str, 3, NULL, NULL);
   str[n] = '\0';
@@ -116,60 +122,39 @@ int start_game(int day)
   printf("\n");
   nans=0;
   while(1){
-    printf(" %d : ", nans + 1);
-    printf("\033[K");
+    printf(" %d : \033[K", nans + 1);
     gets(input);
     if(strlen(input) == 0) {
-      printf("\033[F");
-      printf("                              \n");
       printf("\033[F");
       continue;
     }
     MultiByteToWideChar(CP_ACP, 0, input, -1, ans[nans], 6);
     if (!isStation(ans[nans])){
-      printf("\033[F");
-      printf(" %d : ", nans + 1);
-      mywprintf(L"リストにありません\n");
+      mywprintf(L"\033[F %d : リストにありません\033[K\n", nans + 1);
       Sleep(1000);
-      printf("\033[F");
-      printf("                              \n");
       printf("\033[F");
       continue;
     }else{
       compare(problem, ans[nans], a);
-      printf("\033[F");
-      printf(" %d : ", nans + 1);
+      printf("\033[F %d : ", nans + 1);
       for (i = 0; i < 5; i++){
-	switch (a[i]){
-	case 1:
-	  printf("\033[42m");
-	  break;
-	case 2:
-	  printf("\033[43m");
-	  break;
-	case 3:
-	  printf("\033[45m");
-	  break;
-	}
+	printf(color[a[i]]);
 	mywputc(ans[nans][i]);
-	printf("\033[0m");
+	printf(color[0]);
       }
       if (wcscmp(problem, ans[nans]) == 0){
 	mywprintf(L"\n\n目的地に到着！\n");
 	return 0;
       }
       if (nans < 5){
-	mywprintf(L" - 残り候補数: ");
 	rest=count_rest(problem, nans);
-	printf("%3d", rest);
+	mywprintf(L" - 残り候補数: %3d", rest);
       }
       printf("\n");
       nans++;
       if (nans == 6) {
 	mywprintf(L"\n残念！途中下車…\n");
-	mywprintf(L"\n正解は「");
-	mywprintf(problem);
-	mywprintf(L"」でした。\n");
+	mywprintf(L"\n正解は「%ls」でした。\n", problem);
 	return 0;
       }
     }
@@ -193,24 +178,20 @@ int main(void)
   
   day_max = (t-t0)/86400+1;
   while(1){
-    mywprintf(L"\nゲーム番号を入力 [1-");
-    printf("%d] (0", day_max);
-    mywprintf(L"で終了) : ");
-    printf("\033[K");
+    mywprintf(L"\nゲーム番号を入力 [1-%d] (0で終了) : \033[K", day_max);
     gets(str);
     if(strlen(str) == 0 || !isNumber(str)) {
-      printf("\033[F");
-      printf("\033[F");
+      printf("\033[2F");
       continue;
     }
     day = atoi(str);
     if (day == 0) return 0;
     if (day > day_max){
-      mywprintf(L"\n未来の問題はできません\n");
-    }else if (day > 0){
-      start_game(day);
+      mywprintf(L"\n未来の問題はできません！");
+      Sleep(1000);
+      printf("\033[G\033[K\033[3F");
     }else{
-      continue;
+      start_game(day);
     }
   }
 }
