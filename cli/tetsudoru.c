@@ -72,7 +72,7 @@ int mywprintf(const wchar_t *fmt, ...)
   va_end(ap);
   n = WideCharToMultiByte(CP_ACP, 0, wstr, -1, str, 255, NULL, NULL);
   str[n] = '\0';
-  printf(str);
+  return printf(str);
 }
 
 void mywputc(wchar_t wch)
@@ -122,21 +122,21 @@ int start_game(int day)
   printf("\n");
   nans=0;
   while(1){
-    printf(" %d : \033[K", nans + 1);
+    printf(" %d : \e[K", nans + 1);
     gets(input);
     if(strlen(input) == 0) {
-      printf("\033[F");
+      printf("\e[F");
       continue;
     }
     MultiByteToWideChar(CP_ACP, 0, input, -1, ans[nans], 6);
     if (!isStation(ans[nans])){
-      mywprintf(L"\033[F %d : リストにありません\033[K\n", nans + 1);
+      mywprintf(L"\e[F %d : リストにありません\e[K\n", nans + 1);
       Sleep(1000);
-      printf("\033[F");
+      printf("\e[F");
       continue;
     }else{
       compare(problem, ans[nans], a);
-      printf("\033[F %d : ", nans + 1);
+      printf("\e[F %d : ", nans + 1);
       for (i = 0; i < 5; i++){
 	printf(color[a[i]]);
 	mywputc(ans[nans][i]);
@@ -178,10 +178,10 @@ int main(void)
   
   day_max = (t-t0)/86400+1;
   while(1){
-    mywprintf(L"\nゲーム番号を入力 [1-%d] (0で終了) : \033[K", day_max);
+    mywprintf(L"\nゲーム番号を入力 [1-%d] (0で終了) : \e[K", day_max);
     gets(str);
     if(strlen(str) == 0 || !isNumber(str)) {
-      printf("\033[2F");
+      printf("\e[2F");
       continue;
     }
     day = atoi(str);
@@ -189,7 +189,7 @@ int main(void)
     if (day > day_max){
       mywprintf(L"\n未来の問題はできません！");
       Sleep(1000);
-      printf("\033[G\033[K\033[3F");
+      printf("\e[G\e[K\e[3F");
     }else{
       start_game(day);
     }
