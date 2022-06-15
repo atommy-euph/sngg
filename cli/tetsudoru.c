@@ -4,8 +4,6 @@
 #include <windows.h>
 #include "data.h"
 
-wchar_t ans[6][6];
-
 int isNumber(char *str)
 {
   int len, i, result = 1;
@@ -37,7 +35,7 @@ int IsSameGroup(wchar_t *ans, wchar_t *inp)
 
 void compare(wchar_t *target, wchar_t *input, int *a)
 {
-  int i, j, b[6];
+  int i, j, b[5];
   for (i = 0; i < 5; i++)
     a[i] = b[i] = 0;
   /* 緑チェック */
@@ -95,7 +93,7 @@ int isStation(wchar_t *str)
 
 int count_rest(wchar_t *problem, int nans)
 {
-  int i, j, k, n, a[6], b[6];
+  int i, j, k, n, a[5], b[5];
   int isSamePattern;
   
   n = 0;
@@ -104,7 +102,7 @@ int count_rest(wchar_t *problem, int nans)
     for(j = 0; j < nans + 1; j++){
       compare(station[i], ans[j], a);
       compare(problem, ans[j], b);
-      for (k = 0; k < 6; k++)
+      for (k = 0; k < 5; k++)
 	if (a[k] != b[k]) isSamePattern = 0;
     }
     if (isSamePattern == 1) n++;
