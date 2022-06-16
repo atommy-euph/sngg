@@ -10,6 +10,7 @@
 
 # production
 /build
+cli/tetsudoru
 
 # data processing
 station_name_data_processing/
