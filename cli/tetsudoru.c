@@ -1,7 +1,15 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include <wchar.h>
 #include <time.h>
+#include <ctype.h>
+#include <locale.h>
+#ifdef WIN32
 #include <windows.h>
+#endif
 #include "data.h"
 
 int isNumber(char *str)
@@ -60,26 +68,35 @@ void compare(wchar_t *target, wchar_t *input, int *a)
 
 int mywprintf(const wchar_t *fmt, ...)
 {
-  int n;
   wchar_t wstr[256];
-  char str[1024];
   va_list ap;
 
   va_start(ap, fmt);
   vswprintf(wstr, 255, fmt, ap);
   va_end(ap);
+#ifdef WIN32
+  int n;
+  char str[1024];
   n = WideCharToMultiByte(CP_ACP, 0, wstr, -1, str, 255, NULL, NULL);
   str[n] = '\0';
-  return printf(str);
+  printf(str);
+#else
+  wprintf(wstr);
+#endif
+  return 0;
 }
 
 void mywputc(wchar_t wch)
 {
+#ifdef WIN32
   char str[5];
   int n;
   n = WideCharToMultiByte(CP_ACP, 0, &wch, 1, str, 3, NULL, NULL);
   str[n] = '\0';
   printf("%s", str);
+#else
+  putwc(wch, stdout);
+#endif
 }
 
 int isStation(wchar_t *str)
@@ -117,28 +134,32 @@ int start_game(int day)
   wchar_t problem[6];
 
   wcscpy(problem, station[day]);
-  printf("\n");
+  mywprintf(L"\n");
   nans=0;
   while(1){
-    printf(" %d : \e[K", nans + 1);
+    mywprintf(L" %d : \e[K", nans + 1);
     gets(input);
     if(strlen(input) == 0) {
-      printf("\e[F");
+      mywprintf(L"\e[F");
       continue;
     }
+#ifdef WIN32
     MultiByteToWideChar(CP_ACP, 0, input, -1, ans[nans], 6);
+#else
+    mbstowcs(ans[nans], input, 6);
+#endif
     if (!isStation(ans[nans])){
       mywprintf(L"\e[F %d : リストにありません\e[K\n", nans + 1);
-      Sleep(1000);
-      printf("\e[F");
+      sleep(1);
+      mywprintf(L"\e[F");
       continue;
     }else{
       compare(problem, ans[nans], a);
-      printf("\e[F %d : ", nans + 1);
+      mywprintf(L"\e[F %d : ", nans + 1);
       for (i = 0; i < 5; i++){
-	printf(color[a[i]]);
+	mywprintf(L"%s", color[a[i]]);
 	mywputc(ans[nans][i]);
-	printf(color[0]);
+	mywprintf(L"%s", color[0]);
       }
       if (wcscmp(problem, ans[nans]) == 0){
 	mywprintf(L"\n\n目的地に到着！\n");
@@ -148,7 +169,7 @@ int start_game(int day)
 	rest=count_rest(problem, nans);
 	mywprintf(L" - 残り候補数: %3d", rest);
       }
-      printf("\n");
+      mywprintf(L"\n");
       nans++;
       if (nans == 6) {
 	mywprintf(L"\n残念！途中下車…\n");
@@ -165,11 +186,15 @@ int main(void)
   int day, day_max;
   char str[255];
 
+#ifdef WIN32
   HANDLE stdOut = GetStdHandle(STD_OUTPUT_HANDLE);
   DWORD consoleMode = 0;
   GetConsoleMode(stdOut, &consoleMode);
   consoleMode = consoleMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING;
   SetConsoleMode(stdOut, consoleMode);
+#else
+  setlocale(LC_CTYPE, "");
+#endif
 
   t0 = 1645023600;
   t = time(NULL);
@@ -179,15 +204,16 @@ int main(void)
     mywprintf(L"\nゲーム番号を入力 [1-%d] (0で終了) : \e[K", day_max);
     gets(str);
     if(strlen(str) == 0 || !isNumber(str)) {
-      printf("\e[2F");
+      mywprintf(L"\e[2F");
+      fflush(stdout);
       continue;
     }
     day = atoi(str);
     if (day == 0) return 0;
     if (day > day_max){
       mywprintf(L"\n未来の問題はできません！");
-      Sleep(1000);
-      printf("\e[G\e[K\e[3F");
+      sleep(1);
+      mywprintf(L"\e[G\e[K\e[3F");
     }else{
       start_game(day);
     }
