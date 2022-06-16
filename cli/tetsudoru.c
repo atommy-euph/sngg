@@ -205,7 +205,6 @@ int main(void)
     gets(str);
     if(strlen(str) == 0 || !isNumber(str)) {
       mywprintf(L"\e[2F");
-      fflush(stdout);
       continue;
     }
     day = atoi(str);
