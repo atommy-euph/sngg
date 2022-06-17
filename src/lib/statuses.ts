@@ -110,12 +110,14 @@ export function getStatuses(guesses: string[]): { [key: string]: CharStatus } {
         }
       } else {
         // 文字が黒の場合。
-        // 黒にする
-        charObj[letter] = "absent";
-        // さらに samegruop 内の色が着いていないキーを黒にする。
-        sameGroup?.forEach((value) => {
-          if (!charObj[value]) charObj[value] = "absent";
-        });
+        if (!charObj[letter]) {
+          // キーに色が付いていなければ黒にする
+	  charObj[letter] = "absent";
+          // さらに samegruop 内の色が着いていないキーを黒にする。
+          sameGroup?.forEach((value) => {
+            if (!charObj[value]) charObj[value] = "absent";
+          });
+        }
       }
     });
   });
