@@ -4185,10 +4185,6 @@ export const urls: Urls = {
   ],
   "シュクガワ": [
     {
-      "url": "https://ja.wikipedia.org/wiki/%E3%81%95%E3%81%8F%E3%82%89%E5%A4%99%E5%B7%9D%E9%A7%85",
-      "title": "さくら夙川駅"
-    },
-    {
       "url": "https://ja.wikipedia.org/wiki/%E5%A4%99%E5%B7%9D%E9%A7%85",
       "title": "夙川駅"
     }
