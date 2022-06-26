@@ -1174,7 +1174,7 @@ export const urls: Urls = {
   "ウルシヤマ": [
     {
       "url": "https://ja.wikipedia.org/wiki/%E6%BC%86%E5%B1%B1%E9%A7%85_(%E5%B1%B1%E5%BD%A2%E7%9C%8C)",
-      "title": "漆山駅 (山形県)"
+      "title": "漆山駅"
     }
   ],
   "ウワゴロモ": [
@@ -1478,7 +1478,7 @@ export const urls: Urls = {
   "オオマガリ": [
     {
       "url": "https://ja.wikipedia.org/wiki/%E5%A4%A7%E6%9B%B2%E9%A7%85_(%E7%A7%8B%E7%94%B0%E7%9C%8C)",
-      "title": "大曲駅 (秋田県)"
+      "title": "大曲駅"
     }
   ],
   "オオマゴシ": [
@@ -1513,8 +1513,8 @@ export const urls: Urls = {
   ],
   "オカチマチ": [
     {
-      "url": "https://ja.wikipedia.org/wiki/%E4%B8%8A%E9%87%8E%E5%BE%A1%E5%BE%92%E7%94%BA%E9%A7%85",
-      "title": "上野御徒町駅"
+      "url": "https://ja.wikipedia.org/wiki/%E5%BE%A1%E5%BE%92%E7%94%BA%E9%A7%85",
+      "title": "御徒町駅"
     }
   ],
   "オガワゴウ": [
@@ -3354,7 +3354,7 @@ export const urls: Urls = {
     },
     {
       "url": "https://ja.wikipedia.org/wiki/%E5%BE%8C%E5%85%8D%E7%94%BA%E9%A7%85",
-      "title": "後免町駅"
+      "title": "後免町停留場"
     }
   ],
   "コヤダイラ": [
@@ -3436,10 +3436,6 @@ export const urls: Urls = {
     }
   ],
   "サカエマチ": [
-    {
-      "url": "https://ja.wikipedia.org/wiki/%E4%B8%8A%E6%A0%84%E7%94%BA%E9%A7%85",
-      "title": "上栄町駅"
-    },
     {
       "url": "https://ja.wikipedia.org/wiki/%E6%A0%84%E7%94%BA%E9%A7%85_(%E6%9C%AD%E5%B9%8C%E5%B8%82)",
       "title": "栄町駅 (札幌市)"
@@ -3564,7 +3560,7 @@ export const urls: Urls = {
   "サクラバシ": [
     {
       "url": "https://ja.wikipedia.org/wiki/%E6%A1%9C%E6%A9%8B%E9%A7%85_(%E9%9D%99%E5%B2%A1%E7%9C%8C)",
-      "title": "桜橋駅 (静岡県)"
+      "title": "桜橋駅"
     },
     {
       "url": "https://ja.wikipedia.org/wiki/%E6%A1%9C%E6%A9%8B%E5%81%9C%E7%95%99%E5%A0%B4",
@@ -4344,7 +4340,7 @@ export const urls: Urls = {
   "シンウオヅ": [
     {
       "url": "https://ja.wikipedia.org/wiki/%E9%AD%9A%E6%B4%A5%E9%A7%85",
-      "title": "魚津駅"
+      "title": "新魚津駅"
     }
   ],
   "シンウヌマ": [
@@ -4362,7 +4358,7 @@ export const urls: Urls = {
   "シンオウジ": [
     {
       "url": "https://ja.wikipedia.org/wiki/%E7%8E%8B%E5%AF%BA%E9%A7%85",
-      "title": "王寺駅"
+      "title": "新王寺駅"
     }
   ],
   "シンオオツ": [
@@ -5634,7 +5630,7 @@ export const urls: Urls = {
   "ドームマエ": [
     {
       "url": "https://ja.wikipedia.org/wiki/%E3%83%89%E3%83%BC%E3%83%A0%E5%89%8D%E5%8D%83%E4%BB%A3%E5%B4%8E%E9%A7%85",
-      "title": "ドーム前千代崎駅"
+      "title": "ドーム前駅"
     }
   ],
   "トオリタニ": [
@@ -5740,7 +5736,7 @@ export const urls: Urls = {
   "トヤマエキ": [
     {
       "url": "https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E9%A7%85",
-      "title": "富山駅"
+      "title": "富山駅停留場"
     }
   ],
   "トラノモン": [
@@ -8342,7 +8338,7 @@ export const urls: Urls = {
   "ヤナギバシ": [
     {
       "url": "https://ja.wikipedia.org/wiki/%E6%9F%B3%E6%A9%8B%E9%A7%85_(%E5%AF%8C%E5%B1%B1%E7%9C%8C)",
-      "title": "柳橋駅 (富山県)"
+      "title": "柳橋駅"
     }
   ],
   "ヤナギハラ": [
