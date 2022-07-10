@@ -7,7 +7,6 @@
 #include <time.h>
 #include <ctype.h>
 #include <locale.h>
-#include "data.h"
 
 #ifdef WIN32
 #include <windows.h>
@@ -36,8 +35,11 @@ void myputwc(wchar_t wch, FILE *fp)
   str[n] = '\0';
   fprintf(fp, "%s", str);
 }
+#undef putwc
 #define putwc myputwc
 #endif
+
+#include "data.h"
 
 int isStation(wchar_t *str)
 {
