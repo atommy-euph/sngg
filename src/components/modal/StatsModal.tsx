@@ -29,7 +29,7 @@ import {
 import { shareStatus } from "../../lib/share";
 import { romanize } from "../../lib/kanaToRoman";
 
-import { urls } from "../../constants/urls";
+import { STATION_DATA } from "../../constants/station_names_5_katakana_20220728_shuffled";
 import { samegroupColor } from "../../constants/colors";
 
 import BMC_BUTTON from "../../img/bmc-button.png";
@@ -68,8 +68,6 @@ export const StatsModal = React.memo(function StatsModal({
     handleShare();
     event.target.blur();
   };
-
-  console.log(urls.JRアワジ);
 
   return (
     <Modal isOpen={isOpen} onClose={onCloseStatsModal}>
@@ -216,7 +214,7 @@ export const StatsModal = React.memo(function StatsModal({
                   ></Square>
                 </Box>
                 <HStack justifyContent="center" space={3} flexWrap="wrap">
-                  {urls[solution].map((value) => (
+                  {STATION_DATA[solution].map((value) => (
                     <Link
                       href={value["url"]}
                       isExternal
