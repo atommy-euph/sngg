@@ -109,6 +109,7 @@ export const StatsModal = React.memo(function StatsModal({
                         _text={{
                           fontWeight: "bold",
                           fontSize: 22,
+                          letterSpacing: -2,
                         }}
                       >
                         {solutionIndex}
@@ -171,6 +172,7 @@ export const StatsModal = React.memo(function StatsModal({
                           _text={{
                             fontWeight: "bold",
                             fontSize: 16,
+                            letterSpacing: -2,
                           }}
                         >
                           {solutionIndex + 1}
