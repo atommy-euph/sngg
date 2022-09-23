@@ -11,6 +11,8 @@
 # production
 /build
 cli/tetsudoru
+cli/tetsudoru.exe
+cli/resource.o
 
 # data processing
 station_name_data_processing/
