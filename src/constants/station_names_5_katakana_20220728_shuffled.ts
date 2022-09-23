@@ -8,12 +8,6 @@ interface Url {
 }
 
 export const STATION_DATA: Urls = {
-  シンシミズ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E6%96%B0%E6%B8%85%E6%B0%B4%E9%A7%85",
-      title: "新清水駅",
-    },
-  ],
   コボレグチ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E6%B2%B3%E5%A0%80%E5%8F%A3%E9%A7%85",
@@ -2516,6 +2510,12 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E7%86%8A%E9%87%8E%E5%89%8D%E9%A7%85",
       title: "熊野前駅",
+    },
+  ],
+  シンシミズ: [
+    {
+      url: "https://ja.wikipedia.org/wiki/%E6%96%B0%E6%B8%85%E6%B0%B4%E9%A7%85",
+      title: "新清水駅",
     },
   ],
   サツマタキ: [
