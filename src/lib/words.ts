@@ -31,7 +31,7 @@ export const getWordOfTheDay = () => {
   const msInDay = 86400000;
   const index = Math.floor((now - epochMs) / msInDay);
   const nextday = (index + 1) * msInDay + epochMs - now;
-  const questionNumber = index - dayOffset - 1;
+  const questionNumber = (index - dayOffset - 1) % NumberOfData;
   var lastStation;
   if (questionNumber === 0){
     lastStation = finalStation;
