@@ -8,7 +8,7 @@ export const shareStatus = (guesses: string[], lost: boolean) => {
   navigator.clipboard.writeText(
     `#${GAME_TITLE} ${solutionIndex} ${
       lost ? 'X' : guesses.length
-    }/${GUESS_MAX}\n\n` + generateEmojiGrid(guesses) + "\n\nrailword.com"
+    }/${GUESS_MAX}\n\n` + generateEmojiGrid(guesses) + "\n\nhttps://railword.com"
   )
 }
 
