@@ -38,7 +38,7 @@ export const getWordOfTheDay = () => {
   }else{
     lastStation = NAMES[questionNumber - 1];
   }
-  console.log(NAMES[index]);
+  console.log(NAMES[questionNumber]);
   return {
     solution_yesterday: lastStation,
     solution: NAMES[questionNumber],
