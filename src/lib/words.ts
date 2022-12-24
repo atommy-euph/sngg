@@ -1,4 +1,4 @@
-import { STATION_DATA } from "../constants/station_names_5_katakana_20220728_shuffled";
+import { STATION_DATA } from "../constants/station_names_5_katakana_20221222_shuffled";
 
 export const NAMES = Object.keys(STATION_DATA);
 export const NumberOfData = NAMES.length;
@@ -7,8 +7,8 @@ export const NumberOfData = NAMES.length;
 export const dayOffset = 0;
 
 // ex1) 出題リストのリセット: 前日の通算日を指定
-//      1394問で一巡して1395日目にリセット -> dayOffset = 1394
-//export const dayOffset = 1394;
+//      1392問で一巡して1393日目にリセット -> dayOffset = 1392
+//export const dayOffset = 1392;
 
 // ex2) 既出の駅のリストからの削除に対応: 削除した数を指定
 //     20駅削除 -> dayOffset = 20
