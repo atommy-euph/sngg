@@ -29,7 +29,7 @@ import {
 import { shareStatus } from "../../lib/share";
 import { romanize } from "../../lib/kanaToRoman";
 
-import { STATION_DATA } from "../../constants/station_names_5_katakana_20221222_shuffled";
+import { STATION_DATA } from "../../constants/station_names_5_katakana_20221227_shuffled";
 import { samegroupColor } from "../../constants/colors";
 
 import BMC_BUTTON from "../../img/bmc-button.png";

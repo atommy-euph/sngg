@@ -1,10 +1,9 @@
-import { STATION_DATA } from "../constants/station_names_5_katakana_20221222_shuffled";
+import { STATION_DATA } from "../constants/station_names_5_katakana_20221227_shuffled";
 
 export const NAMES = Object.keys(STATION_DATA);
 export const NumberOfData = NAMES.length;
 
-// 問題番号のオフセット
-export const dayOffset = 0;
+// dayOffset: 問題番号のオフセット
 
 // ex1) 出題リストのリセット: 前日の通算日を指定
 //      1392問で一巡して1393日目にリセット -> dayOffset = 1392
@@ -12,7 +11,7 @@ export const dayOffset = 0;
 
 // ex2) 既出の駅のリストからの削除に対応: 削除した数を指定
 //     20駅削除 -> dayOffset = 20
-//export const dayOffset = 20;
+export const dayOffset = 1;
 
 // リセット前日の出題駅
 export const finalStation = 'ナカウラワ'
