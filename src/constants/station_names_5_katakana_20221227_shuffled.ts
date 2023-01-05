@@ -6046,8 +6046,8 @@ export const STATION_DATA: Urls = {
   ],
   シヤクショ: [
     {
-      url: "https://ja.wikipedia.org/wiki/%E5%B8%82%E5%BD%B9%E6%89%80%E9%A7%85",
-      title: "市役所駅",
+      url: "https://ja.wikipedia.org/wiki/%E5%B8%82%E5%BD%B9%E6%89%80%E5%81%9C%E7%95%99%E5%A0%B4",
+      title: "市役所停留場",
     },
   ],
   ツキジグチ: [
