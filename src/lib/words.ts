@@ -1,4 +1,4 @@
-import { STATION_DATA } from "../constants/station_names_5_katakana_20230106_shuffled";
+import { STATION_DATA } from "../constants/station_names_5_katakana_shuffled";
 
 export const NAMES = Object.keys(STATION_DATA);
 export const NumberOfData = NAMES.length;
