@@ -11,7 +11,7 @@ export const NumberOfData = NAMES.length;
 
 // ex2) 既出の駅のリストからの削除に対応: 削除した数を指定
 //     20駅削除 -> dayOffset = 20
-export const dayOffset = 1;
+export const dayOffset = 2;
 
 // リセット前日の出題駅
 export const finalStation = 'ナカウラワ'

@@ -880,12 +880,6 @@ export const STATION_DATA: Urls = {
       title: "蒲郡駅",
     },
   ],
-  ハマタウラ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E6%B5%9C%E7%94%B0%E6%B5%A6%E9%A7%85",
-      title: "浜田浦駅",
-    },
-  ],
   シイナマチ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E6%A4%8E%E5%90%8D%E7%94%BA%E9%A7%85",
