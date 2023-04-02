@@ -6762,12 +6762,6 @@ export const STATION_DATA: Urls = {
       title: "東浦駅",
     },
   ],
-  トウゲシタ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%B3%A0%E4%B8%8B%E9%A7%85",
-      title: "峠下駅",
-    },
-  ],
   シンバンバ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E6%96%B0%E9%A6%AC%E5%A0%B4%E9%A7%85",
