@@ -27,6 +27,8 @@ import {
   solutionIndex,
 } from "../../lib/words";
 import { shareStatus } from "../../lib/share";
+
+// @ts-ignore
 import { romanize } from "../../lib/kanaToRoman";
 
 import { STATION_DATA } from "../../constants/station_names_5_katakana_shuffled";
@@ -107,8 +109,9 @@ export const StatsModal = React.memo(function StatsModal({
                         h="34px"
                         bgColor="white"
                         _text={{
+                          marginLeft: -0.5,
                           fontWeight: "bold",
-                          fontSize: 22,
+                          fontSize: 19,
                           letterSpacing: -2,
                         }}
                       >
@@ -170,8 +173,9 @@ export const StatsModal = React.memo(function StatsModal({
                           h="24px"
                           bgColor="white"
                           _text={{
+                            marginLeft: -0.5,
                             fontWeight: "bold",
-                            fontSize: 16,
+                            fontSize: 14,
                             letterSpacing: -2,
                           }}
                         >
