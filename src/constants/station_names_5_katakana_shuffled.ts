@@ -8522,12 +8522,6 @@ export const STATION_DATA: Urls = {
       title: "大師橋駅",
     },
   ],
-  タキノウエ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E6%BB%9D%E3%83%8E%E4%B8%8A%E9%A7%85",
-      title: "滝ノ上駅",
-    },
-  ],
   アスカヤマ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E9%A3%9B%E9%B3%A5%E5%B1%B1%E5%81%9C%E7%95%99%E5%A0%B4",
