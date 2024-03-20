@@ -7,10 +7,10 @@
 # 使い方： ./remove.pl < input > output
 
 # 削除する駅
-$extinct = "ハマタウラ";
+$extinct = "ナカノサワ";
 
 # 削除前のオフセット値
-$dayOffset = 1;
+$dayOffset = 3;
 
 $n = 0;
 

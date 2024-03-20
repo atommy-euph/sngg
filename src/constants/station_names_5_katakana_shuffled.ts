@@ -676,12 +676,6 @@ export const STATION_DATA: Urls = {
       title: "西戸崎駅",
     },
   ],
-  オンネナイ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E6%81%A9%E6%A0%B9%E5%86%85%E9%A7%85",
-      title: "恩根内駅",
-    },
-  ],
   ヌマブクロ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E6%B2%BC%E8%A2%8B%E9%A7%85",
@@ -7618,12 +7612,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E9%A6%99%E6%AB%A8%E5%9C%92%E9%A7%85",
       title: "香櫨園駅",
-    },
-  ],
-  ナカノサワ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E4%B8%AD%E3%83%8E%E6%B2%A2%E9%A7%85",
-      title: "中ノ沢駅",
     },
   ],
   カミマエヅ: [

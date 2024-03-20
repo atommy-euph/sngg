@@ -248,7 +248,7 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
             >
               Wikipedia「日本の鉄道駅一覧」
             </Link>
-            に2023年4月2日時点で掲載されているものに準じます。
+            に2024年3月20日時点で掲載されているものに準じます。
           </Text>
           <Divider my={3} />
           <Heading {...headingProps} color="gray.400" textAlign="center">
