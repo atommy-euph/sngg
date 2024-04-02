@@ -32,12 +32,12 @@ export const getWordOfTheDay = () => {
   const nextday = (index + 1) * msInDay + epochMs - now;
   const questionNumber = (index - dayOffset - 1) % NumberOfData;
   var lastStation;
-  if (questionNumber === 0){
+  if (questionNumber === 0) {
     lastStation = finalStation;
-  }else{
+  } else {
     lastStation = NAMES[questionNumber - 1];
   }
-  console.log(NAMES[questionNumber]);
+
   return {
     solution_yesterday: lastStation,
     solution: NAMES[questionNumber],
