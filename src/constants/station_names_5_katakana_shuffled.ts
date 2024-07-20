@@ -32,12 +32,6 @@ export const STATION_DATA: Urls = {
       title: "伊予三島駅",
     },
   ],
-  モミジダニ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%BA%83%E5%B3%B6%E8%A6%B3%E5%85%89%E9%96%8B%E7%99%BA#宮島ロープウエー",
-      title: "紅葉谷駅",
-    },
-  ],
   ヤマジョウ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E5%B1%B1%E5%9F%8E%E9%A7%85",
@@ -148,12 +142,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E6%9D%B1%E9%A0%88%E7%A3%A8%E9%A7%85",
       title: "東須磨駅",
-    },
-  ],
-  オリオダニ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E9%96%A2%E8%A5%BF%E9%9B%BB%E5%8A%9B%E9%BB%92%E9%83%A8%E5%B0%82%E7%94%A8%E9%89%84%E9%81%93",
-      title: "折尾谷駅",
     },
   ],
   ミノバヤシ: [
@@ -378,84 +366,6 @@ export const STATION_DATA: Urls = {
       title: "城東駅",
     },
   ],
-  サンチョウ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E3%81%B3%E3%82%8F%E6%B9%96%E3%83%90%E3%83%AC%E3%82%A4",
-      title: "山頂駅 (滋賀県)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%83%E3%83%9D%E3%83%AD%E3%83%86%E3%82%A4%E3%83%8D#手稲山ロープウェイ",
-      title: "山頂駅 (北海道札幌市)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%83%89%E3%83%A9",
-      title: "山頂駅 (新潟県湯沢町②)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E4%BC%8A%E8%B1%86%E3%81%AE%E5%9B%BD%E3%83%91%E3%83%8E%E3%83%A9%E3%83%9E%E3%83%91%E3%83%BC%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "山頂駅 (静岡県)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%85%AB%E6%B5%B7%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%83%BC",
-      title: "山頂駅 (新潟県南魚沼市)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%87%BD%E9%A4%A8%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "山頂駅 (北海道函館市)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%8C%97%E5%85%AB%E3%83%B6%E5%B2%B3%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A8%E3%82%A4",
-      title: "山頂駅 (長野県)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%8D%83%E5%85%89%E5%AF%BA%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "山頂駅 (広島県)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%AF%8C%E8%89%AF%E9%87%8E%E3%83%97%E3%83%AA%E3%83%B3%E3%82%B9%E3%83%9B%E3%83%86%E3%83%AB#富良野ロープウェー",
-      title: "山頂駅 (北海道富良野市)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%AF%92%E9%9C%9E%E6%B8%93%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "山頂駅 (香川県小豆島町)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%B0%8F%E6%A8%BD%E5%A4%A9%E7%8B%97%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A8%E3%82%A4",
-      title: "山頂駅 (北海道小樽市)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%BC%A5%E5%BD%A6%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "山頂駅 (新潟県弥彦村)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E6%B9%AF%E6%B2%A2%E9%AB%98%E5%8E%9F%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "山頂駅 (新潟県湯沢町①)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E7%9C%89%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "山頂駅 (徳島県徳島市)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E7%A8%B2%E4%BD%90%E5%B1%B1",
-      title: "山頂駅 (長崎県)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E7%AE%B8%E8%94%B5%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "山頂駅 (徳島県三好市)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E8%88%B9%E5%B2%A1%E5%9F%8E#昇降施設",
-      title: "山頂駅 (宮城県)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E9%82%A3%E9%A0%88%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "山頂駅 (栃木県)",
-    },
-    {
-      url: "https://ja.wikipedia.org/wiki/%E9%9B%B2%E8%BE%BA%E5%AF%BA%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "山頂駅 (香川県観音寺市)",
-    },
-  ],
   アマガサカ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E5%B0%BC%E3%83%B6%E5%9D%82%E9%A7%85",
@@ -490,12 +400,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E6%B5%9C%E5%8A%A0%E7%A9%8D%E9%A7%85",
       title: "浜加積駅",
-    },
-  ],
-  ヤナギバシ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E6%9F%B3%E6%A9%8B%E9%A7%85_(%E5%AF%8C%E5%B1%B1%E7%9C%8C)",
-      title: "柳橋駅",
     },
   ],
   アライマチ: [
@@ -698,12 +602,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E6%B9%8A%E5%B7%9D%E9%A7%85",
       title: "湊川駅",
-    },
-  ],
-  ワキノサワ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E8%84%87%E3%83%8E%E6%B2%A2%E9%A7%85",
-      title: "脇ノ沢駅",
     },
   ],
   メマンベツ: [
@@ -1210,12 +1108,6 @@ export const STATION_DATA: Urls = {
       title: "八王子駅",
     },
   ],
-  ブンカムラ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E7%A2%93%E6%B0%B7%E5%B3%A0%E9%89%84%E9%81%93%E6%96%87%E5%8C%96%E3%82%80%E3%82%89#トロッコ列車・シェルパ君",
-      title: "ぶんかむら駅",
-    },
-  ],
   アオバダイ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E9%9D%92%E8%91%89%E5%8F%B0%E9%A7%85",
@@ -1294,18 +1186,6 @@ export const STATION_DATA: Urls = {
       title: "貴船口駅",
     },
   ],
-  ダンノウラ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E4%B8%8B%E9%96%A2%E5%B8%82%E7%81%AB%E3%81%AE%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "壇ノ浦駅",
-    },
-  ],
-  ウワノダイ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E8%94%B5%E7%8E%8B%E4%B8%AD%E5%A4%AE%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "上の台駅",
-    },
-  ],
   テヅカヤマ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E5%B8%9D%E5%A1%9A%E5%B1%B1%E9%A7%85",
@@ -1322,12 +1202,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E7%A5%9E%E4%BF%9D%E5%8E%9F%E9%A7%85",
       title: "神保原駅",
-    },
-  ],
-  オンセンジ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%9F%8E%E5%B4%8E%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "温泉寺駅",
     },
   ],
   ニシタビラ: [
@@ -1396,12 +1270,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E7%A5%9E%E6%A5%BD%E5%9D%82%E9%A7%85",
       title: "神楽坂駅",
-    },
-  ],
-  ダシダイラ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%87%BA%E5%B9%B3%E9%A7%85",
-      title: "出平駅",
     },
   ],
   ダイタバシ: [
@@ -1952,12 +1820,6 @@ export const STATION_DATA: Urls = {
       title: "鳥居本駅",
     },
   ],
-  チュウフク: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E7%A8%B2%E4%BD%90%E5%B1%B1",
-      title: "中腹駅",
-    },
-  ],
   タンバグチ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E4%B8%B9%E6%B3%A2%E5%8F%A3%E9%A7%85",
@@ -2028,12 +1890,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E5%A4%A7%E6%9B%B2%E9%A7%85_(%E7%A7%8B%E7%94%B0%E7%9C%8C)",
       title: "大曲駅",
-    },
-  ],
-  ワシノサト: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%A4%AA%E9%BE%8D%E5%AF%BA%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4#駅一覧",
-      title: "鷲の里駅",
     },
   ],
   トウジョウ: [
@@ -2298,12 +2154,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E4%B8%89%E3%83%84%E5%A2%83%E9%A7%85",
       title: "三ツ境駅",
-    },
-  ],
-  トリカブト: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E8%94%B5%E7%8E%8B%E4%B8%AD%E5%A4%AE%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "鳥兜駅",
     },
   ],
   イワムラダ: [
@@ -2698,12 +2548,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E6%BA%9D%E3%81%AE%E5%8F%A3%E9%A7%85",
       title: "溝の口駅",
-    },
-  ],
-  トウゲノユ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E7%A2%93%E6%B0%B7%E5%B3%A0%E9%89%84%E9%81%93%E6%96%87%E5%8C%96%E3%82%80%E3%82%89#トロッコ列車・シェルパ君",
-      title: "とうげのゆ駅",
     },
   ],
   ゴテンヤマ: [
@@ -3214,12 +3058,6 @@ export const STATION_DATA: Urls = {
       title: "大通駅",
     },
   ],
-  コガネザワ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%B0%8F%E9%87%91%E6%B2%A2%E9%A7%85",
-      title: "小金沢駅",
-    },
-  ],
   アヤメイケ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E8%8F%96%E8%92%B2%E6%B1%A0%E9%A7%85",
@@ -3300,12 +3138,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E5%B5%90%E5%B1%B1%E9%A7%85_(%E9%98%AA%E6%80%A5)",
       title: "嵐山駅 (阪急)",
-    },
-  ],
-  シンシモダ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E4%B8%8B%E7%94%B0%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4#路線概要",
-      title: "新下田駅",
     },
   ],
   ウエダハラ: [
@@ -3448,12 +3280,6 @@ export const STATION_DATA: Urls = {
       title: "春日山駅",
     },
   ],
-  オクノイン: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E8%BA%AB%E5%BB%B6%E5%B1%B1#身延山ロープウェイ",
-      title: "奥之院駅",
-    },
-  ],
   キタアゲオ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E5%8C%97%E4%B8%8A%E5%B0%BE%E9%A7%85",
@@ -3488,12 +3314,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E6%A1%9C%E5%B2%A1%E9%A7%85",
       title: "桜岡駅",
-    },
-  ],
-  カンノウラ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E7%94%B2%E6%B5%A6%E4%BF%A1%E5%8F%B7%E5%A0%B4",
-      title: "甲浦駅",
     },
   ],
   イズミサワ: [
@@ -3846,12 +3666,6 @@ export const STATION_DATA: Urls = {
       title: "宮の陣駅",
     },
   ],
-  カンザンジ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E3%81%8B%E3%82%93%E3%81%96%E3%82%93%E3%81%98%E9%A7%85",
-      title: "かんざんじ駅",
-    },
-  ],
   ギョウトク: [
     {
       url: "https://ja.wikipedia.org/wiki/%E8%A1%8C%E5%BE%B3%E9%A7%85",
@@ -3886,12 +3700,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E5%B2%A9%E6%B0%B4%E5%AF%BA%E9%A7%85",
       title: "岩水寺駅",
-    },
-  ],
-  シジミタニ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E9%96%A2%E8%A5%BF%E9%9B%BB%E5%8A%9B%E9%BB%92%E9%83%A8%E5%B0%82%E7%94%A8%E9%89%84%E9%81%93",
-      title: "蜆谷駅",
     },
   ],
   タツルハマ: [
@@ -4172,12 +3980,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E5%8C%97%E7%BE%8E%E7%91%9B%E9%A7%85",
       title: "北美瑛駅",
-    },
-  ],
-  オオフナト: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%A4%A7%E8%88%B9%E6%B8%A1%E9%A7%85",
-      title: "大船渡駅",
     },
   ],
   オオサクラ: [
@@ -4704,12 +4506,6 @@ export const STATION_DATA: Urls = {
       title: "上総久保駅",
     },
   ],
-  センガタキ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E6%98%87%E4%BB%99%E5%B3%A1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4#路線データ",
-      title: "仙蛾滝駅",
-    },
-  ],
   オヤマダイ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E5%B0%BE%E5%B1%B1%E5%8F%B0%E9%A7%85",
@@ -4980,12 +4776,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%AF%8C%E8%89%AF%E9%87%8E%E9%A7%85",
       title: "中富良野駅",
-    },
-  ],
-  マルヤマド: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E8%B5%A4%E6%B2%A2%E8%87%AA%E7%84%B6%E4%BC%91%E9%A4%8A%E6%9E%97#森林鉄道",
-      title: "丸山渡駅",
     },
   ],
   タカチャヤ: [
@@ -5688,12 +5478,6 @@ export const STATION_DATA: Urls = {
       title: "香櫨園駅",
     },
   ],
-  テングイワ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%85%AD%E7%94%B2%E6%9C%89%E9%A6%AC%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%83%BC",
-      title: "天狗岩駅",
-    },
-  ],
   イリヤマセ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E5%85%A5%E5%B1%B1%E7%80%AC%E9%A7%85",
@@ -5904,12 +5688,6 @@ export const STATION_DATA: Urls = {
       title: "宝塚駅",
     },
   ],
-  ハコネエン: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E7%AE%B1%E6%A0%B9_%E9%A7%92%E3%83%B6%E5%B2%B3%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%83%BC",
-      title: "箱根園駅",
-    },
-  ],
   シモオオリ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E4%B8%8B%E5%A4%A7%E5%88%A9%E9%A7%85",
@@ -5950,12 +5728,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E5%8C%97%E5%8A%A0%E8%B3%80%E5%B1%8B%E9%A7%85",
       title: "北加賀屋駅",
-    },
-  ],
-  ミドリグチ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E3%81%BF%E3%81%A9%E3%82%8A%E5%8F%A3%E9%A7%85",
-      title: "みどり口駅",
     },
   ],
   タツタグチ: [
@@ -6682,12 +6454,6 @@ export const STATION_DATA: Urls = {
       title: "上道駅 (鳥取県)",
     },
   ],
-  コヤダイラ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%B0%8F%E5%B1%8B%E5%B9%B3%E9%A7%85",
-      title: "小屋平駅",
-    },
-  ],
   リョウゴク: [
     {
       url: "https://ja.wikipedia.org/wiki/%E4%B8%A1%E5%9B%BD%E9%A7%85",
@@ -6906,12 +6672,8 @@ export const STATION_DATA: Urls = {
       title: "三条駅 (香川県)",
     },
     {
-      url: "https://ja.wikipedia.org/wiki/%E5%B1%B1%E4%B8%8A%E9%A7%85_(%E6%9D%B1%E4%BA%AC%E9%83%BD)",
-      title: "山上駅 (東京都)",
-    },
-    {
       url: "https://ja.wikipedia.org/wiki/%E7%9A%BF%E5%80%89%E5%B1%B1%E3%82%B1%E3%83%BC%E3%83%96%E3%83%AB%E3%82%AB%E3%83%BC",
-      title: "山上駅 (福岡県)",
+      title: "山上駅",
     },
   ],
   マルタマチ: [
@@ -7020,12 +6782,6 @@ export const STATION_DATA: Urls = {
       title: "飯田橋駅",
     },
   ],
-  オオヤマチ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%A4%A7%E8%B0%B7%E3%81%BE%E3%81%A1%E9%A7%85",
-      title: "大谷まち駅",
-    },
-  ],
   ヒダホソエ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E9%A3%9B%E9%A8%A8%E7%B4%B0%E6%B1%9F%E9%A7%85",
@@ -7054,12 +6810,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E4%B8%8A%E8%8F%85%E8%B0%B7%E9%A7%85",
       title: "上菅谷駅",
-    },
-  ],
-  ヒガシタニ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E9%96%A2%E8%A5%BF%E9%9B%BB%E5%8A%9B%E9%BB%92%E9%83%A8%E5%B0%82%E7%94%A8%E9%89%84%E9%81%93",
-      title: "東谷駅",
     },
   ],
   マンガツカ: [
@@ -7106,12 +6856,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E7%99%BB%E5%88%A5%E9%A7%85",
       title: "登別駅",
-    },
-  ],
-  シアイダニ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E9%96%A2%E8%A5%BF%E9%9B%BB%E5%8A%9B%E9%BB%92%E9%83%A8%E5%B0%82%E7%94%A8%E9%89%84%E9%81%93",
-      title: "志合谷駅",
     },
   ],
   ロクジョウ: [
@@ -7634,12 +7378,6 @@ export const STATION_DATA: Urls = {
       title: "羽犬塚駅",
     },
   ],
-  トザングチ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E7%AE%B8%E8%94%B5%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "登山口駅",
-    },
-  ],
   イナリヤマ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E7%A8%B2%E8%8D%B7%E5%B1%B1%E9%A7%85",
@@ -7770,12 +7508,6 @@ export const STATION_DATA: Urls = {
       title: "上前津駅",
     },
   ],
-  ドアイグチ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E8%B0%B7%E5%B7%9D%E5%B2%B3%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4#駅一覧",
-      title: "土合口駅",
-    },
-  ],
   ゼンツウジ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E5%96%84%E9%80%9A%E5%AF%BA%E9%A7%85",
@@ -7872,12 +7604,6 @@ export const STATION_DATA: Urls = {
       title: "八栗口駅",
     },
   ],
-  イナサダケ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E7%A8%B2%E4%BD%90%E5%B1%B1",
-      title: "稲佐岳駅",
-    },
-  ],
   キタカヌマ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E5%8C%97%E9%B9%BF%E6%B2%BC%E9%A7%85",
@@ -7926,12 +7652,6 @@ export const STATION_DATA: Urls = {
       title: "桜島駅",
     },
   ],
-  ササダイラ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E7%AC%B9%E5%B9%B3%E9%A7%85",
-      title: "笹平駅",
-    },
-  ],
   ウシノハマ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E7%89%9B%E3%83%8E%E6%B5%9C%E9%A7%85",
@@ -7956,12 +7676,6 @@ export const STATION_DATA: Urls = {
       title: "明神駅",
     },
   ],
-  ヨシノヤマ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%90%89%E9%87%8E%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4",
-      title: "吉野山駅",
-    },
-  ],
   フクダマチ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E7%A6%8F%E7%94%B0%E7%94%BA%E9%A7%85",
@@ -7984,12 +7698,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E6%84%9B%E7%9F%A5%E5%BE%A1%E6%B4%A5%E9%A7%85",
       title: "愛知御津駅",
-    },
-  ],
-  クノウザン: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E5%B9%B3%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4#路線データ",
-      title: "久能山駅",
     },
   ],
   カミイマイ: [
@@ -8296,12 +8004,6 @@ export const STATION_DATA: Urls = {
       title: "弥生台駅",
     },
   ],
-  ニタトウゲ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E9%9B%B2%E4%BB%99%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4#駅一覧",
-      title: "仁田峠駅",
-    },
-  ],
   チヨガオカ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E5%8D%83%E4%BB%A3%E3%83%B6%E5%B2%A1%E9%A7%85",
@@ -8384,12 +8086,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E6%96%B0%E9%96%8B%E5%9C%B0%E9%A7%85",
       title: "新開地駅",
-    },
-  ],
-  シモフナト: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E4%B8%8B%E8%88%B9%E6%B8%A1%E9%A7%85",
-      title: "下船渡駅",
     },
   ],
   シンジョウ: [
@@ -8532,12 +8228,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E4%B8%8A%E6%B3%89%E9%A7%85",
       title: "上泉駅",
-    },
-  ],
-  ホトトギス: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E4%B8%8D%E5%A6%82%E5%B8%B0%E9%A7%85",
-      title: "不如帰駅",
     },
   ],
   ニシオウチ: [
