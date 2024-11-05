@@ -100,18 +100,21 @@ export const StatsModal = React.memo(function StatsModal({
                       position="absolute"
                       top="7px"
                       left="9%"
-                      w="41px"
-                      h="41px"
+                      w="42px"
+                      h="42px"
                       bgColor={samegroupColor}
                     >
                       <Circle
-                        w="34px"
-                        h="34px"
+                        w="36px"
+                        h="36px"
                         bgColor="white"
+                        position="absolute"
+                        top="3px"
+                        left="3px"
                         _text={{
                           marginLeft: -0.5,
                           fontWeight: "bold",
-                          fontSize: 19,
+                          fontSize: 16,
                           letterSpacing: -2,
                         }}
                       >
@@ -162,20 +165,23 @@ export const StatsModal = React.memo(function StatsModal({
                     <VStack>
                       <Circle
                         position="absolute"
-                        right={0}
-                        top={-33}
-                        w="30px"
-                        h="30px"
+                        right={1}
+                        top={-35}
+                        w="34px"
+                        h="34px"
                         bgColor={samegroupColor}
                       >
                         <Circle
-                          w="24px"
-                          h="24px"
+                          w="28px"
+                          h="28px"
                           bgColor="white"
+                          position="absolute"
+                          top="3px"
+                          left="3px"
                           _text={{
                             marginLeft: -0.5,
                             fontWeight: "bold",
-                            fontSize: 14,
+                            fontSize: 12,
                             letterSpacing: -2,
                           }}
                         >
@@ -184,8 +190,8 @@ export const StatsModal = React.memo(function StatsModal({
                       </Circle>
                       <Text
                         position="absolute"
-                        right={8}
-                        top={-34}
+                        right={10}
+                        top={-36}
                         fontWeight="bold"
                         fontSize={25}
                         color="black"
