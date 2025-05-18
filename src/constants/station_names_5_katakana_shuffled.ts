@@ -2958,7 +2958,7 @@ export const STATION_DATA: Urls = {
   ],
   ロクジゾウ: [
     {
-      url: "https://ja.wikipedia.org/wiki/%E5%85%AD%E5%9C%B0%E8%94%B5%E9%A7%85",
+      url: "https://ja.wikipedia.org/wiki/%E5%85%AD%E5%9C%B0%E8%94%B5%E9%A7%85_(%E4%BA%AC%E9%98%AA)",
       title: "六地蔵駅",
     },
   ],
