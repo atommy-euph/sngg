@@ -4696,8 +4696,12 @@ export const STATION_DATA: Urls = {
       title: "三ノ宮駅",
     },
     {
-      url: "https://ja.wikipedia.org/wiki/%E4%B8%89%E5%AE%AE%E9%A7%85",
-      title: "三宮駅",
+      url: "https://ja.wikipedia.org/wiki/%E4%B8%89%E5%AE%AE%E9%A7%85_(%E7%A5%9E%E6%88%B8%E5%B8%82%E5%96%B6%E5%9C%B0%E4%B8%8B%E9%89%84)",
+      title: "三宮駅 (神戸市営地下鉄)",
+    },
+    {
+      url: "https://ja.wikipedia.org/wiki/%E4%B8%89%E5%AE%AE%E9%A7%85_(%E7%A5%9E%E6%88%B8%E6%96%B0%E4%BA%A4%E9%80%9A)",
+      title: "三宮駅 (神戸新交通)"
     },
   ],
   イズミゴウ: [
