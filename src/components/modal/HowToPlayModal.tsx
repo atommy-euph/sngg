@@ -250,6 +250,9 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
             </Link>
             に2025年7月14日時点で掲載されているものに準じます。
           </Text>
+	  <Text>
+            ・全ての5文字の駅が出題されたため、出題リストをシャッフルしました（2025/11/25）
+	  </Text>
           <Divider my={3} />
           <Heading {...headingProps} color="gray.400" textAlign="center">
             About this game.

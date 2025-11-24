@@ -7,8 +7,7 @@ export const NumberOfData = NAMES.length;
 // 出題リストのリセット: 一巡する日の通算日を指定
 
 // 2025/11/24 (1377日目) に出題が一巡。
-export const dayOffset = 24;
-//export const dayOffset = 1377;
+export const dayOffset = 1377;
 
 // リセット前日の出題駅
 export const finalStation = 'ヒゴイクラ'
@@ -32,24 +31,17 @@ export const getWordOfTheDay = () => {
   const nextday = (index + 1) * msInDay + epochMs - now;
   const questionNumber = (index - dayOffset - 1) % NumberOfData;
   var lastStation;
-  if (questionNumber === NumberOfData - 1) {
-    // 24時までの間、答えと昨日の答えを個別に設定
-    lastStation = 'シンフカエ';
-    return {
-      solution_yesterday: lastStation,
-      solution: finalStation,
-      solutionIndex: index,
-      tomorrow: nextday,
-    };
-  } else {
-    // 24時を過ぎたら、答えと昨日の答えを変更
+  if (questionNumber === 0) {
     lastStation = finalStation;
-    return {
-      solution_yesterday: lastStation,
-      solution: NAMES[0],
-      solutionIndex: index,
-      tomorrow: nextday,
-    };
+  } else {
+    lastStation = NAMES[questionNumber - 1];
+  }
+
+  return {
+    solution_yesterday: lastStation,
+    solution: NAMES[questionNumber],
+    solutionIndex: index,
+    tomorrow: nextday,
   };
 };
 
