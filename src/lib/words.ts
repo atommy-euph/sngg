@@ -4,17 +4,17 @@ export const NAMES = Object.keys(STATION_DATA);
 export const NumberOfData = NAMES.length;
 
 // dayOffset: 問題番号のオフセット
+// 出題リストのリセット: 一巡する日の通算日を指定
 
-// ex1) 出題リストのリセット: 前日の通算日を指定
-//      1392問で一巡して1393日目にリセット -> dayOffset = 1392
-//export const dayOffset = 1392;
-
-// ex2) 既出の駅のリストからの削除に対応: 削除した数を指定
-//     20駅削除 -> dayOffset = 20
+// 2025/11/24 (1377日目) に出題が一巡。
 export const dayOffset = 24;
+//export const dayOffset = 1377;
 
 // リセット前日の出題駅
-export const finalStation = 'ナカウラワ'
+export const finalStation = 'ヒゴイクラ'
+
+// リセット後、既出の駅をリストから削除した場合、削除した数を加算
+//export const dayOffset = 1377 + 1;
 
 export const isWinningWord = (word: string): boolean => {
   return solution === word;
@@ -32,17 +32,24 @@ export const getWordOfTheDay = () => {
   const nextday = (index + 1) * msInDay + epochMs - now;
   const questionNumber = (index - dayOffset - 1) % NumberOfData;
   var lastStation;
-  if (questionNumber === 0) {
-    lastStation = finalStation;
+  if (questionNumber === NumberOfData - 1) {
+    // 24時までの間、答えと昨日の答えを個別に設定
+    lastStation = 'シンフカエ';
+    return {
+      solution_yesterday: lastStation,
+      solution: finalStation,
+      solutionIndex: index,
+      tomorrow: nextday,
+    };
   } else {
-    lastStation = NAMES[questionNumber - 1];
-  }
-
-  return {
-    solution_yesterday: lastStation,
-    solution: NAMES[questionNumber],
-    solutionIndex: index,
-    tomorrow: nextday,
+    // 24時を過ぎたら、答えと昨日の答えを変更
+    lastStation = finalStation;
+    return {
+      solution_yesterday: lastStation,
+      solution: NAMES[0],
+      solutionIndex: index,
+      tomorrow: nextday,
+    };
   };
 };
 
