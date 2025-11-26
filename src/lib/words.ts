@@ -10,7 +10,7 @@ export const NumberOfData = NAMES.length;
 export const dayOffset = 1377;
 
 // リセット前日の出題駅
-export const finalStation = 'ヒゴイクラ'
+//export const finalStation = 'シンジュク'
 
 // リセット後、既出の駅をリストから削除した場合、削除した数を加算
 //export const dayOffset = 1377 + 1;
@@ -32,7 +32,8 @@ export const getWordOfTheDay = () => {
   const questionNumber = (index - dayOffset - 1) % NumberOfData;
   var lastStation;
   if (questionNumber === 0) {
-    lastStation = finalStation;
+// lastStation = finalStation;
+   lastStation = NAMES[NumberOfData - 1];
   } else {
     lastStation = NAMES[questionNumber - 1];
   }
