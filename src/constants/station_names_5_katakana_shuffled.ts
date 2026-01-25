@@ -6916,12 +6916,6 @@ export const STATION_DATA: Urls = {
       title: "道後山駅",
     },
   ],
-  ゼンザマチ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E9%8A%AD%E5%BA%A7%E7%94%BA%E5%81%9C%E7%95%99%E5%A0%B4",
-      title: "銭座町停留場",
-    },
-  ],
   ジュウソウ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E5%8D%81%E4%B8%89%E9%A7%85",
@@ -7130,12 +7124,6 @@ export const STATION_DATA: Urls = {
     {
       url: "https://ja.wikipedia.org/wiki/%E7%9F%B3%E8%A6%8B%E6%B4%A5%E7%94%B0%E9%A7%85",
       title: "石見津田駅",
-    },
-  ],
-  タカラマチ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E5%AE%9D%E7%94%BA%E5%81%9C%E7%95%99%E5%A0%B4",
-      title: "宝町停留場",
     },
   ],
   キタシンチ: [
