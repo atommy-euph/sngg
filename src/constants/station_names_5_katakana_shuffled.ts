@@ -1794,12 +1794,6 @@ export const STATION_DATA: Urls = {
       title: "新栃木駅",
     },
   ],
-  チップベツ: [
-    {
-      url: "https://ja.wikipedia.org/wiki/%E7%A7%A9%E7%88%B6%E5%88%A5%E9%A7%85",
-      title: "秩父別駅",
-    },
-  ],
   ヒガシズシ: [
     {
       url: "https://ja.wikipedia.org/wiki/%E6%9D%B1%E9%80%97%E5%AD%90%E9%A7%85",
