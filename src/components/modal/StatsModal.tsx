@@ -31,7 +31,7 @@ import { shareStatus } from "../../lib/share";
 // @ts-ignore
 import { romanize } from "../../lib/kanaToRoman";
 
-import { STATION_DATA } from "../../constants/station_names_5_katakana_shuffled";
+import { ACTIVE_STATION_DATA as STATION_DATA } from "../../lib/words";
 import { samegroupColor } from "../../constants/colors";
 
 import BMC_BUTTON from "../../img/bmc-button.png";
