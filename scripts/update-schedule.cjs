@@ -19,12 +19,7 @@ try {
   let config;
   if (fs.existsSync(target)) config = JSON.parse(fs.readFileSync(target, 'utf8'));
   else throw new Error('初期設定ファイルがありません');
-  // Full legacy order stays outside src and is never imported by the browser.
-  // It is needed only to reschedule the initial migration before publication.
-  const legacyFile = path.join(__dirname, 'legacy-order.json');
-  if (args.includes('--replace-pending') && initialize) {
-    config.revisions[0].order = JSON.parse(fs.readFileSync(legacyFile, 'utf8'));
-  }
+  restoreLegacyOrderForMigration(config, initialize && args.includes('--replace-pending'));
   const oldReferenceDate = stateAt(config, dayDate(dateDay(effective) - 1)).referenceDate;
   const canonical = data => JSON.stringify(Object.keys(data).sort().map(k => [k, data[k]]));
   let last = config.revisions[config.revisions.length - 1];
@@ -51,9 +46,7 @@ try {
   console.log('駅名・読みの基準日:', oldReferenceDate, '→', today, '（適用日から表示）');
   config.revisions[config.revisions.length - 1].referenceDate = today;
   config.version = 3;
-  // Retain only the legacy days that can actually be selected before migration.
-  const migration = config.revisions.find(r => !r.legacy);
-  if (migration) config.revisions[0].order = config.revisions[0].order.slice(0, dateDay(migration.effective) - dateDay(config.revisions[0].effective));
+  trimLegacyHistory(config);
   for (const revision of config.revisions) {
     revision.active = Object.fromEntries(Object.keys(revision.active).sort().map(name => [name, revision.active[name]]));
   }
@@ -64,3 +57,18 @@ try {
   fs.renameSync(target + '.tmp', target);
   console.log('出題設定を保存しました。駅データと一緒にコミット・デプロイしてください。');
 } catch (error) { console.error(error.message); process.exitCode = 1; }
+
+/** 公開前の初回適用日を変更するときだけ、管理用の旧順序を復元する。 */
+function restoreLegacyOrderForMigration(config, replacingInitialMigration) {
+  if (!replacingInitialMigration) return;
+  const legacyFile = path.join(__dirname, 'legacy-order.json');
+  config.revisions[0].order = JSON.parse(fs.readFileSync(legacyFile, 'utf8'));
+}
+
+/** ブラウザへ渡す旧順序を、初回移行前に選ばれる日数分だけに限定する。 */
+function trimLegacyHistory(config) {
+  const migration = config.revisions.find(r => !r.legacy);
+  if (!migration) return;
+  const legacy = config.revisions[0];
+  legacy.order = legacy.order.slice(0, dateDay(migration.effective) - dateDay(legacy.effective));
+}

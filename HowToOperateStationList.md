@@ -18,7 +18,7 @@ npm run schedule:update -- 2026-10-01
 以下のコマンドで、現在のサイクルの指定した日付以降の出題リストを確認できます。
 
 ```sh
-npm run schedule:list -- 2026-09-24 --output schedule-list.csv
+npm run schedule:list -- 2026-10-01 --output schedule-list.csv
 ```
 
 ## 変更の扱い

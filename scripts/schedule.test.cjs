@@ -7,6 +7,18 @@ const orderOf = r => r.legacy ? r.order : shuffled(r.candidates,r.seed,r.previou
 const data = names => Object.fromEntries(names.map(n => [n, [{ title: n, url: 'https://example.com' }]]));
 const fixture = () => ({ version: 3, revisions: [{ referenceDate: '2026-01-01', effective: '2026-01-01', cycle: 1, fullShuffle: '2026-01-01', seen: [], candidates: ['A','B','C','D','E'], seed: '14', active: data(['A','B','C','D','E']) }] });
 
+test('legacy compatibility repeats only the old order and retains its shuffle date', () => {
+  const config={version:3,revisions:[{referenceDate:'2025-12-01',effective:'2026-01-01',cycle:1,
+    fullShuffle:'2025-11-25',seen:[],legacy:true,order:['A','B','C'],active:data(['A','B','C'])}]};
+  for(let i=0;i<10;i++) {
+    const state=stateAt(config,dayDate(dateDay('2026-01-01')+i));
+    assert.equal(state.solution,['A','B','C'][i%3]);
+    assert.equal(state.cycle,1+Math.floor(i/3));
+    assert.equal(state.fullShuffle,'2025-11-25');
+    assert.deepEqual(state.seen,['A','B','C'].slice(0,i%3));
+  }
+});
+
 test('migration preserves legacy days, excludes every already asked station', () => {
   const first = real.revisions[0], migration = real.revisions[1];
   const elapsed = dateDay(migration.effective) - dateDay(first.effective);
@@ -99,7 +111,7 @@ test('real migration into 30 full cycles: no boundary repeat or missing entries'
 
 test('page-load snapshot stays fixed after midnight; explicit new dates advance', () => {
   const NativeDate=Date;
-  let clock=new NativeDate(2026,8,23,23,59,59);
+  let clock=new NativeDate(2026,8,30,23,59,59);
   global.Date=class extends NativeDate {
     constructor(...args) { super(...(args.length ? args : [clock.getTime()])); }
     static now() { return clock.getTime(); }
@@ -107,7 +119,7 @@ test('page-load snapshot stays fixed after midnight; explicit new dates advance'
   try {
     const words=require('../src/lib/words.ts');
     const old=words.getWordOfTheDay();
-    clock=new NativeDate(2026,8,24,0,1);
+    clock=new NativeDate(2026,9,1,0,1);
     assert.deepEqual(words.getWordOfTheDay(),old);
     const next=words.getWordOfTheDay(clock);
     assert.equal(next.solutionIndex,old.solutionIndex+1);
@@ -192,8 +204,8 @@ test('reference date changes with active station data on the effective date', ()
   assert.ok(before.active.A);assert.equal(before.active.X,undefined);
   assert.equal(after.referenceDate,'2026-01-02');
   assert.equal(after.active.A,undefined);assert.ok(after.active.X);
-  assert.equal(stateAt(real,'2026-09-23').referenceDate,'2026-04-02');
-  assert.equal(stateAt(real,'2026-09-24').referenceDate,'2026-09-21');
+  assert.equal(stateAt(real,'2026-09-30').referenceDate,'2026-04-02');
+  assert.equal(stateAt(real,'2026-10-01').referenceDate,'2026-09-22');
 });
 
 test('published recipes contain no literal post-migration order', () => {

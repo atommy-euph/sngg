@@ -7,10 +7,10 @@ const { stateAt, revise } = require('../src/lib/schedule.ts');
 const config = require('../src/constants/schedule.json');
 
 test('includes specified date, stops before next cycle, and crosses initial migration', () => {
-  const rows = listSchedule(config, '2026-09-23');
-  assert.equal(rows[0].date, '2026-09-23');
+  const rows = listSchedule(config, '2026-09-30');
+  assert.equal(rows[0].date, '2026-09-30');
   assert.equal(rows.at(-1).date, '2029-08-05');
-  assert.equal(rows.length, 1048);
+  assert.equal(rows.length, 1041);
   for (const row of rows) assert.equal(row.station, stateAt(config, row.date).solution);
   assert.equal(listSchedule(config, '2029-08-05').length, 1);
   assert.equal(listSchedule(config, '2029-08-06').length, 1350);

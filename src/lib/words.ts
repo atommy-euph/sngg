@@ -1,8 +1,10 @@
 import config from '../constants/schedule.json';
 import { Schedule, stateAt, localDate, dateDay, dayDate, epoch } from './schedule';
 
-const schedule: Schedule = config;
-// Intentionally fixed at page load: players can finish after midnight.
+const schedule = config as Schedule;
+// solution（当日の答え）とsolutionIndex（通算問題番号）は、ページ読込時に
+// ブラウザ内で計算し、各画面で共有する。画面側での再計算を避け、
+// 日付をまたいでも読込時の問題を維持する。solutionIndexは駅一覧の配列インデックスではない。
 const openedAt = new Date();
 const today = localDate(openedAt);
 const current = stateAt(schedule, today);
