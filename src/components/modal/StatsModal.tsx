@@ -24,14 +24,14 @@ import {
   tomorrow,
   solution,
   solution_yesterday,
-  solutionIndex,
+  puzzleNumber,
 } from "../../lib/words";
 import { shareStatus } from "../../lib/share";
 
 // @ts-ignore
 import { romanize } from "../../lib/kanaToRoman";
 
-import { STATION_DATA } from "../../constants/station_names_5_katakana_shuffled";
+import { ACTIVE_STATION_DATA as STATION_DATA } from "../../lib/words";
 import { samegroupColor } from "../../constants/colors";
 
 import BMC_BUTTON from "../../img/bmc-button.png";
@@ -118,7 +118,7 @@ export const StatsModal = React.memo(function StatsModal({
                           letterSpacing: -2,
                         }}
                       >
-                        {solutionIndex}
+                        {puzzleNumber}
                       </Circle>
                     </Circle>
                     <Heading
@@ -185,7 +185,7 @@ export const StatsModal = React.memo(function StatsModal({
                             letterSpacing: -2,
                           }}
                         >
-                          {solutionIndex + 1}
+                          {puzzleNumber + 1}
                         </Circle>
                       </Circle>
                       <Text

@@ -1,50 +1,31 @@
-import { STATION_DATA } from "../constants/station_names_5_katakana_shuffled";
+import config from '../constants/schedule.json';
+import { Schedule, stateAt, localDate, dateDay, dayDate, epoch } from './schedule';
 
-export const NAMES = Object.keys(STATION_DATA);
+const schedule = config as Schedule;
+// solution（当日の答え）とpuzzleNumber（通算問題番号）は、ページ読込時に
+// ブラウザ内で計算し、各画面で共有する。画面側での再計算を避け、
+// 日付をまたいでも読込時の問題を維持する。puzzleNumberは駅一覧の配列インデックスではない。
+const openedAt = new Date();
+const today = localDate(openedAt);
+const current = stateAt(schedule, today);
+export const ACTIVE_STATION_DATA = current.active;
+export const NAMES = Object.keys(ACTIVE_STATION_DATA);
 export const NumberOfData = NAMES.length;
+export const fullShuffleDate = current.fullShuffle.replace(/-/g, '/');
+const [year, month, day] = current.referenceDate.split('-').map(Number);
+export const stationReferenceDate = `${year}年${month}月${day}日`;
 
-// dayOffset: 問題番号のオフセット
-// 出題リストのリセット: 一巡する日の通算日を指定
-
-// 2025/11/24 (1377日目) に出題が一巡。
-export const dayOffset = 1377;
-
-// リセット前日の出題駅
-//export const finalStation = 'シンジュク'
-
-// リセット後、既出の駅をリストから削除した場合、削除した数を加算
-//export const dayOffset = 1377 + 1;
-
-export const isWinningWord = (word: string): boolean => {
-  return solution === word;
-};
-
-export const isInWordList = (word: string): boolean => {
-  return NAMES.includes(word);
-};
-
-export const getWordOfTheDay = () => {
-  const epochMs = new Date("February 16, 2022 00:00:00").valueOf();
-  const now = Date.now();
-  const msInDay = 86400000;
-  const index = Math.floor((now - epochMs) / msInDay);
-  const nextday = (index + 1) * msInDay + epochMs - now;
-  const questionNumber = (index - dayOffset - 1) % NumberOfData;
-  var lastStation;
-  if (questionNumber === 0) {
-// lastStation = finalStation;
-   lastStation = NAMES[NumberOfData - 1];
-  } else {
-    lastStation = NAMES[questionNumber - 1];
-  }
-
+export const getWordOfTheDay = (now: Date = openedAt) => {
+  const date = localDate(now);
+  const day = dateDay(date);
+  const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
   return {
-    solution_yesterday: lastStation,
-    solution: NAMES[questionNumber],
-    solutionIndex: index,
-    tomorrow: nextday,
+    solution: stateAt(schedule, date).solution,
+    solution_yesterday: stateAt(schedule, dayDate(day - 1)).solution,
+    puzzleNumber: day - epoch,
+    tomorrow: next.getTime() - now.getTime(),
   };
 };
-
-export const { solution, solution_yesterday, solutionIndex, tomorrow } =
-  getWordOfTheDay();
+export const { solution, solution_yesterday, puzzleNumber, tomorrow } = getWordOfTheDay();
+export const isWinningWord = (word: string): boolean => solution === word;
+export const isInWordList = (word: string): boolean => NAMES.includes(word);

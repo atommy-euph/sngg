@@ -1,3 +1,4 @@
+import { fullShuffleDate, stationReferenceDate } from "../../lib/words";
 import React from "react";
 import {
   Modal,
@@ -248,10 +249,10 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
             >
               Wikipedia「日本の鉄道駅一覧」
             </Link>
-            に2026年4月2日時点で掲載されているものに準じます。
+            に{stationReferenceDate}時点で掲載されているものに準じます。
           </Text>
 	  <Text>
-            ・全ての5文字の駅が出題されたため、出題リストをシャッフルしました（2025/11/25）
+            ・出題リストは全駅が一巡するたびに自動でシャッフルされます。（全体の最終シャッフル日：{fullShuffleDate}）
 	  </Text>
           <Divider my={3} />
           <Heading {...headingProps} color="gray.400" textAlign="center">
