@@ -3,7 +3,7 @@ const gameStateKey = 'gameState'
 type StoredGameState = {
   guesses: string[]
   solution: string
-  solutionIndex?: number
+  puzzleNumber?: number
 }
 
 export const saveGameStateToLocalStorage = (gameState: StoredGameState) => {
@@ -12,7 +12,10 @@ export const saveGameStateToLocalStorage = (gameState: StoredGameState) => {
 
 export const loadGameStateFromLocalStorage = () => {
   const state = localStorage.getItem(gameStateKey)
-  return state ? (JSON.parse(state) as StoredGameState) : null
+  if (!state) return null
+  // 名前変更前の保存データも、通算問題番号を引き継いで復元する。
+  const { solutionIndex, ...gameState } = JSON.parse(state) as StoredGameState & { solutionIndex?: number }
+  return { ...gameState, puzzleNumber: gameState.puzzleNumber ?? solutionIndex }
 }
 
 const gameStatsKey = "gameStats"

@@ -7,6 +7,34 @@ const orderOf = r => r.legacy ? r.order : shuffled(r.candidates,r.seed,r.previou
 const data = names => Object.fromEntries(names.map(n => [n, [{ title: n, url: 'https://example.com' }]]));
 const fixture = () => ({ version: 3, revisions: [{ referenceDate: '2026-01-01', effective: '2026-01-01', cycle: 1, fullShuffle: '2026-01-01', seen: [], candidates: ['A','B','C','D','E'], seed: '14', active: data(['A','B','C','D','E']) }] });
 
+test('saved games retain puzzle numbers across the rename and write only the new key', () => {
+  const { loadGameStateFromLocalStorage, saveGameStateToLocalStorage } = require('../src/lib/localStorage.ts');
+  const original = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
+  let stored = null;
+  Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: {
+    getItem: () => stored,
+    setItem: (_key, value) => { stored = value; },
+  } });
+  try {
+    assert.equal(loadGameStateFromLocalStorage(), null);
+    const base = { guesses: ['トウキョウ'], solution: 'トウキョウ' };
+    for (const [fields, expected] of [[{}, undefined], [{ solutionIndex: 1688 }, 1688],
+      [{ puzzleNumber: 1689 }, 1689], [{ puzzleNumber: 0, solutionIndex: 1688 }, 0]]) {
+      stored = JSON.stringify({ ...base, ...fields });
+      const loaded = loadGameStateFromLocalStorage();
+      assert.deepEqual(loaded, { ...base, puzzleNumber: expected });
+      saveGameStateToLocalStorage(loaded);
+      const saved = JSON.parse(stored);
+      assert.equal(saved.puzzleNumber, expected);
+      assert.equal(Object.hasOwn(saved, 'solutionIndex'), false);
+      assert.deepEqual(saved.guesses, base.guesses);
+    }
+  } finally {
+    if (original) Object.defineProperty(globalThis, 'localStorage', original);
+    else delete globalThis.localStorage;
+  }
+});
+
 test('legacy compatibility repeats only the old order and retains its shuffle date', () => {
   const config={version:3,revisions:[{referenceDate:'2025-12-01',effective:'2026-01-01',cycle:1,
     fullShuffle:'2025-11-25',seen:[],legacy:true,order:['A','B','C'],active:data(['A','B','C'])}]};
@@ -122,7 +150,7 @@ test('page-load snapshot stays fixed after midnight; explicit new dates advance'
     clock=new NativeDate(2026,9,1,0,1);
     assert.deepEqual(words.getWordOfTheDay(),old);
     const next=words.getWordOfTheDay(clock);
-    assert.equal(next.solutionIndex,old.solutionIndex+1);
+    assert.equal(next.puzzleNumber,old.puzzleNumber+1);
     assert.equal(next.solution_yesterday,old.solution);
     assert.equal(next.solution,orderOf(real.revisions[1])[0]);
     assert.equal(words.stationReferenceDate,'2026年4月2日');

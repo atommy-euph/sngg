@@ -24,7 +24,7 @@ import {
   tomorrow,
   solution,
   solution_yesterday,
-  solutionIndex,
+  puzzleNumber,
 } from "../../lib/words";
 import { shareStatus } from "../../lib/share";
 
@@ -118,7 +118,7 @@ export const StatsModal = React.memo(function StatsModal({
                           letterSpacing: -2,
                         }}
                       >
-                        {solutionIndex}
+                        {puzzleNumber}
                       </Circle>
                     </Circle>
                     <Heading
@@ -185,7 +185,7 @@ export const StatsModal = React.memo(function StatsModal({
                             letterSpacing: -2,
                           }}
                         >
-                          {solutionIndex + 1}
+                          {puzzleNumber + 1}
                         </Circle>
                       </Circle>
                       <Text

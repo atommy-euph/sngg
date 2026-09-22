@@ -2,9 +2,9 @@ import config from '../constants/schedule.json';
 import { Schedule, stateAt, localDate, dateDay, dayDate, epoch } from './schedule';
 
 const schedule = config as Schedule;
-// solution（当日の答え）とsolutionIndex（通算問題番号）は、ページ読込時に
+// solution（当日の答え）とpuzzleNumber（通算問題番号）は、ページ読込時に
 // ブラウザ内で計算し、各画面で共有する。画面側での再計算を避け、
-// 日付をまたいでも読込時の問題を維持する。solutionIndexは駅一覧の配列インデックスではない。
+// 日付をまたいでも読込時の問題を維持する。puzzleNumberは駅一覧の配列インデックスではない。
 const openedAt = new Date();
 const today = localDate(openedAt);
 const current = stateAt(schedule, today);
@@ -22,10 +22,10 @@ export const getWordOfTheDay = (now: Date = openedAt) => {
   return {
     solution: stateAt(schedule, date).solution,
     solution_yesterday: stateAt(schedule, dayDate(day - 1)).solution,
-    solutionIndex: day - epoch,
+    puzzleNumber: day - epoch,
     tomorrow: next.getTime() - now.getTime(),
   };
 };
-export const { solution, solution_yesterday, solutionIndex, tomorrow } = getWordOfTheDay();
+export const { solution, solution_yesterday, puzzleNumber, tomorrow } = getWordOfTheDay();
 export const isWinningWord = (word: string): boolean => solution === word;
 export const isInWordList = (word: string): boolean => NAMES.includes(word);

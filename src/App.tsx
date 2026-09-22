@@ -16,7 +16,7 @@ import {
   loadGameStateFromLocalStorage,
   saveGameStateToLocalStorage,
 } from "./lib/localStorage";
-import { solution, solutionIndex } from "./lib/words";
+import { solution, puzzleNumber } from "./lib/words";
 import { loadStats, addGameStatsForCompletedGame } from "./lib/stats";
 import { getCandidatesCount } from "./lib/statuses";
 
@@ -33,7 +33,7 @@ function App() {
   const [currentGuess, setCurrentGuess] = useState("");
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage();
-    if (!loaded || loaded.solution !== solution || (loaded.solutionIndex !== undefined && loaded.solutionIndex !== solutionIndex)) {
+    if (!loaded || loaded.solution !== solution || (loaded.puzzleNumber !== undefined && loaded.puzzleNumber !== puzzleNumber)) {
       return [];
     }
     const gameWasWon = loaded.guesses.includes(solution);
@@ -47,7 +47,7 @@ function App() {
   });
 
   useEffect(() => {
-    saveGameStateToLocalStorage({ guesses, solution, solutionIndex });
+    saveGameStateToLocalStorage({ guesses, solution, puzzleNumber });
     if (guesses.length > 0)
       alert.info(`残り候補: ${getCandidatesCount(guesses)}駅`);
   }, [alert, guesses]);
