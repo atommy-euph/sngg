@@ -1,12 +1,12 @@
 import { Schedule, ShuffleRevision, StationData } from './scheduleTypes';
-import { resolveDay } from './schedule';
+import { resolveScheduleState } from './schedule';
 import { toDayNumber, toDateString } from './scheduleDates';
 
 export function createRevision(schedule: Schedule, active: StationData, effective: string, initialize = false): ShuffleRevision {
   if (Object.keys(active).length < 2) throw new Error('巡回境界の連続を防ぐため、2駅以上が必要です');
   const day = toDayNumber(effective);
-  const before = resolveDay(schedule, toDateString(day - 1));
-  const today = resolveDay(schedule, effective);
+  const before = resolveScheduleState(schedule, toDateString(day - 1));
+  const today = resolveScheduleState(schedule, effective);
   const added = Object.keys(active).filter(name => !before.active[name]);
   const removed = Object.keys(before.active).filter(name => !active[name]);
   // 駅集合が同じなら元のレシピと消化位置を保ち、リンク・基準日だけを更新する。

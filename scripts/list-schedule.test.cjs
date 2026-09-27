@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const { spawnSync } = require('node:child_process');
 const path = require('node:path');
 const { listSchedule, toCsv } = require('./list-schedule.cjs');
-const { resolveDay } = require('../src/lib/schedule.ts');
+const { resolveScheduleState } = require('../src/lib/schedule.ts');
 const { createRevision } = require('../src/lib/scheduleAuthoring.ts');
 const config = require('../src/constants/schedule.json');
 
@@ -12,7 +12,7 @@ test('includes specified date, stops before next cycle, and crosses initial migr
   assert.equal(rows[0].date, '2026-09-30');
   assert.equal(rows.at(-1).date, '2029-08-05');
   assert.equal(rows.length, 1041);
-  for (const row of rows) assert.equal(row.station, resolveDay(config, row.date).solution);
+  for (const row of rows) assert.equal(row.station, resolveScheduleState(config, row.date).solution);
   assert.equal(listSchedule(config, '2029-08-05').length, 1);
   assert.equal(listSchedule(config, '2029-08-06').length, 1350);
 });

@@ -2,19 +2,24 @@ require('./load-typescript.cjs');
 const fs = require('fs');
 const { readSchedule } = require('../src/lib/scheduleValidation.ts');
 const path = require('path');
-const { resolveDay } = require('../src/lib/schedule.ts');
+const { resolveScheduleState } = require('../src/lib/schedule.ts');
 const { toDayNumber, toDateString } = require('../src/lib/scheduleDates.ts');
 
-// Evaluate each date so pending station changes can shorten or extend the cycle.
+// 巡回の残りを再利用するが、途中の改訂適用日では必ず再解決する。
 function listSchedule(config, from) {
-  const start = toDayNumber(from);
-  const cycle = resolveDay(config, from).cycle;
+  let day = toDayNumber(from);
+  const cycle = resolveScheduleState(config, from).cycle;
   const rows = [];
-  for (let day = start; ; day++) {
-    const date = toDateString(day);
-    const state = resolveDay(config, date);
+  while (true) {
+    const state = resolveScheduleState(config, toDateString(day));
     if (state.cycle !== cycle) break;
-    rows.push({ date, station: state.solution });
+    const nextRevision = config.revisions.find(r => toDayNumber(r.effective) > day);
+    const untilRevision = nextRevision ? toDayNumber(nextRevision.effective) - day : Infinity;
+    const count = Math.min(state.order.length - state.index, untilRevision);
+    for (let offset = 0; offset < count; offset++) {
+      rows.push({ date: toDateString(day + offset), station: state.order[state.index + offset] });
+    }
+    day += count;
   }
   return rows;
 }

@@ -27,7 +27,17 @@ export function shuffled(names: string[], seed: string, previousSolution?: strin
   return result;
 }
 
+/** ブラウザ向け。管理用の順序や消化位置は公開せず、表示に必要な情報だけ返す。 */
 export function resolveDay(schedule: Schedule, date: string) {
+  const state = resolveScheduleState(schedule, date);
+  return {
+    solution: state.solution, active: state.active,
+    fullShuffle: state.fullShuffle, referenceDate: state.referenceDate,
+  };
+}
+
+/** 管理ツール向け。通常の出題解決と同じ計算を使い、巡回状態も参照できる。 */
+export function resolveScheduleState(schedule: Schedule, date: string) {
   const day = toDayNumber(date);
   const revision = schedule.revisions.filter(r => toDayNumber(r.effective) <= day).pop();
   if (!revision) throw new Error('出題設定の開始日より前です');
@@ -60,6 +70,6 @@ function shuffleStateAt(revision: ShuffleRevision, day: number, startDay: number
     fullShuffleDate = toDateString(start);
   }
   const index = day - start;
-  return { referenceDate: revision.referenceDate, solution: order[index], cycle, fullShuffle: fullShuffleDate, seen: seen.concat(order.slice(0, index)), order, index, active: revision.active,
-    recipe: { candidates, seed, previous: previousSolution, skip: consumed + index } };
+  return { referenceDate: revision.referenceDate, solution: order[index], cycle, fullShuffle: fullShuffleDate, get seen() { return seen.concat(order.slice(0, index)); }, order, index, active: revision.active,
+    get recipe() { return { candidates, seed, previous: previousSolution, skip: consumed + index }; } };
 }

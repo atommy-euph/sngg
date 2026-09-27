@@ -1,7 +1,7 @@
 require('./load-typescript.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { resolveDay, shuffled } = require('../src/lib/schedule.ts');
+const { resolveScheduleState, shuffled } = require('../src/lib/schedule.ts');
 const { toDayNumber, toDateString, localDateString, EPOCH_DAY } = require('../src/lib/scheduleDates.ts');
 const { createRevision } = require('../src/lib/scheduleAuthoring.ts');
 const real = require('../src/constants/schedule.json');
@@ -41,7 +41,7 @@ test('legacy compatibility repeats only the old order and retains its shuffle da
   const config={revisions:[{referenceDate:'2025-12-01',effective:'2026-01-01',cycle:1,
     fullShuffle:'2025-11-25',seen:[],legacy:true,order:['A','B','C'],active:data(['A','B','C'])}]};
   for(let i=0;i<10;i++) {
-    const state=resolveDay(config,toDateString(toDayNumber('2026-01-01')+i));
+    const state=resolveScheduleState(config,toDateString(toDayNumber('2026-01-01')+i));
     assert.equal(state.solution,['A','B','C'][i%3]);
     assert.equal(state.cycle,1+Math.floor(i/3));
     assert.equal(state.fullShuffle,'2025-11-25');
@@ -52,7 +52,7 @@ test('legacy compatibility repeats only the old order and retains its shuffle da
 test('migration preserves legacy days, excludes every already asked station', () => {
   const first = real.revisions[0], migration = real.revisions[1];
   const elapsed = toDayNumber(migration.effective) - toDayNumber(first.effective);
-  for (let i = 1; i < elapsed; i++) assert.equal(resolveDay(real, toDateString(toDayNumber(first.effective)+i)).solution, first.order[i]);
+  for (let i = 1; i < elapsed; i++) assert.equal(resolveScheduleState(real, toDateString(toDayNumber(first.effective)+i)).solution, first.order[i]);
   assert.equal(toDayNumber(first.effective) - EPOCH_DAY, 1378);
   assert.equal(new Set([...migration.seen, ...orderOf(migration)]).size, Object.keys(first.active).length);
   assert.equal(migration.seen.length + orderOf(migration).length, Object.keys(first.active).length);
@@ -65,7 +65,7 @@ test('each full cycle covers every station once and never repeats at boundary', 
   for (let cycle = 0; cycle < 100; cycle++) {
     const answers = [];
     for (let i=0;i<5;i++) {
-      const state = resolveDay(config,toDateString(toDayNumber('2026-01-01')+cycle*5+i));
+      const state = resolveScheduleState(config,toDateString(toDayNumber('2026-01-01')+cycle*5+i));
       if(i===0) { assert.notEqual(state.solution,previous); assert.equal(state.fullShuffle,toDateString(toDayNumber('2026-01-01')+cycle*5)); }
       answers.push(state.solution); previous=state.solution;
     }
@@ -83,11 +83,11 @@ test('addition and removal preserve past and exclude seen names', () => {
   const config=fixture();
   const next=createRevision(config,data(['B','C','E','X']),'2026-01-03');
   config.revisions.push(next);
-  assert.equal(resolveDay(config,'2026-01-01').solution,'A');
+  assert.equal(resolveScheduleState(config,'2026-01-01').solution,'A');
   assert.deepEqual(orderOf(next).slice().sort(),['C','E','X']);
   assert.equal(next.fullShuffle,'2026-01-01');
-  assert.deepEqual(Object.keys(resolveDay(config,'2026-01-02').active),['A','B','C','D','E']);
-  assert.deepEqual(Object.keys(resolveDay(config,'2026-01-03').active),['B','C','E','X']);
+  assert.deepEqual(Object.keys(resolveScheduleState(config,'2026-01-02').active),['A','B','C','D','E']);
+  assert.deepEqual(Object.keys(resolveScheduleState(config,'2026-01-03').active),['B','C','E','X']);
 });
 test('reopened station becomes a new candidate', () => {
   const config=fixture();
@@ -130,7 +130,7 @@ test('real migration into 30 full cycles: no boundary repeat or missing entries'
   let start=toDayNumber(migration.effective)+orderOf(migration).length;
   let previous=orderOf(migration)[orderOf(migration).length-1];
   for(let i=0;i<30;i++) {
-    const state=resolveDay(real,toDateString(start));
+    const state=resolveScheduleState(real,toDateString(start));
     assert.notEqual(state.solution,previous);
     assert.equal(state.fullShuffle,toDateString(start));
     assert.equal(new Set(state.order).size,size);
@@ -199,16 +199,16 @@ test('update command: idempotency, reference date, metadata, additions, validati
   today='2026-01-02';
   assert.equal(run('2026-01-03','--init'),0);
   assert.equal(stored.revisions.at(-1).referenceDate,today);
-  assert.equal(resolveDay(stored,'2026-01-02').referenceDate,'2025-12-01');
-  assert.equal(resolveDay(stored,'2026-01-03').referenceDate,today);
+  assert.equal(resolveScheduleState(stored,'2026-01-02').referenceDate,'2025-12-01');
+  assert.equal(resolveScheduleState(stored,'2026-01-03').referenceDate,today);
   assert.deepEqual(stored.revisions.map(({referenceDate,...r})=>r),JSON.parse(once).revisions.map(({referenceDate,...r})=>r));
   today='2026-01-04';
-  const oldFuture=resolveDay(stored,'2026-01-05').solution;
+  const oldFuture=resolveScheduleState(stored,'2026-01-05').solution;
   active.AAAAA=[{title:'new title',url:'https://example.com/new'}];
   assert.equal(run('2026-01-05'),0);
-  assert.equal(resolveDay(stored,'2026-01-05').solution,oldFuture);
-  assert.notEqual(resolveDay(stored,'2026-01-04').active.AAAAA[0].title,'new title');
-  assert.equal(resolveDay(stored,'2026-01-05').active.AAAAA[0].title,'new title');
+  assert.equal(resolveScheduleState(stored,'2026-01-05').solution,oldFuture);
+  assert.notEqual(resolveScheduleState(stored,'2026-01-04').active.AAAAA[0].title,'new title');
+  assert.equal(resolveScheduleState(stored,'2026-01-05').active.AAAAA[0].title,'new title');
   assert.equal(stored.revisions.at(-1).order,undefined);
   assert.ok(stored.revisions.at(-1).seed);
   today='2026-01-06';
@@ -220,11 +220,11 @@ test('update command: idempotency, reference date, metadata, additions, validati
   assert.equal(run('2026-02-30'),1);
   assert.equal(JSON.stringify(stored),saved);
   today='2026-01-08';
-  const expected=Array.from({length:30},(_,i)=>resolveDay(stored,toDateString(toDayNumber('2026-01-09')+i)).solution);
+  const expected=Array.from({length:30},(_,i)=>resolveScheduleState(stored,toDateString(toDayNumber('2026-01-09')+i)).solution);
   assert.equal(run('2026-01-09'),0); // No station or link changes: date-only revision.
-  assert.equal(resolveDay(stored,'2026-01-08').referenceDate,'2026-01-06');
-  assert.equal(resolveDay(stored,'2026-01-09').referenceDate,'2026-01-08');
-  assert.deepEqual(Array.from({length:30},(_,i)=>resolveDay(stored,toDateString(toDayNumber('2026-01-09')+i)).solution),expected);
+  assert.equal(resolveScheduleState(stored,'2026-01-08').referenceDate,'2026-01-06');
+  assert.equal(resolveScheduleState(stored,'2026-01-09').referenceDate,'2026-01-08');
+  assert.deepEqual(Array.from({length:30},(_,i)=>resolveScheduleState(stored,toDateString(toDayNumber('2026-01-09')+i)).solution),expected);
 });
 
 test('reference date changes with active station data on the effective date', () => {
@@ -232,13 +232,13 @@ test('reference date changes with active station data on the effective date', ()
   const next=createRevision(config,data(['B','C','D','E','X']),'2026-01-03');
   next.referenceDate='2026-01-02';
   config.revisions.push(next);
-  const before=resolveDay(config,'2026-01-02'),after=resolveDay(config,'2026-01-03');
+  const before=resolveScheduleState(config,'2026-01-02'),after=resolveScheduleState(config,'2026-01-03');
   assert.equal(before.referenceDate,'2026-01-01');
   assert.ok(before.active.A);assert.equal(before.active.X,undefined);
   assert.equal(after.referenceDate,'2026-01-02');
   assert.equal(after.active.A,undefined);assert.ok(after.active.X);
-  assert.equal(resolveDay(real,'2026-09-30').referenceDate,'2026-04-02');
-  assert.equal(resolveDay(real,'2026-10-01').referenceDate,'2026-09-22');
+  assert.equal(resolveScheduleState(real,'2026-09-30').referenceDate,'2026-04-02');
+  assert.equal(resolveScheduleState(real,'2026-10-01').referenceDate,'2026-09-22');
 });
 
 test('published recipes contain no literal post-migration order', () => {
@@ -256,15 +256,15 @@ test('published recipes contain no literal post-migration order', () => {
 test('successive metadata-only updates retain recipes across cycle boundaries', () => {
   const original=fixture(), config=fixture();
   for(const date of ['2026-01-03','2026-01-04','2026-01-06','2026-01-08']) {
-    const current=resolveDay(config,date);
+    const current=resolveScheduleState(config,date);
     const updated = structuredClone(current.active);
     updated.A[0].title = 'Updated ' + date;
     config.revisions.push(createRevision(config, updated, date));
   }
   for(let i=0;i<50;i++) {
     const date=toDateString(toDayNumber('2026-01-01')+i);
-    assert.equal(resolveDay(config,date).solution,resolveDay(original,date).solution);
-    assert.equal(resolveDay(config,date).fullShuffle,resolveDay(original,date).fullShuffle);
+    assert.equal(resolveScheduleState(config,date).solution,resolveScheduleState(original,date).solution);
+    assert.equal(resolveScheduleState(config,date).fullShuffle,resolveScheduleState(original,date).fullShuffle);
   }
   for(const r of config.revisions) assert.equal(r.order,undefined);
 });
@@ -300,5 +300,14 @@ test('source checks detect forgotten updates while allowing historical snapshots
   for (const change of [a => { delete a.X; }, a => { a.Y = a.X; }, a => { a.A[0].url += '/changed'; }]) {
     const source = structuredClone(latest.active); change(source);
     assert.throws(() => assertStationDataMatches(config, source), /schedule:update/);
+  }
+});
+
+test('browser day resolution exposes only the public daily state', () => {
+  const { resolveDay } = require('../src/lib/schedule.ts');
+  for (const date of ['2026-09-30', '2026-10-01', '2029-08-06']) {
+    const day = resolveDay(real, date), state = resolveScheduleState(real, date);
+    assert.deepEqual(Object.keys(day).sort(), ['active','fullShuffle','referenceDate','solution']);
+    for (const key of Object.keys(day)) assert.deepEqual(day[key], state[key]);
   }
 });

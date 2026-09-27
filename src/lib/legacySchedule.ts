@@ -12,8 +12,8 @@ export function legacyStateAt(revision: LegacyRevision, day: number, start: numb
   return {
     referenceDate: revision.referenceDate, solution: order[index],
     cycle: revision.cycle + rounds, fullShuffle: revision.fullShuffle,
-    seen: seen.concat(order.slice(0, index)), order, index, active: revision.active,
+    get seen() { return seen.concat(order.slice(0, index)); }, order, index, active: revision.active,
     // 旧方式には再利用可能なシードがない。初回移行時はcreateRevisionで新しく生成する。
-    recipe: { candidates: undefined, seed: undefined, previous: undefined, skip: index },
+    get recipe() { return { candidates: undefined, seed: undefined, previous: undefined, skip: index }; },
   };
 }
