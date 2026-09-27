@@ -4,7 +4,7 @@ export type { Schedule, Revision, LegacyRevision, ShuffleRevision, StationData }
 
 // Calendar days, not elapsed 24-hour periods: stable across local DST changes.
 export const DAY_MS = 86400000;
-export const epoch = Date.UTC(2022, 1, 16) / DAY_MS;
+export const EPOCH_DAY = Date.UTC(2022, 1, 16) / DAY_MS;
 export const dateDay = (value: string): number => {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) throw new Error('日付はYYYY-MM-DDで指定してください');
   const day = Date.parse(value + 'T00:00:00Z') / DAY_MS;

@@ -1,7 +1,7 @@
 require('./load-typescript.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { stateAt, revise, shuffled, dateDay, dayDate, localDate, epoch } = require('../src/lib/schedule.ts');
+const { stateAt, revise, shuffled, dateDay, dayDate, localDate, EPOCH_DAY } = require('../src/lib/schedule.ts');
 const real = require('../src/constants/schedule.json');
 const orderOf = r => r.legacy ? r.order : shuffled(r.candidates,r.seed,r.previous).slice(r.skip || 0);
 const data = names => Object.fromEntries(names.map(n => [n, [{ title: n, url: 'https://example.com' }]]));
@@ -51,7 +51,7 @@ test('migration preserves legacy days, excludes every already asked station', ()
   const first = real.revisions[0], migration = real.revisions[1];
   const elapsed = dateDay(migration.effective) - dateDay(first.effective);
   for (let i = 1; i < elapsed; i++) assert.equal(stateAt(real, dayDate(dateDay(first.effective)+i)).solution, first.order[i]);
-  assert.equal(dateDay(first.effective) - epoch, 1378);
+  assert.equal(dateDay(first.effective) - EPOCH_DAY, 1378);
   assert.equal(new Set([...migration.seen, ...orderOf(migration)]).size, Object.keys(first.active).length);
   assert.equal(migration.seen.length + orderOf(migration).length, Object.keys(first.active).length);
   assert.deepEqual(migration.seen, first.order.slice(0,elapsed).sort());

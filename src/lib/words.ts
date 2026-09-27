@@ -1,5 +1,5 @@
 import config from '../constants/schedule.json';
-import { Schedule, stateAt, localDate, dateDay, dayDate, epoch } from './schedule';
+import { Schedule, stateAt, localDate, dateDay, dayDate, EPOCH_DAY } from './schedule';
 
 const schedule = config as Schedule;
 // solution（当日の答え）とpuzzleNumber（通算問題番号）は、ページ読込時に
@@ -22,7 +22,7 @@ export const getWordOfTheDay = (now: Date = openedAt) => {
   return {
     solution: stateAt(schedule, date).solution,
     solution_yesterday: stateAt(schedule, dayDate(day - 1)).solution,
-    puzzleNumber: day - epoch,
+    puzzleNumber: day - EPOCH_DAY,
     tomorrow: next.getTime() - now.getTime(),
   };
 };
