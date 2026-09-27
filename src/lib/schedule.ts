@@ -12,7 +12,7 @@ export const toDayNumber = (value: string): number => {
   return day;
 };
 export const toDateString = (day: number): string => new Date(day * DAY_MS).toISOString().slice(0, 10);
-export const localDate = (now: Date): string =>
+export const localDateString = (now: Date): string =>
   `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
 export function shuffled(names: string[], seed: string, previous?: string): string[] {

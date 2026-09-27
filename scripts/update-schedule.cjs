@@ -1,13 +1,13 @@
 require('./load-typescript.cjs');
 const fs = require('fs');
 const path = require('path');
-const { toDayNumber, localDate, toDateString, revise, stateAt } = require('../src/lib/schedule.ts');
+const { toDayNumber, localDateString, toDateString, revise, stateAt } = require('../src/lib/schedule.ts');
 const { STATION_DATA: active } = require('../src/constants/station_names_5_katakana.ts');
 const target = path.join(__dirname, '../src/constants/schedule.json');
 const args = process.argv.slice(2);
 const effective = args.find(x => /^\d{4}-\d{2}-\d{2}$/.test(x));
 const initialize = args.includes('--init');
-const today = localDate(new Date());
+const today = localDateString(new Date());
 try {
   if (!effective) throw new Error('使用方法: npm run schedule:update -- YYYY-MM-DD [--init] [--replace-pending]');
   toDayNumber(effective);

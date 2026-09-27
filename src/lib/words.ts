@@ -1,12 +1,12 @@
 import config from '../constants/schedule.json';
-import { Schedule, stateAt, localDate, toDayNumber, toDateString, EPOCH_DAY } from './schedule';
+import { Schedule, stateAt, localDateString, toDayNumber, toDateString, EPOCH_DAY } from './schedule';
 
 const schedule = config as Schedule;
 // solution（当日の答え）とpuzzleNumber（通算問題番号）は、ページ読込時に
 // ブラウザ内で計算し、各画面で共有する。画面側での再計算を避け、
 // 日付をまたいでも読込時の問題を維持する。puzzleNumberは駅一覧の配列インデックスではない。
 const openedAt = new Date();
-const today = localDate(openedAt);
+const today = localDateString(openedAt);
 const current = stateAt(schedule, today);
 export const ACTIVE_STATION_DATA = current.active;
 export const NAMES = Object.keys(ACTIVE_STATION_DATA);
@@ -16,7 +16,7 @@ const [year, month, day] = current.referenceDate.split('-').map(Number);
 export const stationReferenceDate = `${year}年${month}月${day}日`;
 
 export const getWordOfTheDay = (now: Date = openedAt) => {
-  const date = localDate(now);
+  const date = localDateString(now);
   const day = toDayNumber(date);
   const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
   return {

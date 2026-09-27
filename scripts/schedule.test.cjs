@@ -1,7 +1,7 @@
 require('./load-typescript.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { stateAt, revise, shuffled, toDayNumber, toDateString, localDate, EPOCH_DAY } = require('../src/lib/schedule.ts');
+const { stateAt, revise, shuffled, toDayNumber, toDateString, localDateString, EPOCH_DAY } = require('../src/lib/schedule.ts');
 const real = require('../src/constants/schedule.json');
 const orderOf = r => r.legacy ? r.order : shuffled(r.candidates,r.seed,r.previous).slice(r.skip || 0);
 const data = names => Object.fromEntries(names.map(n => [n, [{ title: n, url: 'https://example.com' }]]));
@@ -118,7 +118,7 @@ test('date validation and local calendar dates', () => {
   assert.throws(()=>toDayNumber('2026-02-30'));
   assert.throws(()=>toDayNumber('2026-2-3'));
   assert.equal(toDateString(toDayNumber('2028-02-29')+1),'2028-03-01');
-  assert.equal(localDate(new Date(2026,8,24,23,59)),'2026-09-24');
+  assert.equal(localDateString(new Date(2026,8,24,23,59)),'2026-09-24');
   assert.throws(()=>revise(fixture(),data(['A']),'2026-01-03'));
 });
 
@@ -176,7 +176,7 @@ test('update command: idempotency, reference date, metadata, additions, validati
         if(id==='./load-typescript.cjs')return {};
         if(id==='fs')return {existsSync:()=>true,readFileSync:p=>JSON.stringify(p.endsWith('legacy-order.json')?legacyOrder:stored),writeFileSync:(_p,s)=>{pending=JSON.parse(s);},renameSync:()=>{stored=pending;}};
         if(id==='path')return path;
-        if(id.includes('schedule.ts'))return {...require('../src/lib/schedule.ts'),localDate:()=>today};
+        if(id.includes('schedule.ts'))return {...require('../src/lib/schedule.ts'),localDateString:()=>today};
         if(id.includes('station_names'))return {STATION_DATA:active};
         throw Error(id);
       }
