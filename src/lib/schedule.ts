@@ -1,19 +1,7 @@
 import { legacyStateAt } from './legacySchedule';
-import { Schedule, ShuffleRevision, StationData } from './scheduleTypes';
+import { Schedule, ShuffleRevision } from './scheduleTypes';
+import { toDayNumber, toDateString } from './scheduleDates';
 export type { Schedule, Revision, LegacyRevision, ShuffleRevision, StationData } from './scheduleTypes';
-
-// Calendar days, not elapsed 24-hour periods: stable across local DST changes.
-export const DAY_MS = 86400000;
-export const EPOCH_DAY = Date.UTC(2022, 1, 16) / DAY_MS;
-export const toDayNumber = (value: string): number => {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) throw new Error('日付はYYYY-MM-DDで指定してください');
-  const day = Date.parse(value + 'T00:00:00Z') / DAY_MS;
-  if (!Number.isFinite(day) || toDateString(day) !== value) throw new Error('存在しない日付です');
-  return day;
-};
-export const toDateString = (day: number): string => new Date(day * DAY_MS).toISOString().slice(0, 10);
-export const localDateString = (now: Date): string =>
-  `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
 export function shuffled(names: string[], seed: string, previousSolution?: string): string[] {
   // 入力ファイルの記載順に依存させないため、文字コード順にそろえる。
@@ -74,31 +62,4 @@ function shuffleStateAt(revision: ShuffleRevision, day: number, startDay: number
   const index = day - start;
   return { referenceDate: revision.referenceDate, solution: order[index], cycle, fullShuffle: fullShuffleDate, seen: seen.concat(order.slice(0, index)), order, index, active: revision.active,
     recipe: { candidates, seed, previous: previousSolution, skip: consumed + index } };
-}
-
-export function createRevision(schedule: Schedule, active: StationData, effective: string, initialize = false): ShuffleRevision {
-  if (Object.keys(active).length < 2) throw new Error('巡回境界の連続を防ぐため、2駅以上が必要です');
-  const day = toDayNumber(effective);
-  const before = resolveDay(schedule, toDateString(day - 1));
-  const today = resolveDay(schedule, effective);
-  const added = Object.keys(active).filter(name => !before.active[name]);
-  // Reopened names count as new entries, even if present in this cycle's history.
-  let seen = today.seen.filter(name => !added.includes(name));
-  let cycle = today.cycle;
-  let fullShuffleDate = today.fullShuffle;
-  let remaining = Object.keys(active).filter(name => !seen.includes(name));
-  if (!remaining.length) {
-    seen = [];
-    cycle = before.cycle + 1;
-    fullShuffleDate = effective;
-    remaining = Object.keys(active);
-  }
-  const full = fullShuffleDate === effective && seen.length === 0;
-  // 全体の巡回は巡回番号、未出題分の更新は履歴件数と適用日でシードを固定する。
-  const seed = full ? `tetsudoru-v1:cycle:${cycle}` : `tetsudoru-v1:revision:${schedule.revisions.length}:${effective}`;
-  return {
-    effective, cycle, referenceDate: before.referenceDate,
-    fullShuffle: initialize ? before.fullShuffle : fullShuffleDate,
-    seen: seen.slice().sort(), candidates: remaining.slice().sort(), seed, previous: before.solution, active,
-  };
 }

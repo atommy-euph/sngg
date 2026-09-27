@@ -1,6 +1,7 @@
 // schedule.jsonはschedule:updateの生成物。駅データの正本を編集し、JSONは手編集しない。
 import config from '../constants/schedule.json';
-import { Schedule, resolveDay, localDateString, toDayNumber, toDateString, EPOCH_DAY } from './schedule';
+import { Schedule, resolveDay } from './schedule';
+import { localDateString, toDayNumber, toDateString, EPOCH_DAY } from './scheduleDates';
 
 const schedule = config as Schedule;
 // solution（当日の答え）とpuzzleNumber（通算問題番号）は、ページ読込時に

@@ -3,7 +3,8 @@ const assert = require('node:assert/strict');
 const { spawnSync } = require('node:child_process');
 const path = require('node:path');
 const { listSchedule, toCsv } = require('./list-schedule.cjs');
-const { resolveDay, createRevision } = require('../src/lib/schedule.ts');
+const { resolveDay } = require('../src/lib/schedule.ts');
+const { createRevision } = require('../src/lib/scheduleAuthoring.ts');
 const config = require('../src/constants/schedule.json');
 
 test('includes specified date, stops before next cycle, and crosses initial migration', () => {

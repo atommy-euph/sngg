@@ -9,6 +9,8 @@
 - `src/lib/scheduleTypes.ts`：設定の型と各項目の説明。旧方式と新方式を区別します。
 - `src/lib/legacySchedule.ts`：移行前の固定順を再現する互換処理。
 - `src/lib/schedule.ts`：有効な設定の選択と、新方式のシャッフル・巡回計算。
+- `src/lib/scheduleDates.ts`：暦日の文字列・通番変換。
+- `src/lib/scheduleAuthoring.ts`：管理用CLIから呼ぶ型付きの改訂生成。
 - `src/lib/words.ts`：ページ読込時にブラウザで答えと通算問題番号を計算し、画面で共有します。開きっぱなしの画面では再計算しません。
 
 この整理による設定ファイル形式・出題順・操作手順の変更はありません。

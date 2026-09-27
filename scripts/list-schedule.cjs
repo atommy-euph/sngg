@@ -1,7 +1,8 @@
 require('./load-typescript.cjs');
 const fs = require('fs');
 const path = require('path');
-const { toDayNumber, toDateString, resolveDay } = require('../src/lib/schedule.ts');
+const { resolveDay } = require('../src/lib/schedule.ts');
+const { toDayNumber, toDateString } = require('../src/lib/scheduleDates.ts');
 
 // Evaluate each date so pending station changes can shorten or extend the cycle.
 function listSchedule(config, from) {

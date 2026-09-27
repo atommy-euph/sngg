@@ -1,7 +1,9 @@
 require('./load-typescript.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { resolveDay, createRevision, shuffled, toDayNumber, toDateString, localDateString, EPOCH_DAY } = require('../src/lib/schedule.ts');
+const { resolveDay, shuffled } = require('../src/lib/schedule.ts');
+const { toDayNumber, toDateString, localDateString, EPOCH_DAY } = require('../src/lib/scheduleDates.ts');
+const { createRevision } = require('../src/lib/scheduleAuthoring.ts');
 const real = require('../src/constants/schedule.json');
 const orderOf = r => r.legacy ? r.order : shuffled(r.candidates,r.seed,r.previous).slice(r.skip || 0);
 const data = names => Object.fromEntries(names.map(n => [n, [{ title: n, url: 'https://example.com' }]]));
@@ -176,7 +178,9 @@ test('update command: idempotency, reference date, metadata, additions, validati
         if(id==='./load-typescript.cjs')return {};
         if(id==='fs')return {existsSync:()=>true,readFileSync:p=>JSON.stringify(p.endsWith('legacy-order.json')?legacyOrder:stored),writeFileSync:(_p,s)=>{pending=JSON.parse(s);},renameSync:()=>{stored=pending;}};
         if(id==='path')return path;
-        if(id.includes('schedule.ts'))return {...require('../src/lib/schedule.ts'),localDateString:()=>today};
+        if(id.includes('scheduleDates.ts'))return {...require('../src/lib/scheduleDates.ts'),localDateString:()=>today};
+        if(id.includes('scheduleAuthoring.ts'))return require('../src/lib/scheduleAuthoring.ts');
+        if(id.includes('schedule.ts'))return require('../src/lib/schedule.ts');
         if(id.includes('station_names'))return {STATION_DATA:active};
         throw Error(id);
       }
