@@ -39,7 +39,9 @@
     "eject": "react-scripts eject",
     "schedule:update": "node scripts/update-schedule.cjs",
     "test:schedule": "node --test scripts/schedule.test.cjs scripts/list-schedule.test.cjs",
-    "schedule:list": "node scripts/list-schedule.cjs"
+    "schedule:list": "node scripts/list-schedule.cjs",
+    "schedule:check": "node scripts/check-schedule.cjs",
+    "prebuild": "npm run schedule:check"
   },
   "eslintConfig": {
     "extends": [

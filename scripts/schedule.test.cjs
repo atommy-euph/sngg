@@ -287,3 +287,18 @@ test('JSON validation rejects malformed revisions with useful errors', () => {
   assert.throws(() => readSchedule(duplicate), /適用日/);
   assert.throws(() => readSchedule({ revisions: [] }), /revisions/);
 });
+
+test('source checks detect forgotten updates while allowing historical snapshots', () => {
+  const { assertStationDataMatches } = require('./check-schedule.cjs');
+  const { STATION_DATA } = require('../src/constants/station_names_5_katakana.ts');
+  assert.doesNotThrow(() => assertStationDataMatches(real, STATION_DATA));
+  const config = fixture();
+  const latest = createRevision(config, data(['A','B','C','D','E','X']), '2026-01-03');
+  config.revisions.push(latest);
+  const reordered = Object.fromEntries(Object.entries(latest.active).reverse());
+  assert.doesNotThrow(() => assertStationDataMatches(config, reordered));
+  for (const change of [a => { delete a.X; }, a => { a.Y = a.X; }, a => { a.A[0].url += '/changed'; }]) {
+    const source = structuredClone(latest.active); change(source);
+    assert.throws(() => assertStationDataMatches(config, source), /schedule:update/);
+  }
+});
