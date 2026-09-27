@@ -12,8 +12,8 @@ const current = resolveDay(schedule, today);
 export const ACTIVE_STATION_DATA = current.active;
 export const NAMES = Object.keys(ACTIVE_STATION_DATA);
 export const fullShuffleDate = current.fullShuffle.replace(/-/g, '/');
-const [year, month, day] = current.referenceDate.split('-').map(Number);
-export const stationReferenceDate = `${year}年${month}月${day}日`;
+const [referenceYear, referenceMonth, referenceDay] = current.referenceDate.split('-').map(Number);
+export const stationReferenceDate = `${referenceYear}年${referenceMonth}月${referenceDay}日`;
 
 export const getWordOfTheDay = (now: Date = openedAt) => {
   const date = localDateString(now);
