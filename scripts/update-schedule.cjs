@@ -2,6 +2,7 @@ require('./load-typescript.cjs');
 const fs = require('fs');
 const path = require('path');
 const { toDayNumber, localDateString, toDateString, revise, stateAt } = require('../src/lib/schedule.ts');
+// 編集用の正本から、適用日付きの生成物schedule.jsonを作る。
 const { STATION_DATA: active } = require('../src/constants/station_names_5_katakana.ts');
 const target = path.join(__dirname, '../src/constants/schedule.json');
 const args = process.argv.slice(2);

@@ -1,3 +1,4 @@
+// schedule.jsonはschedule:updateの生成物。駅データの正本を編集し、JSONは手編集しない。
 import config from '../constants/schedule.json';
 import { Schedule, stateAt, localDateString, toDayNumber, toDateString, EPOCH_DAY } from './schedule';
 

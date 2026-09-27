@@ -1,5 +1,9 @@
 # 出題設定の運用
 
+## 編集用データと生成物
+
+`src/constants/station_names_5_katakana.ts` が駅データの編集用の正本です。`src/constants/schedule.json` は `schedule:update` が生成する適用日付きの履歴で、手編集しません。ファイルの配置は変更しません。正本を編集したら更新コマンドを実行し、両方をコミットしてください。
+
 ## コードの構成
 
 - `src/lib/scheduleTypes.ts`：設定の型と各項目の説明。旧方式と新方式を区別します。
