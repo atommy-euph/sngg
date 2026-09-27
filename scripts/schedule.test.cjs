@@ -151,13 +151,18 @@ test('page-load snapshot stays fixed after midnight; explicit new dates advance'
     const old=words.getWordOfTheDay();
     clock=new NativeDate(2026,9,1,0,1);
     assert.deepEqual(words.getWordOfTheDay(),old);
-    const next=words.getWordOfTheDay(clock);
+    const { createPuzzleSnapshot } = require('../src/lib/puzzleSnapshot.ts');
+    const next=createPuzzleSnapshot(real, clock);
+    assert.strictEqual(words.getWordOfTheDay(), old);
+    assert.equal(old.referenceDate, '2026-04-02');
+    assert.equal(next.referenceDate, '2026-09-22');
+    assert.strictEqual(next.active, real.revisions[1].active);
     assert.equal(next.puzzleNumber,old.puzzleNumber+1);
     assert.equal(next.solution_yesterday,old.solution);
     assert.equal(next.solution,orderOf(real.revisions[1])[0]);
     assert.equal(words.stationReferenceDate,'2026年4月2日');
     assert.equal(words.fullShuffleDate,'2025/11/25');
-  } finally { global.Date=NativeDate; delete require.cache[require.resolve('../src/lib/words.ts')]; }
+  } finally { global.Date=NativeDate; delete require.cache[require.resolve('../src/lib/words.ts')]; delete require.cache[require.resolve('../src/lib/currentPuzzle.ts')]; }
 });
 
 test('update command: idempotency, reference date, metadata, additions, validation', () => {
