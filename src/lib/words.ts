@@ -1,7 +1,6 @@
 import { currentPuzzle } from './currentPuzzle';
 
-export const ACTIVE_STATION_DATA = currentPuzzle.active;
-export const NAMES = Object.keys(ACTIVE_STATION_DATA);
+export const NAMES = Object.keys(currentPuzzle.active);
 export const fullShuffleDate = currentPuzzle.fullShuffle.replace(/-/g, '/');
 const [referenceYear, referenceMonth, referenceDay] = currentPuzzle.referenceDate.split('-').map(Number);
 export const stationReferenceDate = `${referenceYear}年${referenceMonth}月${referenceDay}日`;

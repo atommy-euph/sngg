@@ -31,7 +31,7 @@ import { shareStatus } from "../../lib/share";
 // @ts-ignore
 import { romanize } from "../../lib/kanaToRoman";
 
-import { ACTIVE_STATION_DATA as STATION_DATA } from "../../lib/words";
+import { currentPuzzle } from "../../lib/currentPuzzle";
 import { samegroupColor } from "../../constants/colors";
 
 import BMC_BUTTON from "../../img/bmc-button.png";
@@ -226,7 +226,7 @@ export const StatsModal = React.memo(function StatsModal({
                   ></Square>
                 </Box>
                 <HStack justifyContent="center" space={3} flexWrap="wrap">
-                  {STATION_DATA[solution].map((value) => (
+                  {currentPuzzle.active[solution].map((value) => (
                     <Link
                       href={value["url"]}
                       isExternal
