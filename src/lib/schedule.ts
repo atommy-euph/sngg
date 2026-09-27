@@ -5,13 +5,13 @@ export type { Schedule, Revision, LegacyRevision, ShuffleRevision, StationData }
 // Calendar days, not elapsed 24-hour periods: stable across local DST changes.
 export const DAY_MS = 86400000;
 export const EPOCH_DAY = Date.UTC(2022, 1, 16) / DAY_MS;
-export const dateDay = (value: string): number => {
+export const toDayNumber = (value: string): number => {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) throw new Error('日付はYYYY-MM-DDで指定してください');
   const day = Date.parse(value + 'T00:00:00Z') / DAY_MS;
-  if (!Number.isFinite(day) || dayDate(day) !== value) throw new Error('存在しない日付です');
+  if (!Number.isFinite(day) || toDateString(day) !== value) throw new Error('存在しない日付です');
   return day;
 };
-export const dayDate = (day: number): string => new Date(day * DAY_MS).toISOString().slice(0, 10);
+export const toDateString = (day: number): string => new Date(day * DAY_MS).toISOString().slice(0, 10);
 export const localDate = (now: Date): string =>
   `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
@@ -40,11 +40,11 @@ export function shuffled(names: string[], seed: string, previous?: string): stri
 }
 
 export function stateAt(schedule: Schedule, date: string) {
-  const day = dateDay(date);
-  const revision = schedule.revisions.filter(r => dateDay(r.effective) <= day).pop();
+  const day = toDayNumber(date);
+  const revision = schedule.revisions.filter(r => toDayNumber(r.effective) <= day).pop();
   if (!revision) throw new Error('出題設定の開始日より前です');
   // 旧方式の互換処理は入口で分離し、新方式の巡回ループに持ち込まない。
-  const startDay = dateDay(revision.effective);
+  const startDay = toDayNumber(revision.effective);
   if (revision.legacy) return legacyStateAt(revision, day, startDay);
   return shuffleStateAt(revision, day, startDay);
 }
@@ -69,7 +69,7 @@ function shuffleStateAt(revision: ShuffleRevision, day: number, startDay: number
     skip = 0;
     order = shuffled(candidates, seed, previous);
     seen = [];
-    fullShuffle = dayDate(start);
+    fullShuffle = toDateString(start);
   }
   const index = day - start;
   return { referenceDate: revision.referenceDate, solution: order[index], cycle, fullShuffle, seen: seen.concat(order.slice(0, index)), order, index, active: revision.active,
@@ -78,8 +78,8 @@ function shuffleStateAt(revision: ShuffleRevision, day: number, startDay: number
 
 export function revise(schedule: Schedule, active: StationData, effective: string, initialize = false): ShuffleRevision {
   if (Object.keys(active).length < 2) throw new Error('巡回境界の連続を防ぐため、2駅以上が必要です');
-  const day = dateDay(effective);
-  const before = stateAt(schedule, dayDate(day - 1));
+  const day = toDayNumber(effective);
+  const before = stateAt(schedule, toDateString(day - 1));
   const today = stateAt(schedule, effective);
   const added = Object.keys(active).filter(name => !before.active[name]);
   // Reopened names count as new entries, even if present in this cycle's history.

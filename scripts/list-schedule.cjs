@@ -1,15 +1,15 @@
 require('./load-typescript.cjs');
 const fs = require('fs');
 const path = require('path');
-const { dateDay, dayDate, stateAt } = require('../src/lib/schedule.ts');
+const { toDayNumber, toDateString, stateAt } = require('../src/lib/schedule.ts');
 
 // Evaluate each date so pending station changes can shorten or extend the cycle.
 function listSchedule(config, from) {
-  const start = dateDay(from);
+  const start = toDayNumber(from);
   const cycle = stateAt(config, from).cycle;
   const rows = [];
   for (let day = start; ; day++) {
-    const date = dayDate(day);
+    const date = toDateString(day);
     const state = stateAt(config, date);
     if (state.cycle !== cycle) break;
     rows.push({ date, station: state.solution });

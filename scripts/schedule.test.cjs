@@ -1,7 +1,7 @@
 require('./load-typescript.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { stateAt, revise, shuffled, dateDay, dayDate, localDate, EPOCH_DAY } = require('../src/lib/schedule.ts');
+const { stateAt, revise, shuffled, toDayNumber, toDateString, localDate, EPOCH_DAY } = require('../src/lib/schedule.ts');
 const real = require('../src/constants/schedule.json');
 const orderOf = r => r.legacy ? r.order : shuffled(r.candidates,r.seed,r.previous).slice(r.skip || 0);
 const data = names => Object.fromEntries(names.map(n => [n, [{ title: n, url: 'https://example.com' }]]));
@@ -39,7 +39,7 @@ test('legacy compatibility repeats only the old order and retains its shuffle da
   const config={version:3,revisions:[{referenceDate:'2025-12-01',effective:'2026-01-01',cycle:1,
     fullShuffle:'2025-11-25',seen:[],legacy:true,order:['A','B','C'],active:data(['A','B','C'])}]};
   for(let i=0;i<10;i++) {
-    const state=stateAt(config,dayDate(dateDay('2026-01-01')+i));
+    const state=stateAt(config,toDateString(toDayNumber('2026-01-01')+i));
     assert.equal(state.solution,['A','B','C'][i%3]);
     assert.equal(state.cycle,1+Math.floor(i/3));
     assert.equal(state.fullShuffle,'2025-11-25');
@@ -49,9 +49,9 @@ test('legacy compatibility repeats only the old order and retains its shuffle da
 
 test('migration preserves legacy days, excludes every already asked station', () => {
   const first = real.revisions[0], migration = real.revisions[1];
-  const elapsed = dateDay(migration.effective) - dateDay(first.effective);
-  for (let i = 1; i < elapsed; i++) assert.equal(stateAt(real, dayDate(dateDay(first.effective)+i)).solution, first.order[i]);
-  assert.equal(dateDay(first.effective) - EPOCH_DAY, 1378);
+  const elapsed = toDayNumber(migration.effective) - toDayNumber(first.effective);
+  for (let i = 1; i < elapsed; i++) assert.equal(stateAt(real, toDateString(toDayNumber(first.effective)+i)).solution, first.order[i]);
+  assert.equal(toDayNumber(first.effective) - EPOCH_DAY, 1378);
   assert.equal(new Set([...migration.seen, ...orderOf(migration)]).size, Object.keys(first.active).length);
   assert.equal(migration.seen.length + orderOf(migration).length, Object.keys(first.active).length);
   assert.deepEqual(migration.seen, first.order.slice(0,elapsed).sort());
@@ -63,8 +63,8 @@ test('each full cycle covers every station once and never repeats at boundary', 
   for (let cycle = 0; cycle < 100; cycle++) {
     const answers = [];
     for (let i=0;i<5;i++) {
-      const state = stateAt(config,dayDate(dateDay('2026-01-01')+cycle*5+i));
-      if(i===0) { assert.notEqual(state.solution,previous); assert.equal(state.fullShuffle,dayDate(dateDay('2026-01-01')+cycle*5)); }
+      const state = stateAt(config,toDateString(toDayNumber('2026-01-01')+cycle*5+i));
+      if(i===0) { assert.notEqual(state.solution,previous); assert.equal(state.fullShuffle,toDateString(toDayNumber('2026-01-01')+cycle*5)); }
       answers.push(state.solution); previous=state.solution;
     }
     assert.deepEqual(answers.slice().sort(), ['A','B','C','D','E']);
@@ -115,9 +115,9 @@ test('addition is not always placed last', () => {
   assert.equal(positions.size,3);
 });
 test('date validation and local calendar dates', () => {
-  assert.throws(()=>dateDay('2026-02-30'));
-  assert.throws(()=>dateDay('2026-2-3'));
-  assert.equal(dayDate(dateDay('2028-02-29')+1),'2028-03-01');
+  assert.throws(()=>toDayNumber('2026-02-30'));
+  assert.throws(()=>toDayNumber('2026-2-3'));
+  assert.equal(toDateString(toDayNumber('2028-02-29')+1),'2028-03-01');
   assert.equal(localDate(new Date(2026,8,24,23,59)),'2026-09-24');
   assert.throws(()=>revise(fixture(),data(['A']),'2026-01-03'));
 });
@@ -125,12 +125,12 @@ test('date validation and local calendar dates', () => {
 test('real migration into 30 full cycles: no boundary repeat or missing entries', () => {
   const migration=real.revisions[1];
   const size=Object.keys(migration.active).length;
-  let start=dateDay(migration.effective)+orderOf(migration).length;
+  let start=toDayNumber(migration.effective)+orderOf(migration).length;
   let previous=orderOf(migration)[orderOf(migration).length-1];
   for(let i=0;i<30;i++) {
-    const state=stateAt(real,dayDate(start));
+    const state=stateAt(real,toDateString(start));
     assert.notEqual(state.solution,previous);
-    assert.equal(state.fullShuffle,dayDate(start));
+    assert.equal(state.fullShuffle,toDateString(start));
     assert.equal(new Set(state.order).size,size);
     previous=state.order[size-1];
     start+=size;
@@ -215,11 +215,11 @@ test('update command: idempotency, reference date, metadata, additions, validati
   assert.equal(run('2026-02-30'),1);
   assert.equal(JSON.stringify(stored),saved);
   today='2026-01-08';
-  const expected=Array.from({length:30},(_,i)=>stateAt(stored,dayDate(dateDay('2026-01-09')+i)).solution);
+  const expected=Array.from({length:30},(_,i)=>stateAt(stored,toDateString(toDayNumber('2026-01-09')+i)).solution);
   assert.equal(run('2026-01-09'),0); // No station or link changes: date-only revision.
   assert.equal(stateAt(stored,'2026-01-08').referenceDate,'2026-01-06');
   assert.equal(stateAt(stored,'2026-01-09').referenceDate,'2026-01-08');
-  assert.deepEqual(Array.from({length:30},(_,i)=>stateAt(stored,dayDate(dateDay('2026-01-09')+i)).solution),expected);
+  assert.deepEqual(Array.from({length:30},(_,i)=>stateAt(stored,toDateString(toDayNumber('2026-01-09')+i)).solution),expected);
 });
 
 test('reference date changes with active station data on the effective date', () => {
@@ -244,7 +244,7 @@ test('published recipes contain no literal post-migration order', () => {
     assert.deepEqual(r.candidates,r.candidates.slice().sort());
     assert.deepEqual(r.seen,r.seen.slice().sort());
   }
-  assert.equal(real.revisions[0].order.length,dateDay(real.revisions[1].effective)-dateDay(real.revisions[0].effective));
+  assert.equal(real.revisions[0].order.length,toDayNumber(real.revisions[1].effective)-toDayNumber(real.revisions[0].effective));
   for(const r of real.revisions) assert.deepEqual(Object.keys(r.active),Object.keys(r.active).sort());
 });
 
@@ -256,7 +256,7 @@ test('successive metadata-only updates retain recipes across cycle boundaries', 
       seen:current.seen.slice().sort(),...current.recipe,active:current.active});
   }
   for(let i=0;i<50;i++) {
-    const date=dayDate(dateDay('2026-01-01')+i);
+    const date=toDateString(toDayNumber('2026-01-01')+i);
     assert.equal(stateAt(config,date).solution,stateAt(original,date).solution);
     assert.equal(stateAt(config,date).fullShuffle,stateAt(original,date).fullShuffle);
   }
