@@ -15,7 +15,7 @@ export const toDateString = (day: number): string => new Date(day * DAY_MS).toIS
 export const localDateString = (now: Date): string =>
   `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
-export function shuffled(names: string[], seed: string, previous?: string): string[] {
+export function shuffled(names: string[], seed: string, previousSolution?: string): string[] {
   // 入力ファイルの記載順に依存させないため、文字コード順にそろえる。
   const result = names.slice().sort();
   // FNV-1a: シード文字列を32ビット整数に変換する。
@@ -35,7 +35,7 @@ export function shuffled(names: string[], seed: string, previous?: string): stri
   }
   // 直前の答えと先頭が一致したら2番目と交換し、巡回境界の連続を防ぐ。
   // 1駅では実現できないため、設定更新側で2駅以上を必須としている。
-  if (result.length > 1 && result[0] === previous) [result[0], result[1]] = [result[1], result[0]];
+  if (result.length > 1 && result[0] === previousSolution) [result[0], result[1]] = [result[1], result[0]];
   return result;
 }
 
@@ -53,9 +53,9 @@ function shuffleStateAt(revision: ShuffleRevision, day: number, startDay: number
   let start = startDay;
   let candidates = revision.candidates;
   let seed = revision.seed;
-  let previous = revision.previous;
+  let previousSolution = revision.previous;
   let skip = revision.skip || 0;
-  let order = shuffled(candidates, seed, previous).slice(skip);
+  let order = shuffled(candidates, seed, previousSolution).slice(skip);
   let cycle = revision.cycle;
   let seen = revision.seen;
   let fullShuffle = revision.fullShuffle;
@@ -63,17 +63,17 @@ function shuffleStateAt(revision: ShuffleRevision, day: number, startDay: number
     if (order.length === 0) throw new Error('出題予定が空です');
     start += order.length;
     cycle++;
-    previous = order[order.length - 1];
+    previousSolution = order[order.length - 1];
     candidates = Object.keys(revision.active).sort();
     seed = `tetsudoru-v1:cycle:${cycle}`;
     skip = 0;
-    order = shuffled(candidates, seed, previous);
+    order = shuffled(candidates, seed, previousSolution);
     seen = [];
     fullShuffle = toDateString(start);
   }
   const index = day - start;
   return { referenceDate: revision.referenceDate, solution: order[index], cycle, fullShuffle, seen: seen.concat(order.slice(0, index)), order, index, active: revision.active,
-    recipe: { candidates, seed, previous, skip: skip + index } };
+    recipe: { candidates, seed, previous: previousSolution, skip: skip + index } };
 }
 
 export function revise(schedule: Schedule, active: StationData, effective: string, initialize = false): ShuffleRevision {
