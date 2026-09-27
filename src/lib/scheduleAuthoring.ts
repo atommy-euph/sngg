@@ -8,6 +8,17 @@ export function createRevision(schedule: Schedule, active: StationData, effectiv
   const before = resolveDay(schedule, toDateString(day - 1));
   const today = resolveDay(schedule, effective);
   const added = Object.keys(active).filter(name => !before.active[name]);
+  const removed = Object.keys(before.active).filter(name => !active[name]);
+  // 駅集合が同じなら元のレシピと消化位置を保ち、リンク・基準日だけを更新する。
+  if (!initialize && !added.length && !removed.length) {
+    const { candidates, seed, previous, skip } = today.recipe;
+    if (candidates === undefined || seed === undefined) throw new Error('旧方式からの移行には初回設定が必要です');
+    return {
+      effective, referenceDate: today.referenceDate, cycle: today.cycle,
+      fullShuffle: today.fullShuffle, seen: today.seen.slice().sort(),
+      candidates, seed, previous, skip, active,
+    };
+  }
   // Reopened names count as new entries, even if present in this cycle's history.
   let seen = today.seen.filter(name => !added.includes(name));
   let cycle = today.cycle;

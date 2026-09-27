@@ -38,11 +38,7 @@ try {
     const before = resolveDay(config, toDateString(toDayNumber(effective) - 1));
     const added = Object.keys(active).filter(k => !before.active[k]);
     const removed = Object.keys(before.active).filter(k => !active[k]);
-    if (initialize || added.length || removed.length) config.revisions.push(createRevision(config, active, effective, initialize));
-    else {
-      const current = resolveDay(config, effective);
-      config.revisions.push({ effective, referenceDate: today, cycle: current.cycle, fullShuffle: current.fullShuffle, seen: current.seen.slice().sort(), ...current.recipe, active });
-    }
+    config.revisions.push(createRevision(config, active, effective, initialize));
     console.log('追加:', added.join('、') || 'なし');
     console.log('削除:', removed.join('、') || 'なし');
   } else console.log('同じ設定です。出題順は維持します。');

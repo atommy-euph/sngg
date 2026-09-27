@@ -256,8 +256,9 @@ test('successive metadata-only updates retain recipes across cycle boundaries', 
   const original=fixture(), config=fixture();
   for(const date of ['2026-01-03','2026-01-04','2026-01-06','2026-01-08']) {
     const current=resolveDay(config,date);
-    config.revisions.push({effective:date,referenceDate:current.referenceDate,cycle:current.cycle,fullShuffle:current.fullShuffle,
-      seen:current.seen.slice().sort(),...current.recipe,active:current.active});
+    const updated = structuredClone(current.active);
+    updated.A[0].title = 'Updated ' + date;
+    config.revisions.push(createRevision(config, updated, date));
   }
   for(let i=0;i<50;i++) {
     const date=toDateString(toDayNumber('2026-01-01')+i);
