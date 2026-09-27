@@ -1,9 +1,10 @@
 // schedule.jsonはschedule:updateの生成物。駅データの正本を編集し、JSONは手編集しない。
 import config from '../constants/schedule.json';
-import { Schedule, resolveDay } from './schedule';
+import { resolveDay } from './schedule';
+import { readSchedule } from './scheduleValidation';
 import { localDateString, toDayNumber, toDateString, EPOCH_DAY } from './scheduleDates';
 
-const schedule = config as Schedule;
+const schedule = readSchedule(config);
 // solution（当日の答え）とpuzzleNumber（通算問題番号）は、ページ読込時に
 // ブラウザ内で計算し、各画面で共有する。画面側での再計算を避け、
 // 日付をまたいでも読込時の問題を維持する。puzzleNumberは駅一覧の配列インデックスではない。

@@ -1,5 +1,6 @@
 require('./load-typescript.cjs');
 const fs = require('fs');
+const { readSchedule } = require('../src/lib/scheduleValidation.ts');
 const path = require('path');
 const { resolveDay } = require('../src/lib/schedule.ts');
 const { toDayNumber, toDateString } = require('../src/lib/scheduleDates.ts');
@@ -29,7 +30,7 @@ if (require.main === module) {
     if (args.length !== 1 && !(args.length === 3 && args[1] === '--output')) {
       throw new Error('使用方法: npm run schedule:list -- YYYY-MM-DD [--output ファイル名.csv]');
     }
-    const config = JSON.parse(fs.readFileSync(path.join(__dirname, '../src/constants/schedule.json'), 'utf8'));
+    const config = readSchedule(JSON.parse(fs.readFileSync(path.join(__dirname, '../src/constants/schedule.json'), 'utf8')));
     const rows = listSchedule(config, args[0]);
     const csv = toCsv(rows);
     if (args.length === 3) {

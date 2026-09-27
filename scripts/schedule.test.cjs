@@ -178,6 +178,7 @@ test('update command: idempotency, reference date, metadata, additions, validati
         if(id==='./load-typescript.cjs')return {};
         if(id==='fs')return {existsSync:()=>true,readFileSync:p=>JSON.stringify(p.endsWith('legacy-order.json')?legacyOrder:stored),writeFileSync:(_p,s)=>{pending=JSON.parse(s);},renameSync:()=>{stored=pending;}};
         if(id==='path')return path;
+        if(id.includes('scheduleValidation.ts'))return require('../src/lib/scheduleValidation.ts');
         if(id.includes('scheduleDates.ts'))return {...require('../src/lib/scheduleDates.ts'),localDateString:()=>today};
         if(id.includes('scheduleAuthoring.ts'))return require('../src/lib/scheduleAuthoring.ts');
         if(id.includes('schedule.ts'))return require('../src/lib/schedule.ts');
@@ -266,4 +267,23 @@ test('successive metadata-only updates retain recipes across cycle boundaries', 
     assert.equal(resolveDay(config,date).fullShuffle,resolveDay(original,date).fullShuffle);
   }
   for(const r of config.revisions) assert.equal(r.order,undefined);
+});
+
+test('JSON validation rejects malformed revisions with useful errors', () => {
+  const { readSchedule } = require('../src/lib/scheduleValidation.ts');
+  assert.doesNotThrow(() => readSchedule(real));
+  for (const change of [
+    r => { r.legacy = true; }, r => { delete r.candidates; },
+    r => { r.legacy = 'true'; }, r => { r.seed = 4; },
+    r => { r.skip = -1; }, r => { r.skip = 5; }, r => { r.skip = 0.5; },
+    r => { r.cycle = 0; }, r => { r.seen = null; },
+    r => { r.effective = '2026-02-30'; }, r => { r.active.A = [{title:'A'}]; },
+    r => { r.candidates.push('A'); }
+  ]) {
+    const config = fixture(); change(config.revisions[0]);
+    assert.throws(() => readSchedule(config), /出題設定|日付/);
+  }
+  const duplicate = fixture(); duplicate.revisions.push(structuredClone(duplicate.revisions[0]));
+  assert.throws(() => readSchedule(duplicate), /適用日/);
+  assert.throws(() => readSchedule({ revisions: [] }), /revisions/);
 });

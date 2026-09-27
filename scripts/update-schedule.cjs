@@ -1,5 +1,6 @@
 require('./load-typescript.cjs');
 const fs = require('fs');
+const { readSchedule } = require('../src/lib/scheduleValidation.ts');
 const path = require('path');
 const { resolveDay } = require('../src/lib/schedule.ts');
 const { toDayNumber, localDateString, toDateString } = require('../src/lib/scheduleDates.ts');
@@ -20,7 +21,7 @@ try {
     if (name.length !== 5 || !Array.isArray(links) || !links.length || links.some(x => !x.url || !x.title)) throw new Error(`駅データを確認してください: ${name}`);
   }
   let config;
-  if (fs.existsSync(target)) config = JSON.parse(fs.readFileSync(target, 'utf8'));
+  if (fs.existsSync(target)) config = readSchedule(JSON.parse(fs.readFileSync(target, 'utf8')));
   else throw new Error('初期設定ファイルがありません');
   restoreLegacyOrderForMigration(config, initialize && args.includes('--replace-pending'));
   const oldReferenceDate = resolveDay(config, toDateString(toDayNumber(effective) - 1)).referenceDate;
