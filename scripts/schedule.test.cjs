@@ -160,8 +160,9 @@ test('page-load snapshot stays fixed after midnight; explicit new dates advance'
     assert.equal(next.puzzleNumber,old.puzzleNumber+1);
     assert.equal(next.solution_yesterday,old.solution);
     assert.equal(next.solution,orderOf(real.revisions[1])[0]);
-    assert.equal(words.stationReferenceDate,'2026年4月2日');
-    assert.equal(words.fullShuffleDate,'2025/11/25');
+    const { formatReferenceDate, formatShuffleDate } = require('../src/components/modal/scheduleDateFormat.ts');
+    assert.equal(formatReferenceDate(old.referenceDate),'2026年4月2日');
+    assert.equal(formatShuffleDate(old.fullShuffle),'2025/11/25');
   } finally { global.Date=NativeDate; delete require.cache[require.resolve('../src/lib/words.ts')]; delete require.cache[require.resolve('../src/lib/currentPuzzle.ts')]; }
 });
 

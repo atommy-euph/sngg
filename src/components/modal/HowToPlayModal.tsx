@@ -1,4 +1,5 @@
-import { fullShuffleDate, stationReferenceDate } from "../../lib/words";
+import { currentPuzzle } from "../../lib/currentPuzzle";
+import { formatReferenceDate, formatShuffleDate } from './scheduleDateFormat';
 import React from "react";
 import {
   Modal,
@@ -249,10 +250,10 @@ export const HowToPlayModal = React.memo(function HowToPlayModal({
             >
               Wikipedia「日本の鉄道駅一覧」
             </Link>
-            に{stationReferenceDate}時点で掲載されているものに準じます。
+            に{formatReferenceDate(currentPuzzle.referenceDate)}時点で掲載されているものに準じます。
           </Text>
 	  <Text>
-            ・出題リストは全駅が一巡するたびに自動でシャッフルされます。（全体の最終シャッフル日：{fullShuffleDate}）
+            ・出題リストは全駅が一巡するたびに自動でシャッフルされます。（全体の最終シャッフル日：{formatShuffleDate(currentPuzzle.fullShuffle)}）
 	  </Text>
           <Divider my={3} />
           <Heading {...headingProps} color="gray.400" textAlign="center">

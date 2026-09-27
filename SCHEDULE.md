@@ -11,7 +11,10 @@
 - `src/lib/schedule.ts`：有効な設定の選択と、新方式のシャッフル・巡回計算。
 - `src/lib/scheduleDates.ts`：暦日の文字列・通番変換。
 - `src/lib/scheduleAuthoring.ts`：管理用CLIから呼ぶ型付きの改訂生成。
-- `src/lib/words.ts`：ページ読込時にブラウザで答えと通算問題番号を計算し、画面で共有します。開きっぱなしの画面では再計算しません。
+- `src/lib/currentPuzzle.ts`：ページ読込時に一度だけ問題・駅データを確定して全画面で共有します。
+- `src/lib/puzzleSnapshot.ts`：明示的な日時から問題番号・答え・駅データをまとめて解決します。
+- `src/lib/words.ts`：共有状態から入力検証に必要な語彙と答えを公開します。
+- `src/components/modal/scheduleDateFormat.ts`：画面に表示する日付の整形。出題ロジックには表示書式を持ち込みません。
 
 出題順・操作手順は維持します。設定から未使用のversion項目を削除しますが、駅データの持ち方と既存の保存キーは変更しません。
 
