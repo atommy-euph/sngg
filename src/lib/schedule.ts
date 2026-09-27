@@ -58,7 +58,7 @@ function shuffleStateAt(revision: ShuffleRevision, day: number, startDay: number
   let order = shuffled(candidates, seed, previousSolution).slice(consumed);
   let cycle = revision.cycle;
   let seen = revision.seen;
-  let fullShuffle = revision.fullShuffle;
+  let fullShuffleDate = revision.fullShuffle;
   while (day >= start + order.length) {
     if (order.length === 0) throw new Error('出題予定が空です');
     start += order.length;
@@ -69,10 +69,10 @@ function shuffleStateAt(revision: ShuffleRevision, day: number, startDay: number
     consumed = 0;
     order = shuffled(candidates, seed, previousSolution);
     seen = [];
-    fullShuffle = toDateString(start);
+    fullShuffleDate = toDateString(start);
   }
   const index = day - start;
-  return { referenceDate: revision.referenceDate, solution: order[index], cycle, fullShuffle, seen: seen.concat(order.slice(0, index)), order, index, active: revision.active,
+  return { referenceDate: revision.referenceDate, solution: order[index], cycle, fullShuffle: fullShuffleDate, seen: seen.concat(order.slice(0, index)), order, index, active: revision.active,
     recipe: { candidates, seed, previous: previousSolution, skip: consumed + index } };
 }
 
@@ -85,20 +85,20 @@ export function createRevision(schedule: Schedule, active: StationData, effectiv
   // Reopened names count as new entries, even if present in this cycle's history.
   let seen = today.seen.filter(name => !added.includes(name));
   let cycle = today.cycle;
-  let fullShuffle = today.fullShuffle;
+  let fullShuffleDate = today.fullShuffle;
   let remaining = Object.keys(active).filter(name => !seen.includes(name));
   if (!remaining.length) {
     seen = [];
     cycle = before.cycle + 1;
-    fullShuffle = effective;
+    fullShuffleDate = effective;
     remaining = Object.keys(active);
   }
-  const full = fullShuffle === effective && seen.length === 0;
+  const full = fullShuffleDate === effective && seen.length === 0;
   // 全体の巡回は巡回番号、未出題分の更新は履歴件数と適用日でシードを固定する。
   const seed = full ? `tetsudoru-v1:cycle:${cycle}` : `tetsudoru-v1:revision:${schedule.revisions.length}:${effective}`;
   return {
     effective, cycle, referenceDate: before.referenceDate,
-    fullShuffle: initialize ? before.fullShuffle : fullShuffle,
+    fullShuffle: initialize ? before.fullShuffle : fullShuffleDate,
     seen: seen.slice().sort(), candidates: remaining.slice().sort(), seed, previous: before.solution, active,
   };
 }

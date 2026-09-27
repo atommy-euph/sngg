@@ -7,7 +7,7 @@ interface RevisionBase {
   effective: string;
   /** 巡回番号。駅変更だけでは増やさず、全体の一巡ごとに増やす。 */
   cycle: number;
-  /** 全体を最後にシャッフルした日。未出題分の並べ替えでは更新しない。 */
+  /** 全体を最後にシャッフルした日（YYYY-MM-DD）。未出題分では更新しない。保存キーfullShuffleは互換性のため維持。 */
   fullShuffle: string;
   /** effectiveの前日までに同じ巡回で出題済みの駅。順序は意味を持たない。 */
   seen: string[];
