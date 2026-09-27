@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const { spawnSync } = require('node:child_process');
 const path = require('node:path');
 const { listSchedule, toCsv } = require('./list-schedule.cjs');
-const { stateAt, revise } = require('../src/lib/schedule.ts');
+const { resolveDay, createRevision } = require('../src/lib/schedule.ts');
 const config = require('../src/constants/schedule.json');
 
 test('includes specified date, stops before next cycle, and crosses initial migration', () => {
@@ -11,7 +11,7 @@ test('includes specified date, stops before next cycle, and crosses initial migr
   assert.equal(rows[0].date, '2026-09-30');
   assert.equal(rows.at(-1).date, '2029-08-05');
   assert.equal(rows.length, 1041);
-  for (const row of rows) assert.equal(row.station, stateAt(config, row.date).solution);
+  for (const row of rows) assert.equal(row.station, resolveDay(config, row.date).solution);
   assert.equal(listSchedule(config, '2029-08-05').length, 1);
   assert.equal(listSchedule(config, '2029-08-06').length, 1350);
 });
@@ -20,10 +20,10 @@ test('pending changes extend or shorten the cycle', () => {
   const data = names => Object.fromEntries(names.map(n => [n, [{title:n,url:'https://example.com'}]]));
   const fixture = () => ({version:3,revisions:[{effective:'2026-01-01',referenceDate:'2026-01-01',cycle:1,fullShuffle:'2026-01-01',seen:[],candidates:['A','B','C','D','E'],seed:'14',active:data(['A','B','C','D','E'])}]});
   const extended = fixture();
-  extended.revisions.push(revise(extended,data(['A','B','C','D','E','X']),'2026-01-03'));
+  extended.revisions.push(createRevision(extended,data(['A','B','C','D','E','X']),'2026-01-03'));
   assert.equal(listSchedule(extended,'2026-01-02').at(-1).date,'2026-01-06');
   const shortened = fixture();
-  shortened.revisions.push(revise(shortened,data(['A','B']),'2026-01-03'));
+  shortened.revisions.push(createRevision(shortened,data(['A','B']),'2026-01-03'));
   assert.deepEqual(listSchedule(shortened,'2026-01-02'),[{date:'2026-01-02',station:'B'}]);
 });
 

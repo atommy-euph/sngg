@@ -1,7 +1,7 @@
 require('./load-typescript.cjs');
 const fs = require('fs');
 const path = require('path');
-const { toDayNumber, localDateString, toDateString, revise, stateAt } = require('../src/lib/schedule.ts');
+const { toDayNumber, localDateString, toDateString, createRevision, resolveDay } = require('../src/lib/schedule.ts');
 // 編集用の正本から、適用日付きの生成物schedule.jsonを作る。
 const { STATION_DATA: active } = require('../src/constants/station_names_5_katakana.ts');
 const target = path.join(__dirname, '../src/constants/schedule.json');
@@ -21,7 +21,7 @@ try {
   if (fs.existsSync(target)) config = JSON.parse(fs.readFileSync(target, 'utf8'));
   else throw new Error('初期設定ファイルがありません');
   restoreLegacyOrderForMigration(config, initialize && args.includes('--replace-pending'));
-  const oldReferenceDate = stateAt(config, toDateString(toDayNumber(effective) - 1)).referenceDate;
+  const oldReferenceDate = resolveDay(config, toDateString(toDayNumber(effective) - 1)).referenceDate;
   const canonical = data => JSON.stringify(Object.keys(data).sort().map(k => [k, data[k]]));
   let last = config.revisions[config.revisions.length - 1];
   const identical = last.effective === effective && canonical(last.active) === canonical(active) && !last.legacy;
@@ -33,12 +33,12 @@ try {
     }
     if (effective <= last.effective) throw new Error('履歴より後の適用日が必要です');
     if (initialize !== !!last.legacy) throw new Error(last.legacy ? '初回は --init を指定してください' : '--init は初回だけ指定できます');
-    const before = stateAt(config, toDateString(toDayNumber(effective) - 1));
+    const before = resolveDay(config, toDateString(toDayNumber(effective) - 1));
     const added = Object.keys(active).filter(k => !before.active[k]);
     const removed = Object.keys(before.active).filter(k => !active[k]);
-    if (initialize || added.length || removed.length) config.revisions.push(revise(config, active, effective, initialize));
+    if (initialize || added.length || removed.length) config.revisions.push(createRevision(config, active, effective, initialize));
     else {
-      const current = stateAt(config, effective);
+      const current = resolveDay(config, effective);
       config.revisions.push({ effective, referenceDate: today, cycle: current.cycle, fullShuffle: current.fullShuffle, seen: current.seen.slice().sort(), ...current.recipe, active });
     }
     console.log('追加:', added.join('、') || 'なし');
@@ -51,7 +51,7 @@ try {
   for (const revision of config.revisions) {
     revision.active = Object.fromEntries(Object.keys(revision.active).sort().map(name => [name, revision.active[name]]));
   }
-  const result = stateAt(config, effective);
+  const result = resolveDay(config, effective);
   console.log('適用日:', effective, '残り:', result.order.length - result.index);
   console.log('次の巡回:', toDateString(toDayNumber(effective) + result.order.length - result.index));
   fs.writeFileSync(target + '.tmp', JSON.stringify(config, null, 2) + '\n');

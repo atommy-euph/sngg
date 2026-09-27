@@ -1,6 +1,6 @@
 // schedule.jsonはschedule:updateの生成物。駅データの正本を編集し、JSONは手編集しない。
 import config from '../constants/schedule.json';
-import { Schedule, stateAt, localDateString, toDayNumber, toDateString, EPOCH_DAY } from './schedule';
+import { Schedule, resolveDay, localDateString, toDayNumber, toDateString, EPOCH_DAY } from './schedule';
 
 const schedule = config as Schedule;
 // solution（当日の答え）とpuzzleNumber（通算問題番号）は、ページ読込時に
@@ -8,7 +8,7 @@ const schedule = config as Schedule;
 // 日付をまたいでも読込時の問題を維持する。puzzleNumberは駅一覧の配列インデックスではない。
 const openedAt = new Date();
 const today = localDateString(openedAt);
-const current = stateAt(schedule, today);
+const current = resolveDay(schedule, today);
 export const ACTIVE_STATION_DATA = current.active;
 export const NAMES = Object.keys(ACTIVE_STATION_DATA);
 export const fullShuffleDate = current.fullShuffle.replace(/-/g, '/');
@@ -20,8 +20,8 @@ export const getWordOfTheDay = (now: Date = openedAt) => {
   const day = toDayNumber(date);
   const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
   return {
-    solution: stateAt(schedule, date).solution,
-    solution_yesterday: stateAt(schedule, toDateString(day - 1)).solution,
+    solution: resolveDay(schedule, date).solution,
+    solution_yesterday: resolveDay(schedule, toDateString(day - 1)).solution,
     puzzleNumber: day - EPOCH_DAY,
     tomorrow: next.getTime() - now.getTime(),
   };

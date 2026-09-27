@@ -39,7 +39,7 @@ export function shuffled(names: string[], seed: string, previousSolution?: strin
   return result;
 }
 
-export function stateAt(schedule: Schedule, date: string) {
+export function resolveDay(schedule: Schedule, date: string) {
   const day = toDayNumber(date);
   const revision = schedule.revisions.filter(r => toDayNumber(r.effective) <= day).pop();
   if (!revision) throw new Error('出題設定の開始日より前です');
@@ -76,11 +76,11 @@ function shuffleStateAt(revision: ShuffleRevision, day: number, startDay: number
     recipe: { candidates, seed, previous: previousSolution, skip: skip + index } };
 }
 
-export function revise(schedule: Schedule, active: StationData, effective: string, initialize = false): ShuffleRevision {
+export function createRevision(schedule: Schedule, active: StationData, effective: string, initialize = false): ShuffleRevision {
   if (Object.keys(active).length < 2) throw new Error('巡回境界の連続を防ぐため、2駅以上が必要です');
   const day = toDayNumber(effective);
-  const before = stateAt(schedule, toDateString(day - 1));
-  const today = stateAt(schedule, effective);
+  const before = resolveDay(schedule, toDateString(day - 1));
+  const today = resolveDay(schedule, effective);
   const added = Object.keys(active).filter(name => !before.active[name]);
   // Reopened names count as new entries, even if present in this cycle's history.
   let seen = today.seen.filter(name => !added.includes(name));
