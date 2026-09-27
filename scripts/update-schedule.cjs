@@ -44,7 +44,6 @@ try {
   } else console.log('同じ設定です。出題順は維持します。');
   console.log('駅名・読みの基準日:', oldReferenceDate, '→', today, '（適用日から表示）');
   config.revisions[config.revisions.length - 1].referenceDate = today;
-  config.version = 3;
   trimLegacyHistory(config);
   for (const revision of config.revisions) {
     revision.active = Object.fromEntries(Object.keys(revision.active).sort().map(name => [name, revision.active[name]]));

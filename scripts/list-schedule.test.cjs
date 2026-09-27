@@ -19,7 +19,7 @@ test('includes specified date, stops before next cycle, and crosses initial migr
 
 test('pending changes extend or shorten the cycle', () => {
   const data = names => Object.fromEntries(names.map(n => [n, [{title:n,url:'https://example.com'}]]));
-  const fixture = () => ({version:3,revisions:[{effective:'2026-01-01',referenceDate:'2026-01-01',cycle:1,fullShuffle:'2026-01-01',seen:[],candidates:['A','B','C','D','E'],seed:'14',active:data(['A','B','C','D','E'])}]});
+  const fixture = () => ({revisions:[{effective:'2026-01-01',referenceDate:'2026-01-01',cycle:1,fullShuffle:'2026-01-01',seen:[],candidates:['A','B','C','D','E'],seed:'14',active:data(['A','B','C','D','E'])}]});
   const extended = fixture();
   extended.revisions.push(createRevision(extended,data(['A','B','C','D','E','X']),'2026-01-03'));
   assert.equal(listSchedule(extended,'2026-01-02').at(-1).date,'2026-01-06');

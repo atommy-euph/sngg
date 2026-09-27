@@ -7,7 +7,7 @@ const { createRevision } = require('../src/lib/scheduleAuthoring.ts');
 const real = require('../src/constants/schedule.json');
 const orderOf = r => r.legacy ? r.order : shuffled(r.candidates,r.seed,r.previous).slice(r.skip || 0);
 const data = names => Object.fromEntries(names.map(n => [n, [{ title: n, url: 'https://example.com' }]]));
-const fixture = () => ({ version: 3, revisions: [{ referenceDate: '2026-01-01', effective: '2026-01-01', cycle: 1, fullShuffle: '2026-01-01', seen: [], candidates: ['A','B','C','D','E'], seed: '14', active: data(['A','B','C','D','E']) }] });
+const fixture = () => ({ revisions: [{ referenceDate: '2026-01-01', effective: '2026-01-01', cycle: 1, fullShuffle: '2026-01-01', seen: [], candidates: ['A','B','C','D','E'], seed: '14', active: data(['A','B','C','D','E']) }] });
 
 test('saved games retain puzzle numbers across the rename and write only the new key', () => {
   const { loadGameStateFromLocalStorage, saveGameStateToLocalStorage } = require('../src/lib/localStorage.ts');
@@ -38,7 +38,7 @@ test('saved games retain puzzle numbers across the rename and write only the new
 });
 
 test('legacy compatibility repeats only the old order and retains its shuffle date', () => {
-  const config={version:3,revisions:[{referenceDate:'2025-12-01',effective:'2026-01-01',cycle:1,
+  const config={revisions:[{referenceDate:'2025-12-01',effective:'2026-01-01',cycle:1,
     fullShuffle:'2025-11-25',seen:[],legacy:true,order:['A','B','C'],active:data(['A','B','C'])}]};
   for(let i=0;i<10;i++) {
     const state=resolveDay(config,toDateString(toDayNumber('2026-01-01')+i));
@@ -163,7 +163,7 @@ test('page-load snapshot stays fixed after midnight; explicit new dates advance'
 test('update command: idempotency, reference date, metadata, additions, validation', () => {
   const fs=require('fs'), vm=require('vm'), path=require('path');
   const source=fs.readFileSync(path.join(__dirname,'update-schedule.cjs'),'utf8');
-  let stored={version:3,revisions:[{referenceDate:'2025-12-01',
+  let stored={revisions:[{referenceDate:'2025-12-01',
     effective:'2026-01-01',cycle:1,fullShuffle:'2026-01-01',seen:[],
     order:['AAAAA','BBBBB','CCCCC','DDDDD','EEEEE'],active:data(['AAAAA','BBBBB','CCCCC','DDDDD','EEEEE']),legacy:true
   }]};
@@ -241,7 +241,7 @@ test('reference date changes with active station data on the effective date', ()
 });
 
 test('published recipes contain no literal post-migration order', () => {
-  assert.equal(real.version,3);
+  assert.equal(Object.hasOwn(real, 'version'), false);
   for(const r of real.revisions.filter(r=>!r.legacy)) {
     assert.equal(r.order,undefined);
     assert.ok(r.seed);

@@ -35,8 +35,6 @@ export interface ShuffleRevision extends RevisionBase {
 }
 export type Revision = LegacyRevision | ShuffleRevision;
 export interface Schedule {
-  /** 保存形式のバージョン。今回の整理では形式を変更しない。 */
-  version: number;
   /** 適用日の昇順に保持する履歴。指定日以下で最後の設定が有効。 */
   revisions: Revision[];
 }
