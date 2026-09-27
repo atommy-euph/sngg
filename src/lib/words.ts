@@ -11,7 +11,6 @@ const today = localDateString(openedAt);
 const current = stateAt(schedule, today);
 export const ACTIVE_STATION_DATA = current.active;
 export const NAMES = Object.keys(ACTIVE_STATION_DATA);
-export const NumberOfData = NAMES.length;
 export const fullShuffleDate = current.fullShuffle.replace(/-/g, '/');
 const [year, month, day] = current.referenceDate.split('-').map(Number);
 export const stationReferenceDate = `${year}年${month}月${day}日`;

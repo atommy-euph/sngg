@@ -108,3 +108,7 @@ npm run schedule:update -- 2026-10-01 --init --replace-pending
 - `--replace-pending` は移行後にも未来の改訂を差し替える用途があるため残します。
 - `LegacyRevision`、`legacySchedule.ts`、旧改訂の駅データを削除するには、サポートする最古の日付を決め、昨日の答え・過去日の一覧出力・テストが旧改訂を参照しないことを確認します。現在は過去日の再現を維持し、自動削除しません。
 - 改訂履歴の短縮は、出題済み駅と次の巡回のシードを維持したまま行う必要があります。撤去は専用の変更として検証します。
+
+## 旧運用スクリプト
+
+`remove.pl` と `shuffle.pl` は廃止しました。`src/constants/shuffleall.pl` は旧運用の参照用として残していますが、新方式の更新には使いません。実行しても駅データの記載順が変わるだけで `schedule.json` は更新されません。通常の駅更新は `schedule:update` を使います。
