@@ -54,8 +54,8 @@ function shuffleStateAt(revision: ShuffleRevision, day: number, startDay: number
   let candidates = revision.candidates;
   let seed = revision.seed;
   let previousSolution = revision.previous;
-  let skip = revision.skip || 0;
-  let order = shuffled(candidates, seed, previousSolution).slice(skip);
+  let consumed = revision.skip || 0;
+  let order = shuffled(candidates, seed, previousSolution).slice(consumed);
   let cycle = revision.cycle;
   let seen = revision.seen;
   let fullShuffle = revision.fullShuffle;
@@ -66,14 +66,14 @@ function shuffleStateAt(revision: ShuffleRevision, day: number, startDay: number
     previousSolution = order[order.length - 1];
     candidates = Object.keys(revision.active).sort();
     seed = `tetsudoru-v1:cycle:${cycle}`;
-    skip = 0;
+    consumed = 0;
     order = shuffled(candidates, seed, previousSolution);
     seen = [];
     fullShuffle = toDateString(start);
   }
   const index = day - start;
   return { referenceDate: revision.referenceDate, solution: order[index], cycle, fullShuffle, seen: seen.concat(order.slice(0, index)), order, index, active: revision.active,
-    recipe: { candidates, seed, previous: previousSolution, skip: skip + index } };
+    recipe: { candidates, seed, previous: previousSolution, skip: consumed + index } };
 }
 
 export function createRevision(schedule: Schedule, active: StationData, effective: string, initialize = false): ShuffleRevision {

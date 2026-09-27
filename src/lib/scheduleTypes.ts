@@ -30,7 +30,7 @@ export interface ShuffleRevision extends RevisionBase {
   seed: string;
   /** シャッフル開始直前の答え。省略時は先頭の連続回避を行わない。 */
   previous?: string;
-  /** 再現した並びの先頭から読み飛ばす件数。省略時0。リンク修正時の順序維持に使用。 */
+  /** 元の並びで消化済みの件数。省略時0。リンク修正でも同じ進行位置を再現する。保存キーskipは互換性のため維持。 */
   skip?: number;
 }
 export type Revision = LegacyRevision | ShuffleRevision;
