@@ -11,12 +11,11 @@ const target = path.join(__dirname, '../src/constants/schedule.json');
 const args = process.argv.slice(2);
 const effective = args.find(x => /^\d{4}-\d{2}-\d{2}$/.test(x));
 const initialize = args.includes('--init');
-const appendPending = args.includes('--append-pending');
 const replacePending = args.includes('--replace-pending');
 const today = localDateString(new Date());
 try {
-  if (!effective) throw new Error('使用方法: npm run schedule:update -- YYYY-MM-DD [--init] [--replace-pending | --append-pending]');
-  if (appendPending && replacePending) throw new Error('--append-pending と --replace-pending は同時に指定できません');
+  if (!effective) throw new Error('使用方法: npm run schedule:update -- YYYY-MM-DD [--init] [--replace-pending]');
+  if (args.some(arg => arg.startsWith('-') && !['--init', '--replace-pending'].includes(arg))) throw new Error('未対応のオプションです');
   toDayNumber(effective);
   if (effective <= today) throw new Error('適用日は実行日の翌日以降にしてください');
   if (Object.keys(active).length < 2) throw new Error('2駅以上が必要です');
@@ -32,8 +31,8 @@ try {
   let last = config.revisions[config.revisions.length - 1];
   const identical = last.effective === effective && canonical(last.active) === canonical(active) && !last.legacy;
   if (!identical) {
-    if (last.effective > today && !appendPending) {
-      if (!replacePending) throw new Error('未適用の設定があります。後の日付へ追加する場合は --append-pending、公開前の予定を置き換える場合は --replace-pending を指定してください');
+    if (last.effective > today) {
+      if (!replacePending) throw new Error('未適用の設定があります。公開前の予定を置き換える場合は --replace-pending を指定してください');
       config.revisions.pop();
       last = config.revisions[config.revisions.length - 1];
     }

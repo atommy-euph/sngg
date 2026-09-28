@@ -234,17 +234,16 @@ test('update command: idempotency, reference date, metadata, additions, validati
   const published = JSON.stringify(stored);
   active.AAAAA = [{title:'later title',url:'https://example.com/later'}];
   assert.equal(run('2026-01-10'),1);
-  assert.equal(run('2026-01-09','--append-pending'),1);
-  assert.equal(run('2026-01-10','--append-pending','--replace-pending'),1);
-  assert.equal(run('2026-01-10','--append-pending','--init'),1);
+  assert.equal(run('2026-01-10','--unsupported'),1);
   assert.equal(JSON.stringify(stored),published);
-  assert.equal(run('2026-01-10','--append-pending'),0);
+  today='2026-01-09'; // Wait until the published revision takes effect before adding another.
+  assert.equal(run('2026-01-10'),0);
   assert.deepEqual(stored.revisions.slice(0,-1),JSON.parse(published).revisions);
   assert.equal(resolveScheduleState(stored,'2026-01-09').active.AAAAA[0].title,'new title');
   assert.equal(resolveScheduleState(stored,'2026-01-10').active.AAAAA[0].title,'later title');
   assert.deepEqual(Array.from({length:30},(_,i)=>resolveScheduleState(stored,toDateString(toDayNumber('2026-01-09')+i)).solution),expected);
   const appended = JSON.stringify(stored);
-  assert.equal(run('2026-01-10','--append-pending'),0);
+  assert.equal(run('2026-01-10'),0);
   assert.equal(JSON.stringify(stored),appended);
 });
 
