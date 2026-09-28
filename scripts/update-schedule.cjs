@@ -6,14 +6,17 @@ const { resolveScheduleState } = require('../src/lib/schedule.ts');
 const { toDayNumber, localDateString, toDateString } = require('../src/lib/scheduleDates.ts');
 const { createRevision } = require('../src/lib/scheduleAuthoring.ts');
 // 編集用の正本から、適用日付きの生成物schedule.jsonを作る。
-const { STATION_DATA: active } = require('../src/constants/station_names_5_katakana.ts');
+const { STATION_DATA: active } = require('./load-station-data.cjs');
 const target = path.join(__dirname, '../src/constants/schedule.json');
 const args = process.argv.slice(2);
 const effective = args.find(x => /^\d{4}-\d{2}-\d{2}$/.test(x));
 const initialize = args.includes('--init');
+const appendPending = args.includes('--append-pending');
+const replacePending = args.includes('--replace-pending');
 const today = localDateString(new Date());
 try {
-  if (!effective) throw new Error('使用方法: npm run schedule:update -- YYYY-MM-DD [--init] [--replace-pending]');
+  if (!effective) throw new Error('使用方法: npm run schedule:update -- YYYY-MM-DD [--init] [--replace-pending | --append-pending]');
+  if (appendPending && replacePending) throw new Error('--append-pending と --replace-pending は同時に指定できません');
   toDayNumber(effective);
   if (effective <= today) throw new Error('適用日は実行日の翌日以降にしてください');
   if (Object.keys(active).length < 2) throw new Error('2駅以上が必要です');
@@ -23,14 +26,14 @@ try {
   let config;
   if (fs.existsSync(target)) config = readSchedule(JSON.parse(fs.readFileSync(target, 'utf8')));
   else throw new Error('初期設定ファイルがありません');
-  restoreLegacyOrderForMigration(config, initialize && args.includes('--replace-pending'));
+  restoreLegacyOrderForMigration(config, initialize && replacePending);
   const oldReferenceDate = resolveScheduleState(config, toDateString(toDayNumber(effective) - 1)).referenceDate;
   const canonical = data => JSON.stringify(Object.keys(data).sort().map(k => [k, data[k]]));
   let last = config.revisions[config.revisions.length - 1];
   const identical = last.effective === effective && canonical(last.active) === canonical(active) && !last.legacy;
   if (!identical) {
-    if (last.effective > today) {
-      if (!args.includes('--replace-pending')) throw new Error('未適用の設定があります。公開前の予定を置き換える場合は --replace-pending を指定してください');
+    if (last.effective > today && !appendPending) {
+      if (!replacePending) throw new Error('未適用の設定があります。後の日付へ追加する場合は --append-pending、公開前の予定を置き換える場合は --replace-pending を指定してください');
       config.revisions.pop();
       last = config.revisions[config.revisions.length - 1];
     }

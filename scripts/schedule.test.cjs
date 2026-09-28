@@ -188,7 +188,7 @@ test('update command: idempotency, reference date, metadata, additions, validati
         if(id.includes('scheduleDates.ts'))return {...require('../src/lib/scheduleDates.ts'),localDateString:()=>today};
         if(id.includes('scheduleAuthoring.ts'))return require('../src/lib/scheduleAuthoring.ts');
         if(id.includes('schedule.ts'))return require('../src/lib/schedule.ts');
-        if(id.includes('station_names'))return {STATION_DATA:active};
+        if(id==='./load-station-data.cjs')return {STATION_DATA:active};
         throw Error(id);
       }
     });
@@ -231,6 +231,21 @@ test('update command: idempotency, reference date, metadata, additions, validati
   assert.equal(resolveScheduleState(stored,'2026-01-08').referenceDate,'2026-01-06');
   assert.equal(resolveScheduleState(stored,'2026-01-09').referenceDate,'2026-01-08');
   assert.deepEqual(Array.from({length:30},(_,i)=>resolveScheduleState(stored,toDateString(toDayNumber('2026-01-09')+i)).solution),expected);
+  const published = JSON.stringify(stored);
+  active.AAAAA = [{title:'later title',url:'https://example.com/later'}];
+  assert.equal(run('2026-01-10'),1);
+  assert.equal(run('2026-01-09','--append-pending'),1);
+  assert.equal(run('2026-01-10','--append-pending','--replace-pending'),1);
+  assert.equal(run('2026-01-10','--append-pending','--init'),1);
+  assert.equal(JSON.stringify(stored),published);
+  assert.equal(run('2026-01-10','--append-pending'),0);
+  assert.deepEqual(stored.revisions.slice(0,-1),JSON.parse(published).revisions);
+  assert.equal(resolveScheduleState(stored,'2026-01-09').active.AAAAA[0].title,'new title');
+  assert.equal(resolveScheduleState(stored,'2026-01-10').active.AAAAA[0].title,'later title');
+  assert.deepEqual(Array.from({length:30},(_,i)=>resolveScheduleState(stored,toDateString(toDayNumber('2026-01-09')+i)).solution),expected);
+  const appended = JSON.stringify(stored);
+  assert.equal(run('2026-01-10','--append-pending'),0);
+  assert.equal(JSON.stringify(stored),appended);
 });
 
 test('reference date changes with active station data on the effective date', () => {
@@ -294,9 +309,21 @@ test('JSON validation rejects malformed revisions with useful errors', () => {
   assert.throws(() => readSchedule({ revisions: [] }), /revisions/);
 });
 
+test('scraped ES module loads unchanged in CommonJS management commands', async () => {
+  const fs = require('fs');
+  const path = require('path');
+  const filename = path.join(__dirname, '../src/constants/station_names_5_katakana.js');
+  const source = fs.readFileSync(filename, 'utf8');
+  const esm = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
+  const { STATION_DATA } = require('./load-station-data.cjs');
+  assert.deepEqual(STATION_DATA, esm.STATION_DATA);
+  assert.deepEqual(Object.keys(STATION_DATA), Object.keys(esm.STATION_DATA));
+  assert.equal(fs.readFileSync(filename, 'utf8'), source);
+});
+
 test('source checks detect forgotten updates while allowing historical snapshots', () => {
   const { assertStationDataMatches } = require('./check-schedule.cjs');
-  const { STATION_DATA } = require('../src/constants/station_names_5_katakana.ts');
+  const { STATION_DATA } = require('./load-station-data.cjs');
   assert.doesNotThrow(() => assertStationDataMatches(real, STATION_DATA));
   const config = fixture();
   const latest = createRevision(config, data(['A','B','C','D','E','X']), '2026-01-03');

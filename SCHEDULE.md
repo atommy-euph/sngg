@@ -2,7 +2,7 @@
 
 ## 編集用データと生成物
 
-`src/constants/station_names_5_katakana.ts` が駅データの編集用の正本です。`src/constants/schedule.json` は `schedule:update` が生成する適用日付きの履歴で、手編集しません。ファイルの配置は変更しません。正本を編集したら更新コマンドを実行し、両方をコミットしてください。
+`src/constants/station_names_5_katakana.js` が駅データの正本です。スクレイピングで取得した `export const STATION_DATA = { ... }` 形式のJSをそのまま配置します。TSへの変換は不要です。`src/constants/schedule.json` は `schedule:update` が生成する適用日付きの履歴で、手編集しません。画面はこのJSONを参照し、指定日から新データを使用します。正本を更新したら更新コマンドを実行し、両方をコミットしてください。
 
 ## コードの構成
 
@@ -67,7 +67,7 @@ http://localhost:3000 で確認します。問題はページ読込時に確定�
 ## 駅の追加・削除
 
 1. 最新の公開済みコード・出題設定を使います。
-2. `src/constants/station_names_5_katakana.ts` の駅データを編集します。駅名はアイウエオ順に並べています。記載順は今後の出題順に影響しません。
+2. `src/constants/station_names_5_katakana.js` を最新のスクレイピング結果で置き換えます。取得結果の掲載順序は維持できます。駅名の記載順は今後の出題順に影響せず、同じ読みの駅のリンクは配列の順序で表示されます。
 3. 未来の適用日を指定します（以下の日付は例です）。
 
 ```sh
@@ -84,6 +84,12 @@ npm run schedule:update -- 2026-10-01 --init --replace-pending
 ```
 
 `--replace-pending` は未適用の最終設定を置き換えます。すでに配信した設定の変更は利用者への影響を確認して行ってください。初回以外は `--init` を付けません。同じ入力・適用日で再実行しても順序は変わりませんが、基準日は実行日に更新します。
+
+配信済みの未適用設定を維持し、その後の日付に別の更新を追加する場合は `--append-pending` を指定します。適用日は最後の設定より後の日付とし、`--replace-pending` とは併用しません。例えば、10月1日の移行設定を維持して10月10日に駅データを更新する場合は次のとおりです。
+
+```sh
+npm run schedule:update -- 2026-10-10 --append-pending
+```
 
 ## 変更の扱い
 

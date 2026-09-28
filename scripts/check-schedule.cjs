@@ -13,7 +13,7 @@ function assertStationDataMatches(schedule, source) {
 if (require.main === module) {
   try {
     const schedule = readSchedule(require('../src/constants/schedule.json'));
-    const { STATION_DATA } = require('../src/constants/station_names_5_katakana.ts');
+    const { STATION_DATA } = require('./load-station-data.cjs');
     assertStationDataMatches(schedule, STATION_DATA);
     console.log('出題設定と駅データの一致を確認しました。');
   } catch (error) {
