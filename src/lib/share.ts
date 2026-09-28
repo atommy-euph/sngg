@@ -1,12 +1,12 @@
 import { getGuessStatuses } from './statuses'
-import { solutionIndex } from './words'
+import { puzzleNumber } from './words'
 import { GAME_TITLE } from '../constants/settings'
 import { GUESS_MAX } from '../constants/settings'
 
 
 export const shareStatus = (guesses: string[], lost: boolean) => {
   navigator.clipboard.writeText(
-    `#${GAME_TITLE} ${solutionIndex} ${
+    `#${GAME_TITLE} ${puzzleNumber} ${
       lost ? 'X' : guesses.length
     }/${GUESS_MAX}\n\n` + generateEmojiGrid(guesses) + "\n\nhttps://railword.com"
   )

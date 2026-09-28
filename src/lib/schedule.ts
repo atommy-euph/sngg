@@ -1,0 +1,75 @@
+import { legacyStateAt } from './legacySchedule';
+import { Schedule, ShuffleRevision } from './scheduleTypes';
+import { toDayNumber, toDateString } from './scheduleDates';
+export type { Schedule, Revision, LegacyRevision, ShuffleRevision, StationData } from './scheduleTypes';
+
+export function shuffled(names: string[], seed: string, previousSolution?: string): string[] {
+  // 入力ファイルの記載順に依存させないため、文字コード順にそろえる。
+  const result = names.slice().sort();
+  // FNV-1a: シード文字列を32ビット整数に変換する。
+  let state = 2166136261;
+  for (let i = 0; i < seed.length; i++) state = Math.imul(state ^ seed.charCodeAt(i), 16777619) >>> 0;
+  // Mulberry32: 同じ初期値から同じ乱数列（0以上1未満）を生成する。
+  const random = () => {
+    state = (state + 0x6D2B79F5) >>> 0;
+    let t = Math.imul(state ^ (state >>> 15), 1 | state);
+    t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  // Fisher–Yates: 末尾から、0〜iの交換相手を選ぶ。重複・欠落なく並べ替える。
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  // 直前の答えと先頭が一致したら2番目と交換し、巡回境界の連続を防ぐ。
+  // 1駅では実現できないため、設定更新側で2駅以上を必須としている。
+  if (result.length > 1 && result[0] === previousSolution) [result[0], result[1]] = [result[1], result[0]];
+  return result;
+}
+
+/** ブラウザ向け。管理用の順序や消化位置は公開せず、表示に必要な情報だけ返す。 */
+export function resolveDay(schedule: Schedule, date: string) {
+  const state = resolveScheduleState(schedule, date);
+  return {
+    solution: state.solution, active: state.active,
+    fullShuffle: state.fullShuffle, referenceDate: state.referenceDate,
+  };
+}
+
+/** 管理ツール向け。通常の出題解決と同じ計算を使い、巡回状態も参照できる。 */
+export function resolveScheduleState(schedule: Schedule, date: string) {
+  const day = toDayNumber(date);
+  const revision = schedule.revisions.filter(r => toDayNumber(r.effective) <= day).pop();
+  if (!revision) throw new Error('出題設定の開始日より前です');
+  // 旧方式の互換処理は入口で分離し、新方式の巡回ループに持ち込まない。
+  const startDay = toDayNumber(revision.effective);
+  if (revision.legacy) return legacyStateAt(revision, day, startDay);
+  return shuffleStateAt(revision, day, startDay);
+}
+
+function shuffleStateAt(revision: ShuffleRevision, day: number, startDay: number) {
+  let start = startDay;
+  let candidates = revision.candidates;
+  let seed = revision.seed;
+  let previousSolution = revision.previous;
+  let consumed = revision.skip || 0;
+  let order = shuffled(candidates, seed, previousSolution).slice(consumed);
+  let cycle = revision.cycle;
+  let seen = revision.seen;
+  let fullShuffleDate = revision.fullShuffle;
+  while (day >= start + order.length) {
+    if (order.length === 0) throw new Error('出題予定が空です');
+    start += order.length;
+    cycle++;
+    previousSolution = order[order.length - 1];
+    candidates = Object.keys(revision.active).sort();
+    seed = `tetsudoru-v1:cycle:${cycle}`;
+    consumed = 0;
+    order = shuffled(candidates, seed, previousSolution);
+    seen = [];
+    fullShuffleDate = toDateString(start);
+  }
+  const index = day - start;
+  return { referenceDate: revision.referenceDate, solution: order[index], cycle, fullShuffle: fullShuffleDate, get seen() { return seen.concat(order.slice(0, index)); }, order, index, active: revision.active,
+    get recipe() { return { candidates, seed, previous: previousSolution, skip: consumed + index }; } };
+}
